@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "Print_UART0.C": "cpp",
+        "PUTCHAR.C": "cpp"
+    }
+}
