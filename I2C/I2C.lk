@@ -1,5 +1,5 @@
 -muwx
--i I2Cms51.ihx
+-i I2C.ihx
 -M
 -b HOME = 0x0000
 -b XSEG = 0x0001

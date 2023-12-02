@@ -2,7 +2,7 @@
 #Ngo Hung Cuong
 
 CC = sdcc
-PRJ = I2Cms51
+PRJ = I2C
 FLASH_SIZE = 16384
 
 #do not edit
@@ -10,6 +10,8 @@ OBJ_DIR = obj
 
 SRC = main.c
 SRC += i2c.c
+
+VPATH = lib/src
 
 OBJS = $(patsubst %.c,obj/%.rel,$(SRC))
 
@@ -19,7 +21,7 @@ all: $(OBJS)
 	makebin -s $(FLASH_SIZE) $(PRJ).ihx $(PRJ).bin
 
 obj/%.rel: %.c
-	$(CC) -c $< -I. -o $@
+	$(CC) -c $< -I. -Ilib/inc -o $@
 
 clean:
 	rm -f obj/*.*

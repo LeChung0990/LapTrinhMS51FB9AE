@@ -571,7 +571,7 @@ _send_stop_sloc0_1_0:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'I2C_Init'
 ;------------------------------------------------------------
-;	i2c.c:7: void I2C_Init(void)
+;	lib/src/i2c.c:7: void I2C_Init(void)
 ;	-----------------------------------------
 ;	 function I2C_Init
 ;	-----------------------------------------
@@ -584,26 +584,26 @@ _I2C_Init:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	i2c.c:9: I2CLK = 39;
+;	lib/src/i2c.c:9: I2CLK = 39;
 	mov	_I2CLK,#0x27
-;	i2c.c:12: P1M1 &= ~(1 << 3);
+;	lib/src/i2c.c:12: P1M1 &= ~(1 << 3);
 	anl	_P1M1,#0xf7
-;	i2c.c:13: P1M2 &= ~(1 << 3);
+;	lib/src/i2c.c:13: P1M2 &= ~(1 << 3);
 	anl	_P1M2,#0xf7
-;	i2c.c:16: P1M1 &= ~(1 << 4);
+;	lib/src/i2c.c:16: P1M1 &= ~(1 << 4);
 	anl	_P1M1,#0xef
-;	i2c.c:17: P1M2 &= ~(1 << 4);
+;	lib/src/i2c.c:17: P1M2 &= ~(1 << 4);
 	anl	_P1M2,#0xef
-;	i2c.c:19: P13=1;
+;	lib/src/i2c.c:19: P13=1;
 ;	assignBit
 	setb	_P13
-;	i2c.c:20: P14=1;
+;	lib/src/i2c.c:20: P14=1;
 ;	assignBit
 	setb	_P14
-;	i2c.c:22: I2CEN=1;
+;	lib/src/i2c.c:22: I2CEN=1;
 ;	assignBit
 	setb	_I2CEN
-;	i2c.c:23: }
+;	lib/src/i2c.c:23: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'I2C_Write'
@@ -615,126 +615,126 @@ _I2C_Init:
 ;t                         Allocated to registers r4 r5 
 ;u8TimeOut                 Allocated to registers r7 
 ;------------------------------------------------------------
-;	i2c.c:25: uint8_t I2C_Write(uint8_t Address, uint8_t *pData, uint8_t length)
+;	lib/src/i2c.c:25: uint8_t I2C_Write(uint8_t Address, uint8_t *pData, uint8_t length)
 ;	-----------------------------------------
 ;	 function I2C_Write
 ;	-----------------------------------------
 _I2C_Write:
 	mov	r7,dpl
-;	i2c.c:31: if (I2STAT != 0xF8) {
+;	lib/src/i2c.c:31: if (I2STAT != 0xF8) {
 	mov	a,#0xf8
 	cjne	a,_I2STAT,00232$
 	sjmp	00102$
 00232$:
-;	i2c.c:32: return 0;
+;	lib/src/i2c.c:32: return 0;
 	mov	dpl,#0x00
 	ret
 00102$:
-;	i2c.c:36: STO = 0;
+;	lib/src/i2c.c:36: STO = 0;
 ;	assignBit
 	clr	_STO
-;	i2c.c:37: STA = 1;
+;	lib/src/i2c.c:37: STA = 1;
 ;	assignBit
 	setb	_STA
-;	i2c.c:38: SI = 0;
+;	lib/src/i2c.c:38: SI = 0;
 ;	assignBit
 	clr	_SI
-;	i2c.c:40: u8TimeOut = 0;
+;	lib/src/i2c.c:40: u8TimeOut = 0;
 	mov	r6,#0x00
-;	i2c.c:42: while (1) {
+;	lib/src/i2c.c:42: while (1) {
 	mov	r4,#0x01
 	mov	r5,#0x00
 00108$:
-;	i2c.c:43: if (SI) {
+;	lib/src/i2c.c:43: if (SI) {
 	jb	_SI,00109$
-;	i2c.c:46: if (!t) {
+;	lib/src/i2c.c:46: if (!t) {
 	mov	a,r4
 	orl	a,r5
 	jnz	00106$
-;	i2c.c:47: u8TimeOut = 1;
+;	lib/src/i2c.c:47: u8TimeOut = 1;
 	mov	r6,#0x01
-;	i2c.c:48: break;
+;	lib/src/i2c.c:48: break;
 	sjmp	00109$
 00106$:
-;	i2c.c:50: ++t;
+;	lib/src/i2c.c:50: ++t;
 	inc	r4
 	cjne	r4,#0x00,00108$
 	inc	r5
 	sjmp	00108$
 00109$:
-;	i2c.c:53: if (u8TimeOut) {
+;	lib/src/i2c.c:53: if (u8TimeOut) {
 	mov	a,r6
 	jz	00111$
-;	i2c.c:55: send_stop();
+;	lib/src/i2c.c:55: send_stop();
 	lcall	_send_stop
-;	i2c.c:56: return 0;
+;	lib/src/i2c.c:56: return 0;
 	mov	dpl,#0x00
 	ret
 00111$:
-;	i2c.c:59: if (I2STAT != 0x08) {
+;	lib/src/i2c.c:59: if (I2STAT != 0x08) {
 	mov	a,#0x08
 	cjne	a,_I2STAT,00237$
 	sjmp	00113$
 00237$:
-;	i2c.c:61: send_stop();
+;	lib/src/i2c.c:61: send_stop();
 	lcall	_send_stop
-;	i2c.c:62: return 0;
+;	lib/src/i2c.c:62: return 0;
 	mov	dpl,#0x00
 	ret
 00113$:
-;	i2c.c:66: STA = 0;
+;	lib/src/i2c.c:66: STA = 0;
 ;	assignBit
 	clr	_STA
-;	i2c.c:67: STO = 0;
+;	lib/src/i2c.c:67: STO = 0;
 ;	assignBit
 	clr	_STO
-;	i2c.c:68: I2DAT = Address;
+;	lib/src/i2c.c:68: I2DAT = Address;
 	mov	_I2DAT,r7
-;	i2c.c:69: SI = 0;
+;	lib/src/i2c.c:69: SI = 0;
 ;	assignBit
 	clr	_SI
-;	i2c.c:71: u8TimeOut = 0;
+;	lib/src/i2c.c:71: u8TimeOut = 0;
 	mov	r7,#0x00
-;	i2c.c:72: while (1) {
+;	lib/src/i2c.c:72: while (1) {
 	mov	r5,#0x01
 	mov	r6,#0x00
 00119$:
-;	i2c.c:73: if (SI) {
+;	lib/src/i2c.c:73: if (SI) {
 	jb	_SI,00120$
-;	i2c.c:76: if (!t) {
+;	lib/src/i2c.c:76: if (!t) {
 	mov	a,r5
 	orl	a,r6
 	jnz	00117$
-;	i2c.c:77: u8TimeOut = 1;
+;	lib/src/i2c.c:77: u8TimeOut = 1;
 	mov	r7,#0x01
-;	i2c.c:78: break;
+;	lib/src/i2c.c:78: break;
 	sjmp	00120$
 00117$:
-;	i2c.c:80: ++t;
+;	lib/src/i2c.c:80: ++t;
 	inc	r5
 	cjne	r5,#0x00,00119$
 	inc	r6
 	sjmp	00119$
 00120$:
-;	i2c.c:83: if (u8TimeOut) {
+;	lib/src/i2c.c:83: if (u8TimeOut) {
 	mov	a,r7
 	jz	00122$
-;	i2c.c:85: send_stop();
+;	lib/src/i2c.c:85: send_stop();
 	lcall	_send_stop
-;	i2c.c:86: return 0;
+;	lib/src/i2c.c:86: return 0;
 	mov	dpl,#0x00
 	ret
 00122$:
-;	i2c.c:89: if (I2STAT != 0x18) {
+;	lib/src/i2c.c:89: if (I2STAT != 0x18) {
 	mov	a,#0x18
 	cjne	a,_I2STAT,00242$
 	sjmp	00159$
 00242$:
-;	i2c.c:91: send_stop();
+;	lib/src/i2c.c:91: send_stop();
 	lcall	_send_stop
-;	i2c.c:92: return 0;
+;	lib/src/i2c.c:92: return 0;
 	mov	dpl,#0x00
-;	i2c.c:96: for (i = 0; i < length; ++i) {
+;	lib/src/i2c.c:96: for (i = 0; i < length; ++i) {
 	ret
 00159$:
 	mov	r7,#0x00
@@ -743,7 +743,7 @@ _I2C_Write:
 	mov	a,r7
 	subb	a,_I2C_Write_PARM_3
 	jnc	00136$
-;	i2c.c:97: I2DAT = pData[i];
+;	lib/src/i2c.c:97: I2DAT = pData[i];
 	mov	a,r7
 	add	a,_I2C_Write_PARM_2
 	mov	r4,a
@@ -756,58 +756,58 @@ _I2C_Write:
 	mov	b,r6
 	lcall	__gptrget
 	mov	_I2DAT,a
-;	i2c.c:98: SI = 0;
+;	lib/src/i2c.c:98: SI = 0;
 ;	assignBit
 	clr	_SI
-;	i2c.c:100: u8TimeOut = 0;
+;	lib/src/i2c.c:100: u8TimeOut = 0;
 	mov	r6,#0x00
-;	i2c.c:101: while (1) {
+;	lib/src/i2c.c:101: while (1) {
 	mov	r4,#0x01
 	mov	r5,#0x00
 00130$:
-;	i2c.c:102: if (SI) {
+;	lib/src/i2c.c:102: if (SI) {
 	jb	_SI,00131$
-;	i2c.c:105: if (!t) {
+;	lib/src/i2c.c:105: if (!t) {
 	mov	a,r4
 	orl	a,r5
 	jnz	00128$
-;	i2c.c:106: u8TimeOut = 1;
+;	lib/src/i2c.c:106: u8TimeOut = 1;
 	mov	r6,#0x01
-;	i2c.c:107: break;
+;	lib/src/i2c.c:107: break;
 	sjmp	00131$
 00128$:
-;	i2c.c:109: ++t;
+;	lib/src/i2c.c:109: ++t;
 	inc	r4
 	cjne	r4,#0x00,00130$
 	inc	r5
 	sjmp	00130$
 00131$:
-;	i2c.c:111: if (u8TimeOut) {
+;	lib/src/i2c.c:111: if (u8TimeOut) {
 	mov	a,r6
 	jz	00133$
-;	i2c.c:113: send_stop();
+;	lib/src/i2c.c:113: send_stop();
 	lcall	_send_stop
-;	i2c.c:114: return 0;
+;	lib/src/i2c.c:114: return 0;
 	mov	dpl,#0x00
 	ret
 00133$:
-;	i2c.c:116: if (I2STAT != 0x28) {
+;	lib/src/i2c.c:116: if (I2STAT != 0x28) {
 	mov	a,#0x28
 	cjne	a,_I2STAT,00248$
 	sjmp	00139$
 00248$:
-;	i2c.c:118: send_stop();
+;	lib/src/i2c.c:118: send_stop();
 	lcall	_send_stop
-;	i2c.c:119: return 0;
+;	lib/src/i2c.c:119: return 0;
 	mov	dpl,#0x00
 	ret
 00139$:
-;	i2c.c:96: for (i = 0; i < length; ++i) {
+;	lib/src/i2c.c:96: for (i = 0; i < length; ++i) {
 	inc	r7
 	sjmp	00138$
 00136$:
-;	i2c.c:124: return send_stop();
-;	i2c.c:125: }
+;	lib/src/i2c.c:124: return send_stop();
+;	lib/src/i2c.c:125: }
 	ljmp	_send_stop
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'I2C_Read'
@@ -819,128 +819,128 @@ _I2C_Write:
 ;t                         Allocated to registers r4 r5 
 ;u8TimeOut                 Allocated to registers r5 
 ;------------------------------------------------------------
-;	i2c.c:127: uint8_t I2C_Read(uint8_t Address, uint8_t *pData, uint8_t length)
+;	lib/src/i2c.c:127: uint8_t I2C_Read(uint8_t Address, uint8_t *pData, uint8_t length)
 ;	-----------------------------------------
 ;	 function I2C_Read
 ;	-----------------------------------------
 _I2C_Read:
 	mov	r7,dpl
-;	i2c.c:133: if (I2STAT != 0xF8) {
+;	lib/src/i2c.c:133: if (I2STAT != 0xF8) {
 	mov	a,#0xf8
 	cjne	a,_I2STAT,00268$
 	sjmp	00102$
 00268$:
-;	i2c.c:134: return 0;
+;	lib/src/i2c.c:134: return 0;
 	mov	dpl,#0x00
 	ret
 00102$:
-;	i2c.c:138: STO = 0;
+;	lib/src/i2c.c:138: STO = 0;
 ;	assignBit
 	clr	_STO
-;	i2c.c:139: STA = 1;
+;	lib/src/i2c.c:139: STA = 1;
 ;	assignBit
 	setb	_STA
-;	i2c.c:140: SI = 0;
+;	lib/src/i2c.c:140: SI = 0;
 ;	assignBit
 	clr	_SI
-;	i2c.c:142: u8TimeOut = 0;
+;	lib/src/i2c.c:142: u8TimeOut = 0;
 	mov	r6,#0x00
-;	i2c.c:144: while (1) {
+;	lib/src/i2c.c:144: while (1) {
 	mov	r4,#0x01
 	mov	r5,#0x00
 00108$:
-;	i2c.c:145: if (SI) {
+;	lib/src/i2c.c:145: if (SI) {
 	jb	_SI,00109$
-;	i2c.c:148: if (!t) {
+;	lib/src/i2c.c:148: if (!t) {
 	mov	a,r4
 	orl	a,r5
 	jnz	00106$
-;	i2c.c:149: u8TimeOut = 1;
+;	lib/src/i2c.c:149: u8TimeOut = 1;
 	mov	r6,#0x01
-;	i2c.c:150: break;
+;	lib/src/i2c.c:150: break;
 	sjmp	00109$
 00106$:
-;	i2c.c:152: ++t;
+;	lib/src/i2c.c:152: ++t;
 	inc	r4
 	cjne	r4,#0x00,00108$
 	inc	r5
 	sjmp	00108$
 00109$:
-;	i2c.c:155: if (u8TimeOut) {
+;	lib/src/i2c.c:155: if (u8TimeOut) {
 	mov	a,r6
 	jz	00111$
-;	i2c.c:157: send_stop();
+;	lib/src/i2c.c:157: send_stop();
 	lcall	_send_stop
-;	i2c.c:158: return 0;
+;	lib/src/i2c.c:158: return 0;
 	mov	dpl,#0x00
 	ret
 00111$:
-;	i2c.c:161: if (I2STAT != 0x08) {
+;	lib/src/i2c.c:161: if (I2STAT != 0x08) {
 	mov	a,#0x08
 	cjne	a,_I2STAT,00273$
 	sjmp	00113$
 00273$:
-;	i2c.c:163: send_stop();
+;	lib/src/i2c.c:163: send_stop();
 	lcall	_send_stop
-;	i2c.c:164: return 0;
+;	lib/src/i2c.c:164: return 0;
 	mov	dpl,#0x00
 	ret
 00113$:
-;	i2c.c:168: STA = 0;
+;	lib/src/i2c.c:168: STA = 0;
 ;	assignBit
 	clr	_STA
-;	i2c.c:169: STO = 0;
+;	lib/src/i2c.c:169: STO = 0;
 ;	assignBit
 	clr	_STO
-;	i2c.c:170: I2DAT = Address;
+;	lib/src/i2c.c:170: I2DAT = Address;
 	mov	_I2DAT,r7
-;	i2c.c:171: SI = 0;
+;	lib/src/i2c.c:171: SI = 0;
 ;	assignBit
 	clr	_SI
-;	i2c.c:173: u8TimeOut = 0;
+;	lib/src/i2c.c:173: u8TimeOut = 0;
 	mov	r7,#0x00
-;	i2c.c:174: while (1) {
+;	lib/src/i2c.c:174: while (1) {
 	mov	r5,#0x01
 	mov	r6,#0x00
 00119$:
-;	i2c.c:175: if (SI) {
+;	lib/src/i2c.c:175: if (SI) {
 	jb	_SI,00120$
-;	i2c.c:178: if (!t) {
+;	lib/src/i2c.c:178: if (!t) {
 	mov	a,r5
 	orl	a,r6
 	jnz	00117$
-;	i2c.c:179: u8TimeOut = 1;
+;	lib/src/i2c.c:179: u8TimeOut = 1;
 	mov	r7,#0x01
-;	i2c.c:180: break;
+;	lib/src/i2c.c:180: break;
 	sjmp	00120$
 00117$:
-;	i2c.c:182: ++t;
+;	lib/src/i2c.c:182: ++t;
 	inc	r5
 	cjne	r5,#0x00,00119$
 	inc	r6
 	sjmp	00119$
 00120$:
-;	i2c.c:185: if (u8TimeOut) {
+;	lib/src/i2c.c:185: if (u8TimeOut) {
 	mov	a,r7
 	jz	00122$
-;	i2c.c:187: send_stop();
+;	lib/src/i2c.c:187: send_stop();
 	lcall	_send_stop
-;	i2c.c:188: return 0;
+;	lib/src/i2c.c:188: return 0;
 	mov	dpl,#0x00
 	ret
 00122$:
-;	i2c.c:191: if (I2STAT != 0x40) {
+;	lib/src/i2c.c:191: if (I2STAT != 0x40) {
 	mov	a,#0x40
 	cjne	a,_I2STAT,00278$
 	sjmp	00124$
 00278$:
-;	i2c.c:193: send_stop();
+;	lib/src/i2c.c:193: send_stop();
 	lcall	_send_stop
-;	i2c.c:194: return 0;
+;	lib/src/i2c.c:194: return 0;
 	mov	dpl,#0x00
 	ret
 00124$:
-;	i2c.c:198: for (i = 0; i < length - 1; ++i) {
+;	lib/src/i2c.c:198: for (i = 0; i < length - 1; ++i) {
 	mov	r7,#0x00
 	mov	r6,#0x00
 00149$:
@@ -961,56 +961,56 @@ _I2C_Read:
 	xrl	b,#0x80
 	subb	a,b
 	jnc	00136$
-;	i2c.c:199: AA = 1;
+;	lib/src/i2c.c:199: AA = 1;
 ;	assignBit
 	setb	_AA
-;	i2c.c:200: SI = 0;
+;	lib/src/i2c.c:200: SI = 0;
 ;	assignBit
 	clr	_SI
-;	i2c.c:202: u8TimeOut = 0;
+;	lib/src/i2c.c:202: u8TimeOut = 0;
 	mov	r5,#0x00
-;	i2c.c:203: while (1) {
+;	lib/src/i2c.c:203: while (1) {
 	mov	r3,#0x01
 	mov	r4,#0x00
 00130$:
-;	i2c.c:204: if (SI) {
+;	lib/src/i2c.c:204: if (SI) {
 	jb	_SI,00131$
-;	i2c.c:207: if (!t) {
+;	lib/src/i2c.c:207: if (!t) {
 	mov	a,r3
 	orl	a,r4
 	jnz	00128$
-;	i2c.c:208: u8TimeOut = 1;
+;	lib/src/i2c.c:208: u8TimeOut = 1;
 	mov	r5,#0x01
-;	i2c.c:209: break;
+;	lib/src/i2c.c:209: break;
 	sjmp	00131$
 00128$:
-;	i2c.c:211: ++t;
+;	lib/src/i2c.c:211: ++t;
 	inc	r3
 	cjne	r3,#0x00,00130$
 	inc	r4
 	sjmp	00130$
 00131$:
-;	i2c.c:213: if (u8TimeOut) {
+;	lib/src/i2c.c:213: if (u8TimeOut) {
 	mov	a,r5
 	jz	00133$
-;	i2c.c:215: send_stop();
+;	lib/src/i2c.c:215: send_stop();
 	lcall	_send_stop
-;	i2c.c:216: return 0;
+;	lib/src/i2c.c:216: return 0;
 	mov	dpl,#0x00
 	ret
 00133$:
-;	i2c.c:218: if (I2STAT != 0x50) {
+;	lib/src/i2c.c:218: if (I2STAT != 0x50) {
 	mov	a,#0x50
 	cjne	a,_I2STAT,00285$
 	sjmp	00135$
 00285$:
-;	i2c.c:220: send_stop();
+;	lib/src/i2c.c:220: send_stop();
 	lcall	_send_stop
-;	i2c.c:221: return 0;
+;	lib/src/i2c.c:221: return 0;
 	mov	dpl,#0x00
 	ret
 00135$:
-;	i2c.c:223: pData[i] = I2DAT;
+;	lib/src/i2c.c:223: pData[i] = I2DAT;
 	mov	a,r6
 	add	a,_I2C_Read_PARM_2
 	mov	r3,a
@@ -1023,61 +1023,61 @@ _I2C_Read:
 	mov	b,r5
 	mov	a,_I2DAT
 	lcall	__gptrput
-;	i2c.c:198: for (i = 0; i < length - 1; ++i) {
+;	lib/src/i2c.c:198: for (i = 0; i < length - 1; ++i) {
 	inc	r6
 	mov	ar7,r6
 	sjmp	00149$
 00136$:
-;	i2c.c:227: AA = 0;
+;	lib/src/i2c.c:227: AA = 0;
 ;	assignBit
 	clr	_AA
-;	i2c.c:228: SI = 0;
+;	lib/src/i2c.c:228: SI = 0;
 ;	assignBit
 	clr	_SI
-;	i2c.c:230: u8TimeOut = 0;
+;	lib/src/i2c.c:230: u8TimeOut = 0;
 	mov	r6,#0x00
-;	i2c.c:231: while (1) {
+;	lib/src/i2c.c:231: while (1) {
 	mov	r4,#0x01
 	mov	r5,#0x00
 00142$:
-;	i2c.c:232: if (SI) {
+;	lib/src/i2c.c:232: if (SI) {
 	jb	_SI,00143$
-;	i2c.c:235: if (!t) {
+;	lib/src/i2c.c:235: if (!t) {
 	mov	a,r4
 	orl	a,r5
 	jnz	00140$
-;	i2c.c:236: u8TimeOut = 1;
+;	lib/src/i2c.c:236: u8TimeOut = 1;
 	mov	r6,#0x01
-;	i2c.c:237: break;
+;	lib/src/i2c.c:237: break;
 	sjmp	00143$
 00140$:
-;	i2c.c:239: ++t;
+;	lib/src/i2c.c:239: ++t;
 	inc	r4
 	cjne	r4,#0x00,00142$
 	inc	r5
 	sjmp	00142$
 00143$:
-;	i2c.c:241: if (u8TimeOut) {
+;	lib/src/i2c.c:241: if (u8TimeOut) {
 	mov	a,r6
 	jz	00145$
-;	i2c.c:243: send_stop();
+;	lib/src/i2c.c:243: send_stop();
 	lcall	_send_stop
-;	i2c.c:244: return 0;
+;	lib/src/i2c.c:244: return 0;
 	mov	dpl,#0x00
 	ret
 00145$:
-;	i2c.c:246: if (I2STAT != 0x58) {
+;	lib/src/i2c.c:246: if (I2STAT != 0x58) {
 	mov	a,#0x58
 	cjne	a,_I2STAT,00290$
 	sjmp	00147$
 00290$:
-;	i2c.c:248: send_stop();
+;	lib/src/i2c.c:248: send_stop();
 	lcall	_send_stop
-;	i2c.c:249: return 0;
+;	lib/src/i2c.c:249: return 0;
 	mov	dpl,#0x00
 	ret
 00147$:
-;	i2c.c:251: pData[i] = I2DAT;
+;	lib/src/i2c.c:251: pData[i] = I2DAT;
 	mov	a,r7
 	add	a,_I2C_Read_PARM_2
 	mov	r7,a
@@ -1090,8 +1090,8 @@ _I2C_Read:
 	mov	b,r5
 	mov	a,_I2DAT
 	lcall	__gptrput
-;	i2c.c:253: return send_stop();
-;	i2c.c:254: }
+;	lib/src/i2c.c:253: return send_stop();
+;	lib/src/i2c.c:254: }
 	ljmp	_send_stop
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'I2C_CheckAddress'
@@ -1100,182 +1100,182 @@ _I2C_Read:
 ;t                         Allocated to registers r4 r5 
 ;u8TimeOut                 Allocated to registers r7 
 ;------------------------------------------------------------
-;	i2c.c:256: uint8_t I2C_CheckAddress(uint8_t Address)
+;	lib/src/i2c.c:256: uint8_t I2C_CheckAddress(uint8_t Address)
 ;	-----------------------------------------
 ;	 function I2C_CheckAddress
 ;	-----------------------------------------
 _I2C_CheckAddress:
 	mov	r7,dpl
-;	i2c.c:261: Address |= 0x01;
+;	lib/src/i2c.c:261: Address |= 0x01;
 	orl	ar7,#0x01
-;	i2c.c:263: if (I2STAT != 0xF8) {
+;	lib/src/i2c.c:263: if (I2STAT != 0xF8) {
 	mov	a,#0xf8
 	cjne	a,_I2STAT,00218$
 	sjmp	00102$
 00218$:
-;	i2c.c:264: return 0;
+;	lib/src/i2c.c:264: return 0;
 	mov	dpl,#0x00
 	ret
 00102$:
-;	i2c.c:268: STO = 0;
+;	lib/src/i2c.c:268: STO = 0;
 ;	assignBit
 	clr	_STO
-;	i2c.c:269: STA = 1;
+;	lib/src/i2c.c:269: STA = 1;
 ;	assignBit
 	setb	_STA
-;	i2c.c:270: SI = 0;
+;	lib/src/i2c.c:270: SI = 0;
 ;	assignBit
 	clr	_SI
-;	i2c.c:272: u8TimeOut = 0;
+;	lib/src/i2c.c:272: u8TimeOut = 0;
 	mov	r6,#0x00
-;	i2c.c:274: while (1) {
+;	lib/src/i2c.c:274: while (1) {
 	mov	r4,#0x01
 	mov	r5,#0x00
 00108$:
-;	i2c.c:275: if (SI) {
+;	lib/src/i2c.c:275: if (SI) {
 	jb	_SI,00109$
-;	i2c.c:278: if (!t) {
+;	lib/src/i2c.c:278: if (!t) {
 	mov	a,r4
 	orl	a,r5
 	jnz	00106$
-;	i2c.c:279: u8TimeOut = 1;
+;	lib/src/i2c.c:279: u8TimeOut = 1;
 	mov	r6,#0x01
-;	i2c.c:280: break;
+;	lib/src/i2c.c:280: break;
 	sjmp	00109$
 00106$:
-;	i2c.c:282: ++t;
+;	lib/src/i2c.c:282: ++t;
 	inc	r4
 	cjne	r4,#0x00,00108$
 	inc	r5
 	sjmp	00108$
 00109$:
-;	i2c.c:285: if (u8TimeOut) {
+;	lib/src/i2c.c:285: if (u8TimeOut) {
 	mov	a,r6
 	jz	00111$
-;	i2c.c:287: send_stop();
+;	lib/src/i2c.c:287: send_stop();
 	lcall	_send_stop
-;	i2c.c:288: return 0;
+;	lib/src/i2c.c:288: return 0;
 	mov	dpl,#0x00
 	ret
 00111$:
-;	i2c.c:291: if (I2STAT != 0x08) {
+;	lib/src/i2c.c:291: if (I2STAT != 0x08) {
 	mov	a,#0x08
 	cjne	a,_I2STAT,00223$
 	sjmp	00113$
 00223$:
-;	i2c.c:293: send_stop();
+;	lib/src/i2c.c:293: send_stop();
 	lcall	_send_stop
-;	i2c.c:294: return 0;
+;	lib/src/i2c.c:294: return 0;
 	mov	dpl,#0x00
 	ret
 00113$:
-;	i2c.c:298: STA = 0;
+;	lib/src/i2c.c:298: STA = 0;
 ;	assignBit
 	clr	_STA
-;	i2c.c:299: STO = 0;
+;	lib/src/i2c.c:299: STO = 0;
 ;	assignBit
 	clr	_STO
-;	i2c.c:300: I2DAT = Address;
+;	lib/src/i2c.c:300: I2DAT = Address;
 	mov	_I2DAT,r7
-;	i2c.c:301: SI = 0;
+;	lib/src/i2c.c:301: SI = 0;
 ;	assignBit
 	clr	_SI
-;	i2c.c:303: u8TimeOut = 0;
+;	lib/src/i2c.c:303: u8TimeOut = 0;
 	mov	r7,#0x00
-;	i2c.c:304: while (1) {
+;	lib/src/i2c.c:304: while (1) {
 	mov	r5,#0x01
 	mov	r6,#0x00
 00119$:
-;	i2c.c:305: if (SI) {
+;	lib/src/i2c.c:305: if (SI) {
 	jb	_SI,00120$
-;	i2c.c:308: if (!t) {
+;	lib/src/i2c.c:308: if (!t) {
 	mov	a,r5
 	orl	a,r6
 	jnz	00117$
-;	i2c.c:309: u8TimeOut = 1;
+;	lib/src/i2c.c:309: u8TimeOut = 1;
 	mov	r7,#0x01
-;	i2c.c:310: break;
+;	lib/src/i2c.c:310: break;
 	sjmp	00120$
 00117$:
-;	i2c.c:312: ++t;
+;	lib/src/i2c.c:312: ++t;
 	inc	r5
 	cjne	r5,#0x00,00119$
 	inc	r6
 	sjmp	00119$
 00120$:
-;	i2c.c:315: if (u8TimeOut) {
+;	lib/src/i2c.c:315: if (u8TimeOut) {
 	mov	a,r7
 	jz	00122$
-;	i2c.c:317: send_stop();
+;	lib/src/i2c.c:317: send_stop();
 	lcall	_send_stop
-;	i2c.c:318: return 0;
+;	lib/src/i2c.c:318: return 0;
 	mov	dpl,#0x00
 	ret
 00122$:
-;	i2c.c:321: if (I2STAT != 0x40) {
+;	lib/src/i2c.c:321: if (I2STAT != 0x40) {
 	mov	a,#0x40
 	cjne	a,_I2STAT,00228$
 	sjmp	00124$
 00228$:
-;	i2c.c:323: send_stop();
+;	lib/src/i2c.c:323: send_stop();
 	lcall	_send_stop
-;	i2c.c:324: return 0;
+;	lib/src/i2c.c:324: return 0;
 	mov	dpl,#0x00
 	ret
 00124$:
-;	i2c.c:328: AA = 0;
+;	lib/src/i2c.c:328: AA = 0;
 ;	assignBit
 	clr	_AA
-;	i2c.c:329: SI = 0;
+;	lib/src/i2c.c:329: SI = 0;
 ;	assignBit
 	clr	_SI
-;	i2c.c:331: u8TimeOut = 0;
+;	lib/src/i2c.c:331: u8TimeOut = 0;
 	mov	r7,#0x00
-;	i2c.c:332: while (1) {
+;	lib/src/i2c.c:332: while (1) {
 	mov	r5,#0x01
 	mov	r6,#0x00
 00130$:
-;	i2c.c:333: if (SI) {
+;	lib/src/i2c.c:333: if (SI) {
 	jb	_SI,00131$
-;	i2c.c:336: if (!t) {
+;	lib/src/i2c.c:336: if (!t) {
 	mov	a,r5
 	orl	a,r6
 	jnz	00128$
-;	i2c.c:337: u8TimeOut = 1;
+;	lib/src/i2c.c:337: u8TimeOut = 1;
 	mov	r7,#0x01
-;	i2c.c:338: break;
+;	lib/src/i2c.c:338: break;
 	sjmp	00131$
 00128$:
-;	i2c.c:340: ++t;
+;	lib/src/i2c.c:340: ++t;
 	inc	r5
 	cjne	r5,#0x00,00130$
 	inc	r6
 	sjmp	00130$
 00131$:
-;	i2c.c:342: if (u8TimeOut) {
+;	lib/src/i2c.c:342: if (u8TimeOut) {
 	mov	a,r7
 	jz	00133$
-;	i2c.c:344: send_stop();
+;	lib/src/i2c.c:344: send_stop();
 	lcall	_send_stop
-;	i2c.c:345: return 0;
+;	lib/src/i2c.c:345: return 0;
 	mov	dpl,#0x00
 	ret
 00133$:
-;	i2c.c:347: if (I2STAT != 0x58) {
+;	lib/src/i2c.c:347: if (I2STAT != 0x58) {
 	mov	a,#0x58
 	cjne	a,_I2STAT,00233$
 	sjmp	00135$
 00233$:
-;	i2c.c:349: send_stop();
+;	lib/src/i2c.c:349: send_stop();
 	lcall	_send_stop
-;	i2c.c:350: return 0;
+;	lib/src/i2c.c:350: return 0;
 	mov	dpl,#0x00
 	ret
 00135$:
-;	i2c.c:352: t = I2DAT;
+;	lib/src/i2c.c:352: t = I2DAT;
 	mov	a,_I2DAT
-;	i2c.c:354: return send_stop();
-;	i2c.c:355: }
+;	lib/src/i2c.c:354: return send_stop();
+;	lib/src/i2c.c:355: }
 	ljmp	_send_stop
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'send_stop'
@@ -1283,47 +1283,47 @@ _I2C_CheckAddress:
 ;t                         Allocated to registers r5 r6 
 ;u8TimeOut                 Allocated to registers r7 
 ;------------------------------------------------------------
-;	i2c.c:357: uint8_t send_stop(void)
+;	lib/src/i2c.c:357: uint8_t send_stop(void)
 ;	-----------------------------------------
 ;	 function send_stop
 ;	-----------------------------------------
 _send_stop:
-;	i2c.c:362: STA = 0;
+;	lib/src/i2c.c:362: STA = 0;
 ;	assignBit
 	clr	_STA
-;	i2c.c:363: STO = 1;
+;	lib/src/i2c.c:363: STO = 1;
 ;	assignBit
 	setb	_STO
-;	i2c.c:364: SI = 0;
+;	lib/src/i2c.c:364: SI = 0;
 ;	assignBit
 	clr	_SI
-;	i2c.c:366: u8TimeOut = 0;
+;	lib/src/i2c.c:366: u8TimeOut = 0;
 	mov	r7,#0x00
-;	i2c.c:367: while (1) {
+;	lib/src/i2c.c:367: while (1) {
 	mov	r5,#0x01
 	mov	r6,#0x00
 00106$:
-;	i2c.c:368: if (I2STAT == 0xF8) {
+;	lib/src/i2c.c:368: if (I2STAT == 0xF8) {
 	mov	a,#0xf8
 	cjne	a,_I2STAT,00122$
 	sjmp	00107$
 00122$:
-;	i2c.c:371: if (!t) {
+;	lib/src/i2c.c:371: if (!t) {
 	mov	a,r5
 	orl	a,r6
 	jnz	00104$
-;	i2c.c:372: u8TimeOut = 1;
+;	lib/src/i2c.c:372: u8TimeOut = 1;
 	mov	r7,#0x01
-;	i2c.c:373: break;
+;	lib/src/i2c.c:373: break;
 	sjmp	00107$
 00104$:
-;	i2c.c:375: ++t;
+;	lib/src/i2c.c:375: ++t;
 	inc	r5
 	cjne	r5,#0x00,00106$
 	inc	r6
 	sjmp	00106$
 00107$:
-;	i2c.c:377: return (!u8TimeOut);
+;	lib/src/i2c.c:377: return (!u8TimeOut);
 	mov	a,r7
 	cjne	a,#0x01,00125$
 00125$:
@@ -1331,7 +1331,7 @@ _send_stop:
 	clr	a
 	rlc	a
 	mov	dpl,a
-;	i2c.c:378: }
+;	lib/src/i2c.c:378: }
 	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
