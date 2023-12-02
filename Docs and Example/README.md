@@ -38,8 +38,8 @@ Các chân có thể cấu hình ở 4 chế độ:
 **1. Chế độ Quasi:**
 - Theo như mình tìm hiểu trong datasheet Quasi là chế độ gần như hai chiều, nó là cấu trúc I/O tiêu chuẩn của 8051, có thể điều khiển cả đầu vào và đầu ra. Khi cổng xuất ra mức logic cao, nó được điều khiển yếu, cho phép thiết bị bên ngoài kéo chân xuống mức thấp. có nghĩa nó chỉ có thể cung cấp một lượng dòng điện nhỏ và một thiết bị bên ngoài có thể kéo nó xuống thấp mà không tốn nhiều công sức và không làm hỏng chân. Khi chốt được kéo xuống thấp, nó được dẫn động mạnh và có thể nhấn chìm một dòng điện lớn. 
 Hoạt động ghi giá trị 0 1 như sau:
-<img src = "Quasi0.png" width="350">
-<img src = "Quasi1.png" width = "350">
+<img src = "Quasi0.png" width="550">
+<img src = "Quasi1.png" width = "550">
 
 Ngoài ra có các chế độ Push-pull, Input and Open-drain cho giao tiếp I2C. Chế độ Open-drain cần điện trở kéo lên bên ngoài.
 [Tham khảo](http://vidieukhien.org/ms51fb9ae-gpio.html)
