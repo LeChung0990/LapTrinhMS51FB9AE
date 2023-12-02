@@ -1,6 +1,6 @@
 # Giới thiệu về vi điều khiển MS51FB9AE
 
-<img src = "Anh Chip MS51-1.jpg" width = "250" >
+<img src = "Anh Chip MS51.jpg" >
 
 - Con **N76E003AT20** là sản phẩm có trước, sau này được thay thế bằng con **MS51FB9AE**.
 
@@ -21,19 +21,18 @@
 - I2C tối đa 400Kbps
 - ADC 12 bit tốc độ tối đa 500Ksps
 - Sơ đồ chân:
-<img src = "Schematic-1.png" width = "550">
+<img src = "Schematic.png">
 Datasheet và Reference Manual ở trong thư mục Hoc MS51FB9AE
-
 
 ## 1.GPIO 
 Các chân có thể cấu hình ở 4 chế độ:
 ![Alt text](gpio1.png)
 
-|0  |0  |Quasi-bidirectional    |
+|0  |0  |Quasi-bidirectional            |
 |:-|:-|:-|
-|0  |1  |Push-pull  |
+|0  |1  |Push-pull                      |
 |1  |0  |Input-only (high-impedance)    |
-|1  |1  |Open-drain |
+|1  |1  |Open-drain                     |
 
 **1. Chế độ Quasi:**
 - Theo như mình tìm hiểu trong datasheet Quasi là chế độ gần như hai chiều, nó là cấu trúc I/O tiêu chuẩn của 8051, có thể điều khiển cả đầu vào và đầu ra. Khi cổng xuất ra mức logic cao, nó được điều khiển yếu, cho phép thiết bị bên ngoài kéo chân xuống mức thấp. có nghĩa nó chỉ có thể cung cấp một lượng dòng điện nhỏ và một thiết bị bên ngoài có thể kéo nó xuống thấp mà không tốn nhiều công sức và không làm hỏng chân. Khi chốt được kéo xuống thấp, nó được dẫn động mạnh và có thể nhấn chìm một dòng điện lớn. 
