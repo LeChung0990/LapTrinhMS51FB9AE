@@ -28,8 +28,9 @@ Datasheet và Reference Manual ở trong thư mục Hoc MS51FB9AE
 Các chân có thể cấu hình ở 4 chế độ:
 ![Alt text](gpio1.png)
 
-|0  |0  |Quasi-bidirectional            |
+|PnM1.X|PnM2.X   |                   |
 |:-|:-|:-|
+|0  |0  |Quasi-bidirectional            |
 |0  |1  |Push-pull                      |
 |1  |0  |Input-only (high-impedance)    |
 |1  |1  |Open-drain                     |

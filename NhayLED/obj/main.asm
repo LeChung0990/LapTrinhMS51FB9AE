@@ -579,7 +579,7 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;	main.c:7: void main(void)
+;	main.c:6: void main(void)
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
@@ -592,27 +592,26 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:11: set_P1M1_5;
-	orl	_P1M1,#0x20
-;	main.c:12: set_P1M2_1; 
-	orl	_P1M2,#0x02
+;	main.c:12: P15_PUSHPULL_MODE;
+	anl	_P1M1,#0xdf
+	orl	_P1M2,#0x20
 ;	main.c:13: Delay_Init();
 	lcall	_Delay_Init
-;	main.c:14: while (1) {
+;	main.c:14: while (1)
 00102$:
-;	main.c:15: P15 = 1;
+;	main.c:16: P15 = 1;
 ;	assignBit
 	setb	_P15
-;	main.c:16: Delay_Ms(1000);
-	mov	dptr,#0x03e8
+;	main.c:17: Delay_Ms(500);
+	mov	dptr,#0x01f4
 	lcall	_Delay_Ms
-;	main.c:17: P15 = 0;
+;	main.c:18: P15 = 0;
 ;	assignBit
 	clr	_P15
-;	main.c:18: Delay_Ms(1000);
-	mov	dptr,#0x03e8
+;	main.c:19: Delay_Ms(500);
+	mov	dptr,#0x01f4
 	lcall	_Delay_Ms
-;	main.c:20: }
+;	main.c:21: }
 	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

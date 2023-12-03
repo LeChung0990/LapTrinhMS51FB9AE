@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "sfr_macro_ms51_16k.h": "c"
+        "sfr_macro_ms51_16k.h": "c",
+        "delay.h": "c"
     }
 }
