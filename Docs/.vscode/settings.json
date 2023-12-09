@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "ms51.h": "c",
+        "macro.h": "c",
+        "function_define.h": "c",
+        "my_uart.h": "c"
+    }
+}

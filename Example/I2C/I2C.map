@@ -1,0 +1,589 @@
+ASxxxx Linker V03.00/V05.40 + sdld,  page 1.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+CABS                                00000000    00000000 =           0. bytes (ABS,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   00000000  l_BIT_BANK                      
+C:   00000000  l_CABS                          
+C:   00000000  l_GSINIT1                       
+C:   00000000  l_GSINIT5                       
+C:   00000000  l_IABS                          
+C:   00000000  l_ISEG                          
+C:   00000000  l_PSEG                          
+C:   00000000  l_REG_BANK_1                    
+C:   00000000  l_REG_BANK_2                    
+C:   00000000  l_REG_BANK_3                    
+C:   00000000  l_RSEG                          
+C:   00000000  l_RSEG0                         
+C:   00000000  l_RSEG1                         
+C:   00000000  l_XABS                          
+C:   00000000  l_XINIT                         
+C:   00000000  l_XISEG                         
+C:   00000000  l_XSEG                          
+C:   00000000  l__CODE                         
+C:   00000000  s_BSEG                          
+C:   00000000  s_CABS                          
+C:   00000000  s_DSEG                          
+C:   00000000  s_HOME                          
+C:   00000000  s_IABS                          
+C:   00000000  s_ISEG                          
+C:   00000000  s_REG_BANK_0                    
+C:   00000000  s_RSEG                          
+C:   00000000  s_RSEG0                         
+C:   00000000  s_RSEG1                         
+C:   00000000  s_XABS                          
+C:   00000001  l_BSEG                          
+C:   00000001  l_BSEG_BYTES                    
+C:   00000001  s_PSEG                          
+C:   00000001  s_XISEG                         
+C:   00000001  s_XSEG                          
+C:   00000002  l_OSEG                          
+C:   00000003  l_GSFINAL                       
+C:   00000003  l_GSINIT0                       
+C:   00000006  l_HOME                          
+C:   00000006  s_GSINIT0                       
+C:   00000008  l_REG_BANK_0                    
+C:   00000008  s_REG_BANK_1                    
+C:   00000009  s_GSINIT1                       
+C:   00000009  s_GSINIT2                       
+C:   0000000A  l_GSINIT2                       
+C:   0000000C  l_GSINIT                        
+C:   00000010  s_REG_BANK_2                    
+C:   00000011  l_CONST                         
+C:   00000013  s_GSINIT3                       
+C:   00000018  s_BIT_BANK                      
+C:   00000018  s_REG_BANK_3                    
+ASxxxx Linker V03.00/V05.40 + sdld,  page 2.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+CABS                                00000000    00000000 =           0. bytes (ABS,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   0000001B  s_OSEG                          
+C:   00000020  s_BSEG_BYTES                    
+C:   00000020  s__CODE                         
+C:   00000021  s_SSEG                          
+C:   00000022  l_GSINIT3                       
+C:   0000002A  l_GSINIT4                       
+C:   00000035  s_GSINIT4                       
+C:   0000005F  s_GSINIT                        
+C:   0000005F  s_GSINIT5                       
+C:   0000006B  s_GSFINAL                       
+C:   0000006E  s_CSEG                          
+C:   0000007D  l_DSEG                          
+C:   000000DF  l_SSEG                          
+C:   00000100  l_IRAM                          
+C:   000005E1  l_CSEG                          
+C:   0000064F  s_CONST                         
+C:   00000660  s_XINIT                         
+
+ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000000  .__.ABS.                           _startup
+     00000080  _MOSI                              delay
+     00000080  _P0                                delay
+     00000080  _P00                               delay
+     00000081  _MISO                              delay
+     00000081  _P01                               delay
+     00000081  _SP                                delay
+     00000082  _DPL                               delay
+     00000082  _P02                               delay
+     00000082  _RXD_1                             delay
+     00000083  _DPH                               delay
+     00000083  _P03                               delay
+     00000084  _P04                               delay
+     00000084  _RCTRIM0                           delay
+     00000084  _STADC                             delay
+     00000085  _P05                               delay
+     00000085  _RCTRIM1                           delay
+     00000086  _P06                               delay
+     00000086  _RWK                               delay
+     00000086  _TXD                               delay
+     00000087  _P07                               delay
+     00000087  _PCON                              delay
+     00000087  _RXD                               delay
+     00000088  _IT0                               delay
+     00000088  _TCON                              delay
+     00000089  _IE0                               delay
+     00000089  _TMOD                              delay
+     0000008A  _IT1                               delay
+     0000008A  _TL0                               delay
+     0000008B  _IE1                               delay
+     0000008B  _TL1                               delay
+     0000008C  _TH0                               delay
+     0000008C  _TR0                               delay
+     0000008D  _TF0                               delay
+     0000008D  _TH1                               delay
+     0000008E  _CKCON                             delay
+     0000008E  _TR1                               delay
+     0000008F  _TF1                               delay
+     0000008F  _WKCON                             delay
+     00000090  _P1                                delay
+     00000090  _P10                               delay
+     00000091  _P11                               delay
+     00000091  _SFRS                              delay
+     00000092  _CAPCON0                           delay
+     00000092  _P12                               delay
+     00000093  _CAPCON1                           delay
+     00000093  _P13                               delay
+     00000093  _SCL                               delay
+     00000094  _CAPCON2                           delay
+     00000094  _P14                               delay
+ASxxxx Linker V03.00/V05.40 + sdld,  page 4.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000094  _SDA                               delay
+     00000095  _CKDIV                             delay
+     00000095  _P15                               delay
+     00000096  _CKSWT                             delay
+     00000096  _P16                               delay
+     00000096  _TXD_1                             delay
+     00000097  _CKEN                              delay
+     00000097  _P17                               delay
+     00000098  _RI                                delay
+     00000098  _SCON                              delay
+     00000099  _SBUF                              delay
+     00000099  _TI                                delay
+     0000009A  _RB8                               delay
+     0000009A  _SBUF_1                            delay
+     0000009B  _EIE                               delay
+     0000009B  _TB8                               delay
+     0000009C  _EIE1                              delay
+     0000009C  _REN                               delay
+     0000009D  _SM2                               delay
+     0000009E  _SM1                               delay
+     0000009F  _CHPCON                            delay
+     0000009F  _FE                                delay
+     0000009F  _SM0                               delay
+     000000A0  _P2                                delay
+     000000A0  _P20                               delay
+     000000A0  __XPAGE                            
+     000000A2  _AUXR1                             delay
+     000000A3  _BODCON0                           delay
+     000000A4  _IAPTRG                            delay
+     000000A5  _IAPUEN                            delay
+     000000A6  _IAPAL                             delay
+     000000A7  _IAPAH                             delay
+     000000A8  _EX0                               delay
+     000000A8  _IE                                delay
+     000000A9  _ET0                               delay
+     000000A9  _SADDR                             delay
+     000000AA  _EX1                               delay
+     000000AA  _WDCON                             delay
+     000000AB  _BODCON1                           delay
+     000000AB  _ET1                               delay
+     000000AC  _ES                                delay
+     000000AC  _P3M1                              delay
+     000000AC  _P3S                               delay
+     000000AD  _EBOD                              delay
+     000000AD  _P3M2                              delay
+     000000AD  _P3SR                              delay
+     000000AE  _EADC                              delay
+     000000AE  _IAPFD                             delay
+     000000AF  _EA                                delay
+     000000AF  _IAPCN                             delay
+     000000B0  _P3                                delay
+ASxxxx Linker V03.00/V05.40 + sdld,  page 5.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     000000B0  _P30                               delay
+     000000B1  _P0M1                              delay
+     000000B1  _P0S                               delay
+     000000B2  _P0M2                              delay
+     000000B2  _P0SR                              delay
+     000000B3  _P1M1                              delay
+     000000B3  _P1S                               delay
+     000000B4  _P1M2                              delay
+     000000B4  _P1SR                              delay
+     000000B5  _P2S                               delay
+     000000B7  _IPH                               delay
+     000000B7  _PWMINTC                           delay
+     000000B8  _IP                                delay
+     000000B8  _PX0                               delay
+     000000B9  _PT0                               delay
+     000000B9  _SADEN                             delay
+     000000BA  _PX1                               delay
+     000000BA  _SADEN_1                           delay
+     000000BB  _PT1                               delay
+     000000BB  _SADDR_1                           delay
+     000000BC  _I2DAT                             delay
+     000000BC  _PS                                delay
+     000000BD  _I2STAT                            delay
+     000000BD  _PBOD                              delay
+     000000BE  _I2CLK                             delay
+     000000BE  _PADC                              delay
+     000000BF  _I2TOC                             delay
+     000000C0  _I2CON                             delay
+     000000C0  _I2CPX                             delay
+     000000C1  _I2ADDR                            delay
+     000000C2  _AA                                delay
+     000000C2  _ADCRL                             delay
+     000000C3  _ADCRH                             delay
+     000000C3  _SI                                delay
+     000000C4  _PWM4H                             delay
+     000000C4  _STO                               delay
+     000000C4  _T3CON                             delay
+     000000C5  _PWM5H                             delay
+     000000C5  _RL3                               delay
+     000000C5  _STA                               delay
+     000000C6  _I2CEN                             delay
+     000000C6  _PIOCON1                           delay
+     000000C6  _RH3                               delay
+     000000C7  _TA                                delay
+     000000C8  _CM_RL2                            delay
+     000000C8  _T2CON                             delay
+     000000C9  _T2MOD                             delay
+     000000CA  _RCMP2L                            delay
+     000000CA  _TR2                               delay
+     000000CB  _RCMP2H                            delay
+     000000CC  _PWM4L                             delay
+ASxxxx Linker V03.00/V05.40 + sdld,  page 6.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     000000CC  _TL2                               delay
+     000000CD  _PWM5L                             delay
+     000000CD  _TH2                               delay
+     000000CE  _ADCMPL                            delay
+     000000CF  _ADCMPH                            delay
+     000000CF  _TF2                               delay
+     000000D0  _P                                 delay
+     000000D0  _PSW                               delay
+     000000D1  _PWMPH                             delay
+     000000D2  _OV                                delay
+     000000D2  _PWM0H                             delay
+     000000D3  _PWM1H                             delay
+     000000D3  _RS0                               delay
+     000000D4  _PWM2H                             delay
+     000000D4  _RS1                               delay
+     000000D5  _F0                                delay
+     000000D5  _PWM3H                             delay
+     000000D6  _AC                                delay
+     000000D6  _PNP                               delay
+     000000D7  _CY                                delay
+     000000D7  _FBD                               delay
+     000000D8  _PWMCON0                           delay
+     000000D9  _PWMPL                             delay
+     000000DA  _PWM0L                             delay
+     000000DB  _PWM1L                             delay
+     000000DC  _CLRPWM                            delay
+     000000DC  _PWM2L                             delay
+     000000DD  _PWM3L                             delay
+     000000DD  _PWMF                              delay
+     000000DE  _LOAD                              delay
+     000000DE  _PIOCON0                           delay
+     000000DF  _PWMCON1                           delay
+     000000DF  _PWMRUN                            delay
+     000000E0  _ACC                               delay
+     000000E1  _ADCCON1                           delay
+     000000E2  _ADCCON2                           delay
+     000000E3  _ADCDLY                            delay
+     000000E4  _C0L                               delay
+     000000E5  _C0H                               delay
+     000000E6  _C1L                               delay
+     000000E7  _C1H                               delay
+     000000E8  _ADCCON0                           delay
+     000000E8  _ADCHS0                            delay
+     000000E9  _ADCHS1                            delay
+     000000E9  _PICON                             delay
+     000000EA  _ADCHS2                            delay
+     000000EA  _PINEN                             delay
+     000000EB  _ADCHS3                            delay
+     000000EB  _PIPEN                             delay
+     000000EC  _ETGSEL0                           delay
+     000000EC  _PIF                               delay
+ASxxxx Linker V03.00/V05.40 + sdld,  page 7.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     000000ED  _C2L                               delay
+     000000ED  _ETGSEL1                           delay
+     000000EE  _ADCS                              delay
+     000000EE  _C2H                               delay
+     000000EF  _ADCF                              delay
+     000000EF  _EIP                               delay
+     000000F0  _B                                 delay
+     000000F1  _CAPCON3                           delay
+     000000F2  _CAPCON4                           delay
+     000000F3  _SPCR                              delay
+     000000F3  _SPCR2                             delay
+     000000F4  _SPSR                              delay
+     000000F5  _B_5                               _gptrget
+     000000F5  _SPDR                              delay
+     000000F6  _AINDIDS                           delay
+     000000F6  _B_6                               _gptrget
+     000000F7  _B_7                               _gptrget
+     000000F7  _EIPH                              delay
+     000000F8  _RI_1                              delay
+     000000F8  _SCON_1                            delay
+     000000F9  _PDTEN                             delay
+     000000F9  _TI_1                              delay
+     000000FA  _PDTCNT                            delay
+     000000FA  _RB8_1                             delay
+     000000FB  _PMEN                              delay
+     000000FB  _TB8_1                             delay
+     000000FC  _PMD                               delay
+     000000FC  _REN_1                             delay
+     000000FD  _SM2_1                             delay
+     000000FE  _EIP1                              delay
+     000000FE  _SM1_1                             delay
+     000000FF  _EIPH1                             delay
+     000000FF  _FE_1                              delay
+     000000FF  _SM0_1                             delay
+ASxxxx Linker V03.00/V05.40 + sdld,  page 8.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+BSEG_BYTES                          00000020    00000001 =           1. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00/V05.40 + sdld,  page 9.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+REG_BANK_0                          00000000    00000008 =           8. bytes (REL,OVR)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00/V05.40 + sdld,  page 10.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+DSEG                                00000000    0000007D =         125. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000008  _u8Tmp                             main
+     0000000C  _u8Data                            main
+     0000000E  _I2C_Write_PARM_2                  i2c
+     00000011  _I2C_Write_PARM_3                  i2c
+     00000012  _I2C_Read_PARM_2                   i2c
+     00000015  _I2C_Read_PARM_3                   i2c
+ASxxxx Linker V03.00/V05.40 + sdld,  page 11.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+OSEG                                0000001B    00000002 =           2. bytes (REL,OVR)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     0000001B  __divsint_PARM_2                   _divuint
+     0000001B  __divuint_PARM_2                   _divuint
+     0000001B  __gptrput_PARM_2                   _gptrput
+     0000001B  __modsint_PARM_2                   _moduint
+     0000001B  __moduint_PARM_2                   _moduint
+
+ASxxxx Linker V03.00/V05.40 + sdld,  page 12.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+SSEG                                00000021    000000DF =         223. bytes (REL,OVR)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000021  __start__stack                     main
+
+ASxxxx Linker V03.00/V05.40 + sdld,  page 13.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+HOME                                00000000    00000006 =           6. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   00000003  __sdcc_program_startup             main
+
+ASxxxx Linker V03.00/V05.40 + sdld,  page 14.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+GSINIT0                             00000006    00000003 =           3. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   00000006  __sdcc_gsinit_startup              
+
+ASxxxx Linker V03.00/V05.40 + sdld,  page 15.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+GSINIT2                             00000009    0000000A =          10. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00/V05.40 + sdld,  page 16.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+GSINIT3                             00000013    00000022 =          34. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   00000013  __mcs51_genXINIT                   
+
+ASxxxx Linker V03.00/V05.40 + sdld,  page 17.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+GSINIT4                             00000035    0000002A =          42. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   00000035  __mcs51_genRAMCLEAR                
+C:   0000003B  __mcs51_genXRAMCLEAR               
+
+ASxxxx Linker V03.00/V05.40 + sdld,  page 18.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+GSINIT                              0000005F    0000000C =          12. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00/V05.40 + sdld,  page 19.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+GSFINAL                             0000006B    00000003 =           3. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00/V05.40 + sdld,  page 20.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+CSEG                                0000006E    000005E1 =        1505. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   0000006E  _main                              main
+C:   000000C8  _I2C_Init                          i2c
+C:   000000DE  _I2C_Write                         i2c
+C:   000001AE  _I2C_Read                          i2c
+C:   000002E3  _I2C_CheckAddress                  i2c
+C:   000003C7  _UART0_Init                        uart0
+C:   000003F6  _UART0_SendData                    uart0
+C:   000003FA  _UART0_GetData                     uart0
+C:   000003FE  _UART0_EnableInterrupt             uart0
+C:   00000401  _UART0_DisableInterrupt            uart0
+C:   00000404  _UART0_ClearFlag                   uart0
+C:   0000040A  _UART0_GetFlag                     uart0
+C:   00000418  _UART0_STRING                      uart0
+C:   0000045C  _UART0_NUMBER                      uart0
+C:   000004E1  _Delay_Init                        delay
+C:   000004F1  _Delay_Ms                          delay
+C:   00000530  __gptrput                          _gptrput
+C:   0000054B  __moduint                          _moduint
+C:   00000598  __divuint                          _divuint
+C:   000005C1  __gptrget                          _gptrget
+C:   000005DD  __modsint                          _modsint
+C:   00000613  __divsint                          _divsint
+C:   0000064B  ___sdcc_external_startup           _startup
+
+ASxxxx Linker V03.00/V05.40 + sdld,  page 21.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+CONST                               0000064F    00000011 =          17. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00/V05.40 + sdld,  page 22.
+
+Files Linked                              [ module(s) ]
+
+obj/main.rel                              [  ]
+obj/i2c.rel                               [  ]
+obj/uart0.rel                             [  ]
+obj/delay.rel                             [  ]
+
+
+Libraries Linked                          [ object file ]
+
+C:\Program Files\SDCC\bin\..\lib\small/mcs51.lib
+                                          [ crtclear.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/mcs51.lib
+                                          [ crtxinit.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/libsdcc.lib
+                                          [ _gptrput.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/libint.lib
+                                          [ _moduint.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/libint.lib
+                                          [ _divuint.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/mcs51.lib
+                                          [ crtxclear.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/mcs51.lib
+                                          [ crtpagesfr.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/mcs51.lib
+                                          [ crtstart.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/libsdcc.lib
+                                          [ _gptrget.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/libint.lib
+                                          [ _modsint.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/libint.lib
+                                          [ _divsint.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/libsdcc.lib
+                                          [ _startup.rel ]
+
+ASxxxx Linker V03.00/V05.40 + sdld,  page 23.
+
+User Base Address Definitions
+
+HOME = 0x0000
+XSEG = 0x0001
+PSEG = 0x0001
+ISEG = 0x0000
+BSEG = 0x0000
+
+

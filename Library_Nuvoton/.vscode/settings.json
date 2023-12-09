@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "GPIO.C": "cpp",
+        "GPIO_LED.C": "cpp",
+        "Pin_Int.C": "cpp"
+    }
+}
