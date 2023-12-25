@@ -257,7 +257,7 @@ A GSINIT4 size 0 flags 20 addr 0
 A GSINIT5 size 0 flags 20 addr 0
 A GSINIT size 0 flags 20 addr 0
 A GSFINAL size 0 flags 20 addr 0
-A CSEG size 7 flags 20 addr 0
+A CSEG size D flags 20 addr 0
 S _GPIO_Init Def000000
 A CONST size 0 flags 20 addr 0
 A XINIT size 0 flags 20 addr 0
@@ -270,5 +270,5 @@ T 00 00 00
 R 00 00 00 04
 T 00 00 00
 R 00 00 00 16
-T 00 00 00 53 B3 DF 43 B4 20 22
+T 00 00 00 53 B3 DF 43 B4 20 43 B3 01 53 B4 FE 22
 R 00 00 00 16

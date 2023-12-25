@@ -62,11 +62,11 @@ void main(void)
 	");
 
 		/* read data */
-	// I2C_start();
-	// I2C_Address((uint8_t)0xA1,1);
-	// u8Data[0] =  I2C_Read(1);
-	// u8Data[1] =	 I2C_Read(0);
-	// send_stop();
+	I2C_start();
+	I2C_Address((uint8_t)0xA1,1);
+	u8Data[0] =  I2C_Read(1);
+	u8Data[1] =	 I2C_Read(0);
+	send_stop();
 
 	// UART0_NUMBER(u8Data[0]);
 	// UART0_STRING(",");
@@ -74,7 +74,7 @@ void main(void)
 
 
 	InitMPU6050();
-	UART0_STRING("Step1:");
+	// UART0_STRING("Step1:");
 
 	I2C_start();
 	I2C_Address((uint8_t)0x68 << 1, 0);
@@ -84,17 +84,18 @@ void main(void)
 	checkAddress = I2C_Address((uint8_t)0x68 << 1, 0);
 	
 
-	High = I2C_Read(1);
+	// High = I2C_Read(1);
 
-	UART0_NUMBER(High);
-	Low = I2C_Read(0);
-	send_stop();
-	Res = (High << 8) | Low;
+	// UART0_NUMBER(High);
+	// Low = I2C_Read(0);
+	// send_stop();
+	// Res = (High << 8) | Low;
 	
 
 	while (1) {
-		
 		// UART0_NUMBER(Res);
 		// Delay_Ms(1000);
+
+
 	}
 }

@@ -9,9 +9,9 @@ FLASH_SIZE = 16384
 OBJ_DIR = obj
 
 SRC = main.c
-SRC += gpio.c
-SRC += delay.c
-SRC += adc.c
+# SRC += gpio.c
+# SRC += delay.c
+# SRC += adc.c
 
 OBJS = $(patsubst %.c,obj/%.rel,$(SRC))
 

@@ -566,11 +566,13 @@ _GPIO_Init:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	lib/src/gpio.c:9: P1M1 &= ~(1 << 5);
+;	lib/src/gpio.c:9: P15_PUSHPULL_MODE;
 	anl	_P1M1,#0xdf
-;	lib/src/gpio.c:10: P1M2 |= (1 << 5);
 	orl	_P1M2,#0x20
-;	lib/src/gpio.c:11: }
+;	lib/src/gpio.c:11: P10_INPUT_MODE;;
+	orl	_P1M1,#0x01
+	anl	_P1M2,#0xfe
+;	lib/src/gpio.c:12: }
 	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

@@ -570,7 +570,7 @@
                                     570 ;	-----------------------------------------
                                     571 ;	 function UART0_Init
                                     572 ;	-----------------------------------------
-      000315                        573 _UART0_Init:
+      0002FD                        573 _UART0_Init:
                            000007   574 	ar7 = 0x07
                            000006   575 	ar6 = 0x06
                            000005   576 	ar5 = 0x05
@@ -580,46 +580,46 @@
                            000001   580 	ar1 = 0x01
                            000000   581 	ar0 = 0x00
                                     582 ;	lib/src/uart0.c:8: T3CON |= (1 << 5);
-      000315 43 C4 20         [24]  583 	orl	_T3CON,#0x20
+      0002FD 43 C4 20         [24]  583 	orl	_T3CON,#0x20
                                     584 ;	lib/src/uart0.c:10: T3CON &= 0xF8;
-      000318 53 C4 F8         [24]  585 	anl	_T3CON,#0xf8
+      000300 53 C4 F8         [24]  585 	anl	_T3CON,#0xf8
                                     586 ;	lib/src/uart0.c:13: EIE1 &= ~(1 << 1);
-      00031B 53 9C FD         [24]  587 	anl	_EIE1,#0xfd
+      000303 53 9C FD         [24]  587 	anl	_EIE1,#0xfd
                                     588 ;	lib/src/uart0.c:15: RH3 = 0xff;
-      00031E 75 C6 FF         [24]  589 	mov	_RH3,#0xff
+      000306 75 C6 FF         [24]  589 	mov	_RH3,#0xff
                                     590 ;	lib/src/uart0.c:16: RL3 = 0xe6;
-      000321 75 C5 E6         [24]  591 	mov	_RL3,#0xe6
+      000309 75 C5 E6         [24]  591 	mov	_RL3,#0xe6
                                     592 ;	lib/src/uart0.c:18: T3CON |= (1 << 3);
-      000324 43 C4 08         [24]  593 	orl	_T3CON,#0x08
+      00030C 43 C4 08         [24]  593 	orl	_T3CON,#0x08
                                     594 ;	lib/src/uart0.c:20: PCON &= ~(1 << 7);
-      000327 53 87 7F         [24]  595 	anl	_PCON,#0x7f
+      00030F 53 87 7F         [24]  595 	anl	_PCON,#0x7f
                                     596 ;	lib/src/uart0.c:22: P06 = 1;
                                     597 ;	assignBit
-      00032A D2 86            [12]  598 	setb	_P06
+      000312 D2 86            [12]  598 	setb	_P06
                                     599 ;	lib/src/uart0.c:23: P0M1 &= ~(1 << 6);
-      00032C 53 B1 BF         [24]  600 	anl	_P0M1,#0xbf
+      000314 53 B1 BF         [24]  600 	anl	_P0M1,#0xbf
                                     601 ;	lib/src/uart0.c:24: P0M2 |= (1 << 6);
-      00032F 43 B2 40         [24]  602 	orl	_P0M2,#0x40
+      000317 43 B2 40         [24]  602 	orl	_P0M2,#0x40
                                     603 ;	lib/src/uart0.c:25: P07 = 1;
                                     604 ;	assignBit
-      000332 D2 87            [12]  605 	setb	_P07
+      00031A D2 87            [12]  605 	setb	_P07
                                     606 ;	lib/src/uart0.c:26: P0M1 &= ~(1 << 7);
-      000334 53 B1 7F         [24]  607 	anl	_P0M1,#0x7f
+      00031C 53 B1 7F         [24]  607 	anl	_P0M1,#0x7f
                                     608 ;	lib/src/uart0.c:27: P0M2 &= ~(1 << 7);
-      000337 53 B2 7F         [24]  609 	anl	_P0M2,#0x7f
+      00031F 53 B2 7F         [24]  609 	anl	_P0M2,#0x7f
                                     610 ;	lib/src/uart0.c:29: PCON &= ~(1 << 6);
-      00033A 53 87 BF         [24]  611 	anl	_PCON,#0xbf
+      000322 53 87 BF         [24]  611 	anl	_PCON,#0xbf
                                     612 ;	lib/src/uart0.c:30: SM0 = 0;
                                     613 ;	assignBit
-      00033D C2 9F            [12]  614 	clr	_SM0
+      000325 C2 9F            [12]  614 	clr	_SM0
                                     615 ;	lib/src/uart0.c:31: SM1 = 1;
                                     616 ;	assignBit
-      00033F D2 9E            [12]  617 	setb	_SM1
+      000327 D2 9E            [12]  617 	setb	_SM1
                                     618 ;	lib/src/uart0.c:33: REN = 1;
                                     619 ;	assignBit
-      000341 D2 9C            [12]  620 	setb	_REN
+      000329 D2 9C            [12]  620 	setb	_REN
                                     621 ;	lib/src/uart0.c:34: }
-      000343 22               [24]  622 	ret
+      00032B 22               [24]  622 	ret
                                     623 ;------------------------------------------------------------
                                     624 ;Allocation info for local variables in function 'UART0_SendData'
                                     625 ;------------------------------------------------------------
@@ -629,11 +629,11 @@
                                     629 ;	-----------------------------------------
                                     630 ;	 function UART0_SendData
                                     631 ;	-----------------------------------------
-      000344                        632 _UART0_SendData:
-      000344 85 82 99         [24]  633 	mov	_SBUF,dpl
+      00032C                        632 _UART0_SendData:
+      00032C 85 82 99         [24]  633 	mov	_SBUF,dpl
                                     634 ;	lib/src/uart0.c:38: SBUF = u8Data;
                                     635 ;	lib/src/uart0.c:39: }
-      000347 22               [24]  636 	ret
+      00032F 22               [24]  636 	ret
                                     637 ;------------------------------------------------------------
                                     638 ;Allocation info for local variables in function 'UART0_GetData'
                                     639 ;------------------------------------------------------------
@@ -641,11 +641,11 @@
                                     641 ;	-----------------------------------------
                                     642 ;	 function UART0_GetData
                                     643 ;	-----------------------------------------
-      000348                        644 _UART0_GetData:
+      000330                        644 _UART0_GetData:
                                     645 ;	lib/src/uart0.c:43: return SBUF;
-      000348 85 99 82         [24]  646 	mov	dpl,_SBUF
+      000330 85 99 82         [24]  646 	mov	dpl,_SBUF
                                     647 ;	lib/src/uart0.c:44: }
-      00034B 22               [24]  648 	ret
+      000333 22               [24]  648 	ret
                                     649 ;------------------------------------------------------------
                                     650 ;Allocation info for local variables in function 'UART0_EnableInterrupt'
                                     651 ;------------------------------------------------------------
@@ -653,12 +653,12 @@
                                     653 ;	-----------------------------------------
                                     654 ;	 function UART0_EnableInterrupt
                                     655 ;	-----------------------------------------
-      00034C                        656 _UART0_EnableInterrupt:
+      000334                        656 _UART0_EnableInterrupt:
                                     657 ;	lib/src/uart0.c:48: ES = 1;
                                     658 ;	assignBit
-      00034C D2 AC            [12]  659 	setb	_ES
+      000334 D2 AC            [12]  659 	setb	_ES
                                     660 ;	lib/src/uart0.c:49: }
-      00034E 22               [24]  661 	ret
+      000336 22               [24]  661 	ret
                                     662 ;------------------------------------------------------------
                                     663 ;Allocation info for local variables in function 'UART0_DisableInterrupt'
                                     664 ;------------------------------------------------------------
@@ -666,12 +666,12 @@
                                     666 ;	-----------------------------------------
                                     667 ;	 function UART0_DisableInterrupt
                                     668 ;	-----------------------------------------
-      00034F                        669 _UART0_DisableInterrupt:
+      000337                        669 _UART0_DisableInterrupt:
                                     670 ;	lib/src/uart0.c:53: ES = 0;
                                     671 ;	assignBit
-      00034F C2 AC            [12]  672 	clr	_ES
+      000337 C2 AC            [12]  672 	clr	_ES
                                     673 ;	lib/src/uart0.c:54: }
-      000351 22               [24]  674 	ret
+      000339 22               [24]  674 	ret
                                     675 ;------------------------------------------------------------
                                     676 ;Allocation info for local variables in function 'UART0_ClearFlag'
                                     677 ;------------------------------------------------------------
@@ -681,13 +681,13 @@
                                     681 ;	-----------------------------------------
                                     682 ;	 function UART0_ClearFlag
                                     683 ;	-----------------------------------------
-      000352                        684 _UART0_ClearFlag:
+      00033A                        684 _UART0_ClearFlag:
                                     685 ;	lib/src/uart0.c:58: SCON &= ~(u8Flag);
-      000352 E5 82            [12]  686 	mov	a,dpl
-      000354 F4               [12]  687 	cpl	a
-      000355 52 98            [12]  688 	anl	_SCON,a
+      00033A E5 82            [12]  686 	mov	a,dpl
+      00033C F4               [12]  687 	cpl	a
+      00033D 52 98            [12]  688 	anl	_SCON,a
                                     689 ;	lib/src/uart0.c:59: }
-      000357 22               [24]  690 	ret
+      00033F 22               [24]  690 	ret
                                     691 ;------------------------------------------------------------
                                     692 ;Allocation info for local variables in function 'UART0_GetFlag'
                                     693 ;------------------------------------------------------------
@@ -697,19 +697,19 @@
                                     697 ;	-----------------------------------------
                                     698 ;	 function UART0_GetFlag
                                     699 ;	-----------------------------------------
-      000358                        700 _UART0_GetFlag:
+      000340                        700 _UART0_GetFlag:
                                     701 ;	lib/src/uart0.c:63: if (SCON & (u8Flag)) {
-      000358 E5 82            [12]  702 	mov	a,dpl
-      00035A 55 98            [12]  703 	anl	a,_SCON
-      00035C 60 04            [24]  704 	jz	00102$
+      000340 E5 82            [12]  702 	mov	a,dpl
+      000342 55 98            [12]  703 	anl	a,_SCON
+      000344 60 04            [24]  704 	jz	00102$
                                     705 ;	lib/src/uart0.c:64: return 1;
-      00035E 75 82 01         [24]  706 	mov	dpl,#0x01
-      000361 22               [24]  707 	ret
-      000362                        708 00102$:
+      000346 75 82 01         [24]  706 	mov	dpl,#0x01
+      000349 22               [24]  707 	ret
+      00034A                        708 00102$:
                                     709 ;	lib/src/uart0.c:66: return 0;
-      000362 75 82 00         [24]  710 	mov	dpl,#0x00
+      00034A 75 82 00         [24]  710 	mov	dpl,#0x00
                                     711 ;	lib/src/uart0.c:68: }
-      000365 22               [24]  712 	ret
+      00034D 22               [24]  712 	ret
                                     713 ;------------------------------------------------------------
                                     714 ;Allocation info for local variables in function 'UART0_STRING'
                                     715 ;------------------------------------------------------------
@@ -719,49 +719,49 @@
                                     719 ;	-----------------------------------------
                                     720 ;	 function UART0_STRING
                                     721 ;	-----------------------------------------
-      000366                        722 _UART0_STRING:
-      000366 AD 82            [24]  723 	mov	r5,dpl
-      000368 AE 83            [24]  724 	mov	r6,dph
-      00036A AF F0            [24]  725 	mov	r7,b
+      00034E                        722 _UART0_STRING:
+      00034E AD 82            [24]  723 	mov	r5,dpl
+      000350 AE 83            [24]  724 	mov	r6,dph
+      000352 AF F0            [24]  725 	mov	r7,b
                                     726 ;	lib/src/uart0.c:71: while(*cy)
-      00036C                        727 00104$:
-      00036C 8D 82            [24]  728 	mov	dpl,r5
-      00036E 8E 83            [24]  729 	mov	dph,r6
-      000370 8F F0            [24]  730 	mov	b,r7
-      000372 12 04 A8         [24]  731 	lcall	__gptrget
-      000375 FC               [12]  732 	mov	r4,a
-      000376 60 31            [24]  733 	jz	00107$
+      000354                        727 00104$:
+      000354 8D 82            [24]  728 	mov	dpl,r5
+      000356 8E 83            [24]  729 	mov	dph,r6
+      000358 8F F0            [24]  730 	mov	b,r7
+      00035A 12 04 90         [24]  731 	lcall	__gptrget
+      00035D FC               [12]  732 	mov	r4,a
+      00035E 60 31            [24]  733 	jz	00107$
                                     734 ;	lib/src/uart0.c:73: SBUF = (*cy);
-      000378 8C 99            [24]  735 	mov	_SBUF,r4
+      000360 8C 99            [24]  735 	mov	_SBUF,r4
                                     736 ;	lib/src/uart0.c:74: while (UART0_GetFlag(UART0_TX_FLAG) == 0) {}
-      00037A                        737 00101$:
-      00037A 75 82 02         [24]  738 	mov	dpl,#0x02
-      00037D C0 07            [24]  739 	push	ar7
-      00037F C0 06            [24]  740 	push	ar6
-      000381 C0 05            [24]  741 	push	ar5
-      000383 12 03 58         [24]  742 	lcall	_UART0_GetFlag
-      000386 E5 82            [12]  743 	mov	a,dpl
-      000388 D0 05            [24]  744 	pop	ar5
-      00038A D0 06            [24]  745 	pop	ar6
-      00038C D0 07            [24]  746 	pop	ar7
-      00038E 60 EA            [24]  747 	jz	00101$
+      000362                        737 00101$:
+      000362 75 82 02         [24]  738 	mov	dpl,#0x02
+      000365 C0 07            [24]  739 	push	ar7
+      000367 C0 06            [24]  740 	push	ar6
+      000369 C0 05            [24]  741 	push	ar5
+      00036B 12 03 40         [24]  742 	lcall	_UART0_GetFlag
+      00036E E5 82            [12]  743 	mov	a,dpl
+      000370 D0 05            [24]  744 	pop	ar5
+      000372 D0 06            [24]  745 	pop	ar6
+      000374 D0 07            [24]  746 	pop	ar7
+      000376 60 EA            [24]  747 	jz	00101$
                                     748 ;	lib/src/uart0.c:75: UART0_ClearFlag(UART0_TX_FLAG);
-      000390 75 82 02         [24]  749 	mov	dpl,#0x02
-      000393 C0 07            [24]  750 	push	ar7
-      000395 C0 06            [24]  751 	push	ar6
-      000397 C0 05            [24]  752 	push	ar5
-      000399 12 03 52         [24]  753 	lcall	_UART0_ClearFlag
-      00039C D0 05            [24]  754 	pop	ar5
-      00039E D0 06            [24]  755 	pop	ar6
-      0003A0 D0 07            [24]  756 	pop	ar7
+      000378 75 82 02         [24]  749 	mov	dpl,#0x02
+      00037B C0 07            [24]  750 	push	ar7
+      00037D C0 06            [24]  751 	push	ar6
+      00037F C0 05            [24]  752 	push	ar5
+      000381 12 03 3A         [24]  753 	lcall	_UART0_ClearFlag
+      000384 D0 05            [24]  754 	pop	ar5
+      000386 D0 06            [24]  755 	pop	ar6
+      000388 D0 07            [24]  756 	pop	ar7
                                     757 ;	lib/src/uart0.c:76: cy++;
-      0003A2 0D               [12]  758 	inc	r5
-      0003A3 BD 00 C6         [24]  759 	cjne	r5,#0x00,00104$
-      0003A6 0E               [12]  760 	inc	r6
-      0003A7 80 C3            [24]  761 	sjmp	00104$
-      0003A9                        762 00107$:
+      00038A 0D               [12]  758 	inc	r5
+      00038B BD 00 C6         [24]  759 	cjne	r5,#0x00,00104$
+      00038E 0E               [12]  760 	inc	r6
+      00038F 80 C3            [24]  761 	sjmp	00104$
+      000391                        762 00107$:
                                     763 ;	lib/src/uart0.c:78: }
-      0003A9 22               [24]  764 	ret
+      000391 22               [24]  764 	ret
                                     765 ;------------------------------------------------------------
                                     766 ;Allocation info for local variables in function 'UART0_NUMBER'
                                     767 ;------------------------------------------------------------
@@ -773,98 +773,98 @@
                                     773 ;	-----------------------------------------
                                     774 ;	 function UART0_NUMBER
                                     775 ;	-----------------------------------------
-      0003AA                        776 _UART0_NUMBER:
-      0003AA AE 82            [24]  777 	mov	r6,dpl
-      0003AC AF 83            [24]  778 	mov	r7,dph
+      000392                        776 _UART0_NUMBER:
+      000392 AE 82            [24]  777 	mov	r6,dpl
+      000394 AF 83            [24]  778 	mov	r7,dph
                                     779 ;	lib/src/uart0.c:81: char count = 0;
-      0003AE 7D 00            [12]  780 	mov	r5,#0x00
+      000396 7D 00            [12]  780 	mov	r5,#0x00
                                     781 ;	lib/src/uart0.c:82: char digit[5] = "";
-      0003B0 8D 17            [24]  782 	mov	_UART0_NUMBER_digit_65536_31,r5
-      0003B2 8D 18            [24]  783 	mov	(_UART0_NUMBER_digit_65536_31 + 0x0001),r5
-      0003B4 8D 19            [24]  784 	mov	(_UART0_NUMBER_digit_65536_31 + 0x0002),r5
-      0003B6 8D 1A            [24]  785 	mov	(_UART0_NUMBER_digit_65536_31 + 0x0003),r5
-      0003B8 8D 1B            [24]  786 	mov	(_UART0_NUMBER_digit_65536_31 + 0x0004),r5
+      000398 8D 17            [24]  782 	mov	_UART0_NUMBER_digit_65536_31,r5
+      00039A 8D 18            [24]  783 	mov	(_UART0_NUMBER_digit_65536_31 + 0x0001),r5
+      00039C 8D 19            [24]  784 	mov	(_UART0_NUMBER_digit_65536_31 + 0x0002),r5
+      00039E 8D 1A            [24]  785 	mov	(_UART0_NUMBER_digit_65536_31 + 0x0003),r5
+      0003A0 8D 1B            [24]  786 	mov	(_UART0_NUMBER_digit_65536_31 + 0x0004),r5
                                     787 ;	lib/src/uart0.c:83: if (number == 0)
-      0003BA EE               [12]  788 	mov	a,r6
-      0003BB 4F               [12]  789 	orl	a,r7
+      0003A2 EE               [12]  788 	mov	a,r6
+      0003A3 4F               [12]  789 	orl	a,r7
                                     790 ;	lib/src/uart0.c:85: digit[0] = 0;
-      0003BC 70 04            [24]  791 	jnz	00116$
-      0003BE F5 17            [12]  792 	mov	_UART0_NUMBER_digit_65536_31,a
+      0003A4 70 04            [24]  791 	jnz	00116$
+      0003A6 F5 17            [12]  792 	mov	_UART0_NUMBER_digit_65536_31,a
                                     793 ;	lib/src/uart0.c:86: count = 1;
-      0003C0 7D 01            [12]  794 	mov	r5,#0x01
+      0003A8 7D 01            [12]  794 	mov	r5,#0x01
                                     795 ;	lib/src/uart0.c:88: while(number != 0)
-      0003C2                        796 00116$:
-      0003C2                        797 00103$:
-      0003C2 EE               [12]  798 	mov	a,r6
-      0003C3 4F               [12]  799 	orl	a,r7
-      0003C4 60 3D            [24]  800 	jz	00120$
+      0003AA                        796 00116$:
+      0003AA                        797 00103$:
+      0003AA EE               [12]  798 	mov	a,r6
+      0003AB 4F               [12]  799 	orl	a,r7
+      0003AC 60 3D            [24]  800 	jz	00120$
                                     801 ;	lib/src/uart0.c:90: digit[count] = number%10;   //lay chu so ngoai cung xxxx8;
-      0003C6 ED               [12]  802 	mov	a,r5
-      0003C7 24 17            [12]  803 	add	a,#_UART0_NUMBER_digit_65536_31
-      0003C9 F9               [12]  804 	mov	r1,a
-      0003CA 75 1C 0A         [24]  805 	mov	__modsint_PARM_2,#0x0a
-      0003CD 75 1D 00         [24]  806 	mov	(__modsint_PARM_2 + 1),#0x00
-      0003D0 8E 82            [24]  807 	mov	dpl,r6
-      0003D2 8F 83            [24]  808 	mov	dph,r7
-      0003D4 C0 07            [24]  809 	push	ar7
-      0003D6 C0 06            [24]  810 	push	ar6
-      0003D8 C0 05            [24]  811 	push	ar5
-      0003DA C0 01            [24]  812 	push	ar1
-      0003DC 12 04 C4         [24]  813 	lcall	__modsint
-      0003DF AB 82            [24]  814 	mov	r3,dpl
-      0003E1 D0 01            [24]  815 	pop	ar1
-      0003E3 D0 05            [24]  816 	pop	ar5
-      0003E5 D0 06            [24]  817 	pop	ar6
-      0003E7 D0 07            [24]  818 	pop	ar7
-      0003E9 A7 03            [24]  819 	mov	@r1,ar3
+      0003AE ED               [12]  802 	mov	a,r5
+      0003AF 24 17            [12]  803 	add	a,#_UART0_NUMBER_digit_65536_31
+      0003B1 F9               [12]  804 	mov	r1,a
+      0003B2 75 1C 0A         [24]  805 	mov	__modsint_PARM_2,#0x0a
+      0003B5 75 1D 00         [24]  806 	mov	(__modsint_PARM_2 + 1),#0x00
+      0003B8 8E 82            [24]  807 	mov	dpl,r6
+      0003BA 8F 83            [24]  808 	mov	dph,r7
+      0003BC C0 07            [24]  809 	push	ar7
+      0003BE C0 06            [24]  810 	push	ar6
+      0003C0 C0 05            [24]  811 	push	ar5
+      0003C2 C0 01            [24]  812 	push	ar1
+      0003C4 12 04 AC         [24]  813 	lcall	__modsint
+      0003C7 AB 82            [24]  814 	mov	r3,dpl
+      0003C9 D0 01            [24]  815 	pop	ar1
+      0003CB D0 05            [24]  816 	pop	ar5
+      0003CD D0 06            [24]  817 	pop	ar6
+      0003CF D0 07            [24]  818 	pop	ar7
+      0003D1 A7 03            [24]  819 	mov	@r1,ar3
                                     820 ;	lib/src/uart0.c:91: ++count;
-      0003EB 0D               [12]  821 	inc	r5
+      0003D3 0D               [12]  821 	inc	r5
                                     822 ;	lib/src/uart0.c:92: number = number/10;         //chia so number cho 10 de bo so ngoai cung xxxx
-      0003EC 75 1C 0A         [24]  823 	mov	__divsint_PARM_2,#0x0a
-      0003EF 75 1D 00         [24]  824 	mov	(__divsint_PARM_2 + 1),#0x00
-      0003F2 8E 82            [24]  825 	mov	dpl,r6
-      0003F4 8F 83            [24]  826 	mov	dph,r7
-      0003F6 C0 05            [24]  827 	push	ar5
-      0003F8 12 04 FA         [24]  828 	lcall	__divsint
-      0003FB AE 82            [24]  829 	mov	r6,dpl
-      0003FD AF 83            [24]  830 	mov	r7,dph
-      0003FF D0 05            [24]  831 	pop	ar5
+      0003D4 75 1C 0A         [24]  823 	mov	__divsint_PARM_2,#0x0a
+      0003D7 75 1D 00         [24]  824 	mov	(__divsint_PARM_2 + 1),#0x00
+      0003DA 8E 82            [24]  825 	mov	dpl,r6
+      0003DC 8F 83            [24]  826 	mov	dph,r7
+      0003DE C0 05            [24]  827 	push	ar5
+      0003E0 12 04 E2         [24]  828 	lcall	__divsint
+      0003E3 AE 82            [24]  829 	mov	r6,dpl
+      0003E5 AF 83            [24]  830 	mov	r7,dph
+      0003E7 D0 05            [24]  831 	pop	ar5
                                     832 ;	lib/src/uart0.c:94: while (count!=0)
-      000401 80 BF            [24]  833 	sjmp	00103$
-      000403                        834 00120$:
-      000403 8D 07            [24]  835 	mov	ar7,r5
-      000405                        836 00109$:
-      000405 EF               [12]  837 	mov	a,r7
-      000406 60 29            [24]  838 	jz	00112$
+      0003E9 80 BF            [24]  833 	sjmp	00103$
+      0003EB                        834 00120$:
+      0003EB 8D 07            [24]  835 	mov	ar7,r5
+      0003ED                        836 00109$:
+      0003ED EF               [12]  837 	mov	a,r7
+      0003EE 60 29            [24]  838 	jz	00112$
                                     839 ;	lib/src/uart0.c:96: SBUF = (digit[count - 1] + 0x30); // 0x30 = 48 ;
-      000408 8F 06            [24]  840 	mov	ar6,r7
-      00040A EE               [12]  841 	mov	a,r6
-      00040B 14               [12]  842 	dec	a
-      00040C 24 17            [12]  843 	add	a,#_UART0_NUMBER_digit_65536_31
-      00040E F9               [12]  844 	mov	r1,a
-      00040F 87 06            [24]  845 	mov	ar6,@r1
-      000411 74 30            [12]  846 	mov	a,#0x30
-      000413 2E               [12]  847 	add	a,r6
-      000414 F5 99            [12]  848 	mov	_SBUF,a
+      0003F0 8F 06            [24]  840 	mov	ar6,r7
+      0003F2 EE               [12]  841 	mov	a,r6
+      0003F3 14               [12]  842 	dec	a
+      0003F4 24 17            [12]  843 	add	a,#_UART0_NUMBER_digit_65536_31
+      0003F6 F9               [12]  844 	mov	r1,a
+      0003F7 87 06            [24]  845 	mov	ar6,@r1
+      0003F9 74 30            [12]  846 	mov	a,#0x30
+      0003FB 2E               [12]  847 	add	a,r6
+      0003FC F5 99            [12]  848 	mov	_SBUF,a
                                     849 ;	lib/src/uart0.c:97: while (UART0_GetFlag(UART0_TX_FLAG) == 0) {}
-      000416                        850 00106$:
-      000416 75 82 02         [24]  851 	mov	dpl,#0x02
-      000419 C0 07            [24]  852 	push	ar7
-      00041B 12 03 58         [24]  853 	lcall	_UART0_GetFlag
-      00041E E5 82            [12]  854 	mov	a,dpl
-      000420 D0 07            [24]  855 	pop	ar7
-      000422 60 F2            [24]  856 	jz	00106$
+      0003FE                        850 00106$:
+      0003FE 75 82 02         [24]  851 	mov	dpl,#0x02
+      000401 C0 07            [24]  852 	push	ar7
+      000403 12 03 40         [24]  853 	lcall	_UART0_GetFlag
+      000406 E5 82            [12]  854 	mov	a,dpl
+      000408 D0 07            [24]  855 	pop	ar7
+      00040A 60 F2            [24]  856 	jz	00106$
                                     857 ;	lib/src/uart0.c:98: UART0_ClearFlag(UART0_TX_FLAG);
-      000424 75 82 02         [24]  858 	mov	dpl,#0x02
-      000427 C0 07            [24]  859 	push	ar7
-      000429 12 03 52         [24]  860 	lcall	_UART0_ClearFlag
-      00042C D0 07            [24]  861 	pop	ar7
+      00040C 75 82 02         [24]  858 	mov	dpl,#0x02
+      00040F C0 07            [24]  859 	push	ar7
+      000411 12 03 3A         [24]  860 	lcall	_UART0_ClearFlag
+      000414 D0 07            [24]  861 	pop	ar7
                                     862 ;	lib/src/uart0.c:99: --count;
-      00042E 1F               [12]  863 	dec	r7
-      00042F 80 D4            [24]  864 	sjmp	00109$
-      000431                        865 00112$:
+      000416 1F               [12]  863 	dec	r7
+      000417 80 D4            [24]  864 	sjmp	00109$
+      000419                        865 00112$:
                                     866 ;	lib/src/uart0.c:101: }
-      000431 22               [24]  867 	ret
+      000419 22               [24]  867 	ret
                                     868 	.area CSEG    (CODE)
                                     869 	.area CONST   (CODE)
                                     870 	.area XINIT   (CODE)

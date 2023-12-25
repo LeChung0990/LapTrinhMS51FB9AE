@@ -561,7 +561,7 @@
       000014                        561 	.ds	7
       00001B 32               [24]  562 	reti
       00001C                        563 	.ds	7
-      000023 02 00 AC         [24]  564 	ljmp	_UART0_ISR
+      000023 02 00 A6         [24]  564 	ljmp	_UART0_ISR
                                     565 ;--------------------------------------------------------
                                     566 ; global & static initialisations
                                     567 ;--------------------------------------------------------
@@ -605,47 +605,43 @@
                            000002   605 	ar2 = 0x02
                            000001   606 	ar1 = 0x01
                            000000   607 	ar0 = 0x00
-                                    608 ;	main.c:10: P1M1 &= ~(1 << 5);
-      000085 53 B3 DF         [24]  609 	anl	_P1M1,#0xdf
-                                    610 ;	main.c:11: P1M2 |= (1 << 5);  
-      000088 43 B4 20         [24]  611 	orl	_P1M2,#0x20
-                                    612 ;	main.c:12: UART0_Init();
-      00008B 12 00 FC         [24]  613 	lcall	_UART0_Init
-                                    614 ;	main.c:13: while (1) {
-      00008E                        615 00105$:
-                                    616 ;	main.c:14: UART0_SendData(0x39);
-      00008E 75 82 39         [24]  617 	mov	dpl,#0x39
-      000091 12 01 2B         [24]  618 	lcall	_UART0_SendData
-                                    619 ;	main.c:16: while (UART0_GetFlag(UART0_TX_FLAG) == 0) {
-      000094                        620 00101$:
-      000094 75 82 02         [24]  621 	mov	dpl,#0x02
-      000097 12 01 3F         [24]  622 	lcall	_UART0_GetFlag
-      00009A E5 82            [12]  623 	mov	a,dpl
-      00009C 60 F6            [24]  624 	jz	00101$
-                                    625 ;	main.c:18: UART0_ClearFlag(UART0_TX_FLAG);
-      00009E 75 82 02         [24]  626 	mov	dpl,#0x02
-      0000A1 12 01 39         [24]  627 	lcall	_UART0_ClearFlag
-                                    628 ;	main.c:19: Delay_Ms(1000);
-      0000A4 90 03 E8         [24]  629 	mov	dptr,#0x03e8
-      0000A7 12 00 BD         [24]  630 	lcall	_Delay_Ms
-                                    631 ;	main.c:21: }
-      0000AA 80 E2            [24]  632 	sjmp	00105$
-                                    633 ;------------------------------------------------------------
-                                    634 ;Allocation info for local variables in function 'UART0_ISR'
-                                    635 ;------------------------------------------------------------
-                                    636 ;	main.c:22: void UART0_ISR(void) __interrupt (4){}
-                                    637 ;	-----------------------------------------
-                                    638 ;	 function UART0_ISR
-                                    639 ;	-----------------------------------------
-      0000AC                        640 _UART0_ISR:
-      0000AC 32               [24]  641 	reti
-                                    642 ;	eliminated unneeded mov psw,# (no regs used in bank)
-                                    643 ;	eliminated unneeded push/pop not_psw
-                                    644 ;	eliminated unneeded push/pop dpl
-                                    645 ;	eliminated unneeded push/pop dph
-                                    646 ;	eliminated unneeded push/pop b
-                                    647 ;	eliminated unneeded push/pop acc
-                                    648 	.area CSEG    (CODE)
-                                    649 	.area CONST   (CODE)
-                                    650 	.area XINIT   (CODE)
-                                    651 	.area CABS    (ABS,CODE)
+                                    608 ;	main.c:12: UART0_Init();
+      000085 12 00 F6         [24]  609 	lcall	_UART0_Init
+                                    610 ;	main.c:13: while (1) {
+      000088                        611 00105$:
+                                    612 ;	main.c:14: UART0_SendData(0x39);
+      000088 75 82 39         [24]  613 	mov	dpl,#0x39
+      00008B 12 01 25         [24]  614 	lcall	_UART0_SendData
+                                    615 ;	main.c:16: while (UART0_GetFlag(UART0_TX_FLAG) == 0) {
+      00008E                        616 00101$:
+      00008E 75 82 02         [24]  617 	mov	dpl,#0x02
+      000091 12 01 39         [24]  618 	lcall	_UART0_GetFlag
+      000094 E5 82            [12]  619 	mov	a,dpl
+      000096 60 F6            [24]  620 	jz	00101$
+                                    621 ;	main.c:18: UART0_ClearFlag(UART0_TX_FLAG);
+      000098 75 82 02         [24]  622 	mov	dpl,#0x02
+      00009B 12 01 33         [24]  623 	lcall	_UART0_ClearFlag
+                                    624 ;	main.c:19: Delay_Ms(1000);
+      00009E 90 03 E8         [24]  625 	mov	dptr,#0x03e8
+      0000A1 12 00 B7         [24]  626 	lcall	_Delay_Ms
+                                    627 ;	main.c:21: }
+      0000A4 80 E2            [24]  628 	sjmp	00105$
+                                    629 ;------------------------------------------------------------
+                                    630 ;Allocation info for local variables in function 'UART0_ISR'
+                                    631 ;------------------------------------------------------------
+                                    632 ;	main.c:22: void UART0_ISR(void) __interrupt (4){}
+                                    633 ;	-----------------------------------------
+                                    634 ;	 function UART0_ISR
+                                    635 ;	-----------------------------------------
+      0000A6                        636 _UART0_ISR:
+      0000A6 32               [24]  637 	reti
+                                    638 ;	eliminated unneeded mov psw,# (no regs used in bank)
+                                    639 ;	eliminated unneeded push/pop not_psw
+                                    640 ;	eliminated unneeded push/pop dpl
+                                    641 ;	eliminated unneeded push/pop dph
+                                    642 ;	eliminated unneeded push/pop b
+                                    643 ;	eliminated unneeded push/pop acc
+                                    644 	.area CSEG    (CODE)
+                                    645 	.area CONST   (CODE)
+                                    646 	.area XINIT   (CODE)
+                                    647 	.area CABS    (ABS,CODE)

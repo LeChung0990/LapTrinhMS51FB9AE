@@ -1,0 +1,20 @@
+-muwx
+-i mpu6050.ihx
+-M
+-b HOME = 0x0000
+-b XSEG = 0x0001
+-b PSEG = 0x0001
+-b ISEG = 0x0000
+-b BSEG = 0x0000
+-k C:\Program Files\SDCC\bin\..\lib\small
+-l mcs51
+-l libsdcc
+-l libint
+-l liblong
+-l libfloat
+obj/main.rel
+obj/i2c.rel
+obj/delay.rel
+obj/uart0.rel
+
+-e

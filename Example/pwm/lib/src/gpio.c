@@ -6,6 +6,7 @@ void GPIO_Init(void)
 {
 	/* P1.5 */
 	/* Push-pull */
-	clr_P1M1_5;
-	set_P1M2_1;
+	P15_PUSHPULL_MODE;
+
+	P10_INPUT_MODE;;
 }

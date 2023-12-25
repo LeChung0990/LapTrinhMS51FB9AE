@@ -605,10 +605,6 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:10: P1M1 &= ~(1 << 5);
-	anl	_P1M1,#0xdf
-;	main.c:11: P1M2 |= (1 << 5);  
-	orl	_P1M2,#0x20
 ;	main.c:12: UART0_Init();
 	lcall	_UART0_Init
 ;	main.c:13: while (1) {

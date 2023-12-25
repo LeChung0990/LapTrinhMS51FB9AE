@@ -558,7 +558,7 @@
                                     558 ;	-----------------------------------------
                                     559 ;	 function Delay_Init
                                     560 ;	-----------------------------------------
-      000084                        561 _Delay_Init:
+      0000B5                        561 _Delay_Init:
                            000007   562 	ar7 = 0x07
                            000006   563 	ar6 = 0x06
                            000005   564 	ar5 = 0x05
@@ -568,17 +568,17 @@
                            000001   568 	ar1 = 0x01
                            000000   569 	ar0 = 0x00
                                     570 ;	lib/src/delay.c:9: TMOD |= (1 << 0);
-      000084 43 89 01         [24]  571 	orl	_TMOD,#0x01
+      0000B5 43 89 01         [24]  571 	orl	_TMOD,#0x01
                                     572 ;	lib/src/delay.c:10: TMOD &= ~(1 << 1);
-      000087 53 89 FD         [24]  573 	anl	_TMOD,#0xfd
+      0000B8 53 89 FD         [24]  573 	anl	_TMOD,#0xfd
                                     574 ;	lib/src/delay.c:11: CKCON |= (1 << 3);
-      00008A 43 8E 08         [24]  575 	orl	_CKCON,#0x08
+      0000BB 43 8E 08         [24]  575 	orl	_CKCON,#0x08
                                     576 ;	lib/src/delay.c:12: TMOD &= ~(1 << 2);
-      00008D 53 89 FB         [24]  577 	anl	_TMOD,#0xfb
+      0000BE 53 89 FB         [24]  577 	anl	_TMOD,#0xfb
                                     578 ;	lib/src/delay.c:13: TMOD &= ~(1 << 3);
-      000090 53 89 F7         [24]  579 	anl	_TMOD,#0xf7
+      0000C1 53 89 F7         [24]  579 	anl	_TMOD,#0xf7
                                     580 ;	lib/src/delay.c:14: }
-      000093 22               [24]  581 	ret
+      0000C4 22               [24]  581 	ret
                                     582 ;------------------------------------------------------------
                                     583 ;Allocation info for local variables in function 'Delay_Ms'
                                     584 ;------------------------------------------------------------
@@ -588,29 +588,29 @@
                                     588 ;	-----------------------------------------
                                     589 ;	 function Delay_Ms
                                     590 ;	-----------------------------------------
-      000094                        591 _Delay_Ms:
-      000094 AE 82            [24]  592 	mov	r6,dpl
-      000096 AF 83            [24]  593 	mov	r7,dph
+      0000C5                        591 _Delay_Ms:
+      0000C5 AE 82            [24]  592 	mov	r6,dpl
+      0000C7 AF 83            [24]  593 	mov	r7,dph
                                     594 ;	lib/src/delay.c:18: while (u16Delay) {
-      000098                        595 00101$:
-      000098 EE               [12]  596 	mov	a,r6
-      000099 4F               [12]  597 	orl	a,r7
-      00009A 60 12            [24]  598 	jz	00104$
+      0000C9                        595 00101$:
+      0000C9 EE               [12]  596 	mov	a,r6
+      0000CA 4F               [12]  597 	orl	a,r7
+      0000CB 60 12            [24]  598 	jz	00104$
                                     599 ;	lib/src/delay.c:19: --u16Delay;
-      00009C 1E               [12]  600 	dec	r6
-      00009D BE FF 01         [24]  601 	cjne	r6,#0xff,00116$
-      0000A0 1F               [12]  602 	dec	r7
-      0000A1                        603 00116$:
+      0000CD 1E               [12]  600 	dec	r6
+      0000CE BE FF 01         [24]  601 	cjne	r6,#0xff,00116$
+      0000D1 1F               [12]  602 	dec	r7
+      0000D2                        603 00116$:
                                     604 ;	lib/src/delay.c:20: delay_1ms();
-      0000A1 C0 07            [24]  605 	push	ar7
-      0000A3 C0 06            [24]  606 	push	ar6
-      0000A5 12 00 AF         [24]  607 	lcall	_delay_1ms
-      0000A8 D0 06            [24]  608 	pop	ar6
-      0000AA D0 07            [24]  609 	pop	ar7
-      0000AC 80 EA            [24]  610 	sjmp	00101$
-      0000AE                        611 00104$:
+      0000D2 C0 07            [24]  605 	push	ar7
+      0000D4 C0 06            [24]  606 	push	ar6
+      0000D6 12 00 E0         [24]  607 	lcall	_delay_1ms
+      0000D9 D0 06            [24]  608 	pop	ar6
+      0000DB D0 07            [24]  609 	pop	ar7
+      0000DD 80 EA            [24]  610 	sjmp	00101$
+      0000DF                        611 00104$:
                                     612 ;	lib/src/delay.c:22: }
-      0000AE 22               [24]  613 	ret
+      0000DF 22               [24]  613 	ret
                                     614 ;------------------------------------------------------------
                                     615 ;Allocation info for local variables in function 'delay_1ms'
                                     616 ;------------------------------------------------------------
@@ -618,38 +618,38 @@
                                     618 ;	-----------------------------------------
                                     619 ;	 function delay_1ms
                                     620 ;	-----------------------------------------
-      0000AF                        621 _delay_1ms:
+      0000E0                        621 _delay_1ms:
                                     622 ;	lib/src/delay.c:26: TH0 = 0;
-      0000AF 75 8C 00         [24]  623 	mov	_TH0,#0x00
+      0000E0 75 8C 00         [24]  623 	mov	_TH0,#0x00
                                     624 ;	lib/src/delay.c:27: TL0 = 0;
-      0000B2 75 8A 00         [24]  625 	mov	_TL0,#0x00
+      0000E3 75 8A 00         [24]  625 	mov	_TL0,#0x00
                                     626 ;	lib/src/delay.c:28: TR0 = 1;
                                     627 ;	assignBit
-      0000B5 D2 8C            [12]  628 	setb	_TR0
+      0000E6 D2 8C            [12]  628 	setb	_TR0
                                     629 ;	lib/src/delay.c:29: while (TH0 * 256 + TL0 < 16000) {
-      0000B7                        630 00101$:
-      0000B7 AF 8C            [24]  631 	mov	r7,_TH0
-      0000B9 7E 00            [12]  632 	mov	r6,#0x00
-      0000BB AC 8A            [24]  633 	mov	r4,_TL0
-      0000BD 7D 00            [12]  634 	mov	r5,#0x00
-      0000BF EC               [12]  635 	mov	a,r4
-      0000C0 2E               [12]  636 	add	a,r6
-      0000C1 FE               [12]  637 	mov	r6,a
-      0000C2 ED               [12]  638 	mov	a,r5
-      0000C3 3F               [12]  639 	addc	a,r7
-      0000C4 FF               [12]  640 	mov	r7,a
-      0000C5 C3               [12]  641 	clr	c
-      0000C6 EE               [12]  642 	mov	a,r6
-      0000C7 94 80            [12]  643 	subb	a,#0x80
-      0000C9 EF               [12]  644 	mov	a,r7
-      0000CA 64 80            [12]  645 	xrl	a,#0x80
-      0000CC 94 BE            [12]  646 	subb	a,#0xbe
-      0000CE 40 E7            [24]  647 	jc	00101$
+      0000E8                        630 00101$:
+      0000E8 AF 8C            [24]  631 	mov	r7,_TH0
+      0000EA 7E 00            [12]  632 	mov	r6,#0x00
+      0000EC AC 8A            [24]  633 	mov	r4,_TL0
+      0000EE 7D 00            [12]  634 	mov	r5,#0x00
+      0000F0 EC               [12]  635 	mov	a,r4
+      0000F1 2E               [12]  636 	add	a,r6
+      0000F2 FE               [12]  637 	mov	r6,a
+      0000F3 ED               [12]  638 	mov	a,r5
+      0000F4 3F               [12]  639 	addc	a,r7
+      0000F5 FF               [12]  640 	mov	r7,a
+      0000F6 C3               [12]  641 	clr	c
+      0000F7 EE               [12]  642 	mov	a,r6
+      0000F8 94 80            [12]  643 	subb	a,#0x80
+      0000FA EF               [12]  644 	mov	a,r7
+      0000FB 64 80            [12]  645 	xrl	a,#0x80
+      0000FD 94 BE            [12]  646 	subb	a,#0xbe
+      0000FF 40 E7            [24]  647 	jc	00101$
                                     648 ;	lib/src/delay.c:31: TR0 = 0;
                                     649 ;	assignBit
-      0000D0 C2 8C            [12]  650 	clr	_TR0
+      000101 C2 8C            [12]  650 	clr	_TR0
                                     651 ;	lib/src/delay.c:32: }
-      0000D2 22               [24]  652 	ret
+      000103 22               [24]  652 	ret
                                     653 	.area CSEG    (CODE)
                                     654 	.area CONST   (CODE)
                                     655 	.area XINIT   (CODE)

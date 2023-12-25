@@ -78,11 +78,11 @@ C:   00000082  s_GSFINAL
 C:   00000082  s_GSINIT                        
 C:   00000082  s_GSINIT5                       
 C:   00000085  s_CSEG                          
-C:   000000CC  l_CSEG                          
+C:   000000C6  l_CSEG                          
 C:   000000F8  l_SSEG                          
 C:   00000100  l_IRAM                          
-C:   00000151  s_CONST                         
-C:   00000151  s_XINIT                         
+C:   0000014B  s_CONST                         
+C:   0000014B  s_XINIT                         
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
 Hexadecimal  [32-Bits]
@@ -460,22 +460,22 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CSEG                                00000085    000000CC =         204. bytes (REL,CON,CODE)
+CSEG                                00000085    000000C6 =         198. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
 C:   00000085  _main                              main
-C:   000000AC  _UART0_ISR                         main
-C:   000000AD  _Delay_Init                        delay
-C:   000000BD  _Delay_Ms                          delay
-C:   000000FC  _UART0_Init                        uart0
-C:   0000012B  _UART0_SendData                    uart0
-C:   0000012F  _UART0_GetData                     uart0
-C:   00000133  _UART0_EnableInterrupt             uart0
-C:   00000136  _UART0_DisableInterrupt            uart0
-C:   00000139  _UART0_ClearFlag                   uart0
-C:   0000013F  _UART0_GetFlag                     uart0
-C:   0000014D  ___sdcc_external_startup           _startup
+C:   000000A6  _UART0_ISR                         main
+C:   000000A7  _Delay_Init                        delay
+C:   000000B7  _Delay_Ms                          delay
+C:   000000F6  _UART0_Init                        uart0
+C:   00000125  _UART0_SendData                    uart0
+C:   00000129  _UART0_GetData                     uart0
+C:   0000012D  _UART0_EnableInterrupt             uart0
+C:   00000130  _UART0_DisableInterrupt            uart0
+C:   00000133  _UART0_ClearFlag                   uart0
+C:   00000139  _UART0_GetFlag                     uart0
+C:   00000147  ___sdcc_external_startup           _startup
 ASxxxx Linker V03.00/V05.40 + sdld,  page 18.
 
 Files Linked                              [ module(s) ]

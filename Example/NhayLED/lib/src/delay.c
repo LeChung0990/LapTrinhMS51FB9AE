@@ -1,47 +1,33 @@
 /* delay.c */
-#include <MS51.h>
 #include "delay.h"
 
-static void delay_1ms(void);
-
-void Delay_Init(void)
+void DelayT0_Init(void)
 {
-	TMOD |= (1 << 0);
-	TMOD &= ~(1 << 1);
-	CKCON |= (1 << 3);
-	TMOD &= ~(1 << 2);
-	TMOD &= ~(1 << 3);
-}
-void delay_1ms(void)
-{
-	TH0 = 0;
-	TL0 = 0;
-	TR0 = 1;	/*Timer 0 Enable*/
-	while (TH0 * 256 + TL0 < 16000) {
-	}
-	TR0 = 0;	/*Stop Timer0 and the current count will be preserved in TH0,TL0*/
+	TIMER0_FSYS;		 // T0M=1, Timer0 Clock = Fsys = 16MHz
+	ENABLE_TIMER0_MODE1; // Timer0 is 16-bit mode
 }
 
-void Delay_Ms(uint16_t u16Delay)
+/**
+ * @brief Timer0 delay setting
+ * @param[in] u16Count define count time.
+ * @param[in] configdelay 	CONFIG_1MS,
+ * 							CONFIG_1US
+ * @return  None
+ * @exmaple :  Timer0_Delay(1,1000) = 1ms
+ */
+void DelayT0(uint16_t u16Count, CONFIG configdelay)
 {
-	while (u16Delay) {
-		--u16Delay;
-		delay_1ms();
+	uint8_t TL0TMP, TH0TMP;
+	TL0TMP = LOBYTE(65535 - (16 * configdelay));
+	TH0TMP = HIBYTE(65535 - (16 * configdelay));
+	while (u16Count)
+	{
+		TL0 = TL0TMP;
+		TH0 = TH0TMP;
+		set_TCON_TR0; // Start Timer0
+		while (!TF0); // Check Timer0 Time-Out Flag
+		clr_TCON_TF0;
+		clr_TCON_TR0; // Stop Timer0
+		--u16Count;
 	}
 }
-void delay_10us(void){
-	TH0 = 0;
-	TL0 = 0;
-	TR0 = 1;	/*Timer 0 Enable*/
-	while (TH0 * 256 + TL0 < 160) {
-	}
-	TR0 = 0;	/*Stop Timer0 and the current count will be preserved in TH0,TL0*/
-}
-void Delay_Us(uint16_t u16Delay)
-{
-	while (u16Delay) {
-		--u16Delay;
-		delay_10us();
-	}
-}
-

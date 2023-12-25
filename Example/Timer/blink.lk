@@ -13,8 +13,5 @@
 -l liblong
 -l libfloat
 obj/main.rel
-obj/gpio.rel
-obj/delay.rel
-obj/adc.rel
 
 -e

@@ -1,9 +1,8 @@
+#include <stdint.h> /*Thu vien bien*/
 #include <ms51.h>
 #include <macro.h>
-#include <stdint.h> /*Thu vien bien*/
-#include <my_delay.h>
-unsigned char a;
-__bit t;
+#include <delay.h>
+
 void main(void)
 {
 	/* P1.5, Chan 10 */
@@ -11,35 +10,9 @@ void main(void)
 	DelayT0_Init();
 	while (1)
 	{
-		T0_Delay(1,1000);
-		// t = 1;
-		// P15 = 1;
-		// Delay_Us(60);
-		// P15 = 0;
-		// Delay_Us(1940);
-		// Delay_Ms(200);
-
-		// P15 = 1;
-		// Delay_Us(170);
-		// P15 = 0;
-		// Delay_Us(1830);
-		// Delay_Ms(200);
+		P15 = 1;
+		DelayT0(500,CONFIG_1MS);
+		P15 = 0;
+		DelayT0(500,CONFIG_1MS);
 	}
 }
-// 90 do
-// P15 = 1;
-// Delay_Us(130);
-// P15 = 0;
-// Delay_Us(1870);
-
-//0 do
-// P15 = 1;
-// Delay_Us(60);
-// P15 = 0;
-// Delay_Us(1940);
-
-//150 do
-// P15 = 1;
-// Delay_Us(170);
-// P15 = 0;
-// Delay_Us(1830);

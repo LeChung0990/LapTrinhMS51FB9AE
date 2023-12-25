@@ -8,16 +8,10 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _OLED_FONT
 	.globl _main
-	.globl _UART0_ISR
-	.globl _ADC_ClearFlag
-	.globl _ADC_GetData
-	.globl _ADC_StartConv
-	.globl _ADC_SelectChannel
-	.globl _ADC_Init
+	.globl _Delay_Ms
+	.globl _delay_1ms
 	.globl _Delay_Init
-	.globl _GPIO_Init
 	.globl _MOSI
 	.globl _P00
 	.globl _MISO
@@ -250,10 +244,6 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
-	.globl _string
-	.globl _number
-	.globl _a
-	.globl _ADC_ISR
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -502,29 +492,9 @@ _MOSI	=	0x0080
 	.area REG_BANK_0	(REL,OVR,DATA)
 	.ds 8
 ;--------------------------------------------------------
-; overlayable bit register bank
-;--------------------------------------------------------
-	.area BIT_BANK	(REL,OVR,DATA)
-bits:
-	.ds 1
-	b0 = bits[0]
-	b1 = bits[1]
-	b2 = bits[2]
-	b3 = bits[3]
-	b4 = bits[4]
-	b5 = bits[5]
-	b6 = bits[6]
-	b7 = bits[7]
-;--------------------------------------------------------
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
-_a::
-	.ds 1
-_number::
-	.ds 2
-_string::
-	.ds 20
 ;--------------------------------------------------------
 ; overlayable items in internal ram
 ;--------------------------------------------------------
@@ -580,29 +550,6 @@ __start__stack:
 	.area HOME    (CODE)
 __interrupt_vect:
 	ljmp	__sdcc_gsinit_startup
-	reti
-	.ds	7
-	reti
-	.ds	7
-	reti
-	.ds	7
-	reti
-	.ds	7
-	ljmp	_UART0_ISR
-	.ds	5
-	reti
-	.ds	7
-	reti
-	.ds	7
-	reti
-	.ds	7
-	reti
-	.ds	7
-	reti
-	.ds	7
-	reti
-	.ds	7
-	ljmp	_ADC_ISR
 ;--------------------------------------------------------
 ; global & static initialisations
 ;--------------------------------------------------------
@@ -616,11 +563,6 @@ __interrupt_vect:
 	.globl __mcs51_genXINIT
 	.globl __mcs51_genXRAMCLEAR
 	.globl __mcs51_genRAMCLEAR
-;	main.c:9: uint8_t a=200;
-	mov	_a,#0xc8
-;	main.c:10: int number = 65000;
-	mov	_number,#0xe8
-	mov	(_number + 1),#0xfd
 	.area GSFINAL (CODE)
 	ljmp	__sdcc_program_startup
 ;--------------------------------------------------------
@@ -636,13 +578,13 @@ __sdcc_program_startup:
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'UART0_ISR'
+;Allocation info for local variables in function 'Delay_Init'
 ;------------------------------------------------------------
-;	main.c:79: void UART0_ISR(void) __interrupt (4){}
+;	main.c:5: void Delay_Init(void)
 ;	-----------------------------------------
-;	 function UART0_ISR
+;	 function Delay_Init
 ;	-----------------------------------------
-_UART0_ISR:
+_Delay_Init:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -651,423 +593,119 @@ _UART0_ISR:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-	reti
-;	eliminated unneeded mov psw,# (no regs used in bank)
-;	eliminated unneeded push/pop not_psw
-;	eliminated unneeded push/pop dpl
-;	eliminated unneeded push/pop dph
-;	eliminated unneeded push/pop b
-;	eliminated unneeded push/pop acc
+;	main.c:7: TMOD |= (1 << 0);
+	orl	_TMOD,#0x01
+;	main.c:8: TMOD &= ~(1 << 1);
+	anl	_TMOD,#0xfd
+;	main.c:9: CKCON |= (1 << 3);
+	orl	_CKCON,#0x08
+;	main.c:10: TMOD &= ~(1 << 2);
+	anl	_TMOD,#0xfb
+;	main.c:11: TMOD &= ~(1 << 3);
+	anl	_TMOD,#0xf7
+;	main.c:12: }
+	ret
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'ADC_ISR'
+;Allocation info for local variables in function 'delay_1ms'
 ;------------------------------------------------------------
-;u16AdcValue               Allocated to registers 
-;------------------------------------------------------------
-;	main.c:80: void ADC_ISR(void) __interrupt (11)
+;	main.c:13: void delay_1ms(void)
 ;	-----------------------------------------
-;	 function ADC_ISR
+;	 function delay_1ms
 ;	-----------------------------------------
-_ADC_ISR:
-	push	bits
-	push	acc
-	push	b
-	push	dpl
-	push	dph
-	push	(0+7)
-	push	(0+6)
-	push	(0+5)
-	push	(0+4)
-	push	(0+3)
-	push	(0+2)
-	push	(0+1)
-	push	(0+0)
-	push	psw
-	mov	psw,#0x00
-;	main.c:83: u16AdcValue = ADC_GetData();
-	lcall	_ADC_GetData
-;	main.c:85: ADC_ClearFlag();
-	lcall	_ADC_ClearFlag
-;	main.c:86: ADC_StartConv();
-	lcall	_ADC_StartConv
-;	main.c:87: }
-	pop	psw
-	pop	(0+0)
-	pop	(0+1)
-	pop	(0+2)
-	pop	(0+3)
-	pop	(0+4)
-	pop	(0+5)
-	pop	(0+6)
-	pop	(0+7)
-	pop	dph
-	pop	dpl
-	pop	b
-	pop	acc
-	pop	bits
-	reti
+_delay_1ms:
+;	main.c:15: TH0 = 0;
+	mov	_TH0,#0x00
+;	main.c:16: TL0 = 0;
+	mov	_TL0,#0x00
+;	main.c:17: TR0 = 1;
+;	assignBit
+	setb	_TR0
+;	main.c:18: while (TH0 * 256 + TL0 < 16000) {
+00101$:
+	mov	r7,_TH0
+	mov	r6,#0x00
+	mov	r4,_TL0
+	mov	r5,#0x00
+	mov	a,r4
+	add	a,r6
+	mov	r6,a
+	mov	a,r5
+	addc	a,r7
+	mov	r7,a
+	clr	c
+	mov	a,r6
+	subb	a,#0x80
+	mov	a,r7
+	xrl	a,#0x80
+	subb	a,#0xbe
+	jc	00101$
+;	main.c:20: TR0 = 0;
+;	assignBit
+	clr	_TR0
+;	main.c:21: }
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'Delay_Ms'
+;------------------------------------------------------------
+;u16Delay                  Allocated to registers 
+;------------------------------------------------------------
+;	main.c:23: void Delay_Ms(uint16_t u16Delay)
+;	-----------------------------------------
+;	 function Delay_Ms
+;	-----------------------------------------
+_Delay_Ms:
+	mov	r6,dpl
+	mov	r7,dph
+;	main.c:25: while (u16Delay) {
+00101$:
+	mov	a,r6
+	orl	a,r7
+	jz	00104$
+;	main.c:26: --u16Delay;
+	dec	r6
+	cjne	r6,#0xff,00116$
+	dec	r7
+00116$:
+;	main.c:27: delay_1ms();
+	push	ar7
+	push	ar6
+	lcall	_delay_1ms
+	pop	ar6
+	pop	ar7
+	sjmp	00101$
+00104$:
+;	main.c:29: }
+	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;	main.c:89: void main(void)
+;	main.c:30: void main(void)
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	main.c:92: GPIO_Init();
-	lcall	_GPIO_Init
-;	main.c:93: Delay_Init();
+;	main.c:34: P1M1&=0xDF;P1M2|=0x20;
+	anl	_P1M1,#0xdf
+	orl	_P1M2,#0x20
+;	main.c:35: Delay_Init();
 	lcall	_Delay_Init
-;	main.c:94: ADC_Init();
-	lcall	_ADC_Init
-;	main.c:95: ADC_SelectChannel(0);
-	mov	dpl,#0x00
-	lcall	_ADC_SelectChannel
-;	main.c:96: ADC_StartConv();
-	lcall	_ADC_StartConv
-;	main.c:97: EA = 1;
-;	assignBit
-	setb	_EA
-;	main.c:99: while (1) {
+;	main.c:36: while (1) {
 00102$:
-;	main.c:101: P15 = 0;
+;	main.c:38: P15 = 0;
 ;	assignBit
 	clr	_P15
-;	main.c:103: __asm__("nop\n");
-	nop
-;	main.c:104: P15 = 1;
+;	main.c:39: Delay_Ms(1);
+	mov	dptr,#0x0001
+	lcall	_Delay_Ms
+;	main.c:41: P15 = 1;
 ;	assignBit
 	setb	_P15
-;	main.c:106: __asm__("nop\n");
-	nop
-;	main.c:108: }
+;	main.c:42: Delay_Ms(1);
+	mov	dptr,#0x0001
+	lcall	_Delay_Ms
+;	main.c:45: }
 	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
-_OLED_FONT:
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0x2f	; 47
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0x07	; 7
-	.db #0x00	; 0
-	.db #0x07	; 7
-	.db #0x00	; 0
-	.db #0x14	; 20
-	.db #0x7f	; 127
-	.db #0x14	; 20
-	.db #0x7f	; 127
-	.db #0x14	; 20
-	.db #0x24	; 36
-	.db #0x2a	; 42
-	.db #0x7f	; 127
-	.db #0x2a	; 42
-	.db #0x12	; 18
-	.db #0x62	; 98	'b'
-	.db #0x64	; 100	'd'
-	.db #0x08	; 8
-	.db #0x13	; 19
-	.db #0x23	; 35
-	.db #0x36	; 54	'6'
-	.db #0x49	; 73	'I'
-	.db #0x55	; 85	'U'
-	.db #0x22	; 34
-	.db #0x50	; 80	'P'
-	.db #0x00	; 0
-	.db #0x05	; 5
-	.db #0x03	; 3
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0x1c	; 28
-	.db #0x22	; 34
-	.db #0x41	; 65	'A'
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0x41	; 65	'A'
-	.db #0x22	; 34
-	.db #0x1c	; 28
-	.db #0x00	; 0
-	.db #0x14	; 20
-	.db #0x08	; 8
-	.db #0x3e	; 62
-	.db #0x08	; 8
-	.db #0x14	; 20
-	.db #0x08	; 8
-	.db #0x08	; 8
-	.db #0x3e	; 62
-	.db #0x08	; 8
-	.db #0x08	; 8
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0xa0	; 160
-	.db #0x60	; 96
-	.db #0x00	; 0
-	.db #0x08	; 8
-	.db #0x08	; 8
-	.db #0x08	; 8
-	.db #0x08	; 8
-	.db #0x08	; 8
-	.db #0x00	; 0
-	.db #0x60	; 96
-	.db #0x60	; 96
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0x20	; 32
-	.db #0x10	; 16
-	.db #0x08	; 8
-	.db #0x04	; 4
-	.db #0x02	; 2
-	.db #0x3e	; 62
-	.db #0x51	; 81	'Q'
-	.db #0x49	; 73	'I'
-	.db #0x45	; 69	'E'
-	.db #0x3e	; 62
-	.db #0x00	; 0
-	.db #0x42	; 66	'B'
-	.db #0x7f	; 127
-	.db #0x40	; 64
-	.db #0x00	; 0
-	.db #0x42	; 66	'B'
-	.db #0x61	; 97	'a'
-	.db #0x51	; 81	'Q'
-	.db #0x49	; 73	'I'
-	.db #0x46	; 70	'F'
-	.db #0x21	; 33
-	.db #0x41	; 65	'A'
-	.db #0x45	; 69	'E'
-	.db #0x4b	; 75	'K'
-	.db #0x31	; 49	'1'
-	.db #0x18	; 24
-	.db #0x14	; 20
-	.db #0x12	; 18
-	.db #0x7f	; 127
-	.db #0x10	; 16
-	.db #0x27	; 39
-	.db #0x45	; 69	'E'
-	.db #0x45	; 69	'E'
-	.db #0x45	; 69	'E'
-	.db #0x39	; 57	'9'
-	.db #0x3c	; 60
-	.db #0x4a	; 74	'J'
-	.db #0x49	; 73	'I'
-	.db #0x49	; 73	'I'
-	.db #0x30	; 48	'0'
-	.db #0x01	; 1
-	.db #0x71	; 113	'q'
-	.db #0x09	; 9
-	.db #0x05	; 5
-	.db #0x03	; 3
-	.db #0x36	; 54	'6'
-	.db #0x49	; 73	'I'
-	.db #0x49	; 73	'I'
-	.db #0x49	; 73	'I'
-	.db #0x36	; 54	'6'
-	.db #0x06	; 6
-	.db #0x49	; 73	'I'
-	.db #0x49	; 73	'I'
-	.db #0x29	; 41
-	.db #0x1e	; 30
-	.db #0x00	; 0
-	.db #0x36	; 54	'6'
-	.db #0x36	; 54	'6'
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0x56	; 86	'V'
-	.db #0x36	; 54	'6'
-	.db #0x00	; 0
-	.db #0x00	; 0
-	.db #0x08	; 8
-	.db #0x14	; 20
-	.db #0x22	; 34
-	.db #0x41	; 65	'A'
-	.db #0x00	; 0
-	.db #0x14	; 20
-	.db #0x14	; 20
-	.db #0x14	; 20
-	.db #0x14	; 20
-	.db #0x14	; 20
-	.db #0x00	; 0
-	.db #0x41	; 65	'A'
-	.db #0x22	; 34
-	.db #0x14	; 20
-	.db #0x08	; 8
-	.db #0x02	; 2
-	.db #0x01	; 1
-	.db #0x51	; 81	'Q'
-	.db #0x09	; 9
-	.db #0x06	; 6
-	.db #0x32	; 50	'2'
-	.db #0x49	; 73	'I'
-	.db #0x59	; 89	'Y'
-	.db #0x51	; 81	'Q'
-	.db #0x3e	; 62
-	.db #0x7c	; 124
-	.db #0x12	; 18
-	.db #0x11	; 17
-	.db #0x12	; 18
-	.db #0x7c	; 124
-	.db #0x7f	; 127
-	.db #0x49	; 73	'I'
-	.db #0x49	; 73	'I'
-	.db #0x49	; 73	'I'
-	.db #0x36	; 54	'6'
-	.db #0x3e	; 62
-	.db #0x41	; 65	'A'
-	.db #0x41	; 65	'A'
-	.db #0x41	; 65	'A'
-	.db #0x22	; 34
-	.db #0x7f	; 127
-	.db #0x41	; 65	'A'
-	.db #0x41	; 65	'A'
-	.db #0x22	; 34
-	.db #0x1c	; 28
-	.db #0x7f	; 127
-	.db #0x49	; 73	'I'
-	.db #0x49	; 73	'I'
-	.db #0x49	; 73	'I'
-	.db #0x41	; 65	'A'
-	.db #0x7f	; 127
-	.db #0x09	; 9
-	.db #0x09	; 9
-	.db #0x09	; 9
-	.db #0x01	; 1
-	.db #0x3e	; 62
-	.db #0x41	; 65	'A'
-	.db #0x49	; 73	'I'
-	.db #0x49	; 73	'I'
-	.db #0x7a	; 122	'z'
-	.db #0x7f	; 127
-	.db #0x08	; 8
-	.db #0x08	; 8
-	.db #0x08	; 8
-	.db #0x7f	; 127
-	.db #0x00	; 0
-	.db #0x41	; 65	'A'
-	.db #0x7f	; 127
-	.db #0x41	; 65	'A'
-	.db #0x00	; 0
-	.db #0x20	; 32
-	.db #0x40	; 64
-	.db #0x41	; 65	'A'
-	.db #0x3f	; 63
-	.db #0x01	; 1
-	.db #0x7f	; 127
-	.db #0x08	; 8
-	.db #0x14	; 20
-	.db #0x22	; 34
-	.db #0x41	; 65	'A'
-	.db #0x7f	; 127
-	.db #0x40	; 64
-	.db #0x40	; 64
-	.db #0x40	; 64
-	.db #0x40	; 64
-	.db #0x7f	; 127
-	.db #0x02	; 2
-	.db #0x0c	; 12
-	.db #0x02	; 2
-	.db #0x7f	; 127
-	.db #0x7f	; 127
-	.db #0x04	; 4
-	.db #0x08	; 8
-	.db #0x10	; 16
-	.db #0x7f	; 127
-	.db #0x3e	; 62
-	.db #0x41	; 65	'A'
-	.db #0x41	; 65	'A'
-	.db #0x41	; 65	'A'
-	.db #0x3e	; 62
-	.db #0x7f	; 127
-	.db #0x09	; 9
-	.db #0x09	; 9
-	.db #0x09	; 9
-	.db #0x06	; 6
-	.db #0x3e	; 62
-	.db #0x41	; 65	'A'
-	.db #0x51	; 81	'Q'
-	.db #0x21	; 33
-	.db #0x5e	; 94
-	.db #0x7f	; 127
-	.db #0x09	; 9
-	.db #0x19	; 25
-	.db #0x29	; 41
-	.db #0x46	; 70	'F'
-	.db #0x46	; 70	'F'
-	.db #0x49	; 73	'I'
-	.db #0x49	; 73	'I'
-	.db #0x49	; 73	'I'
-	.db #0x31	; 49	'1'
-	.db #0x01	; 1
-	.db #0x01	; 1
-	.db #0x7f	; 127
-	.db #0x01	; 1
-	.db #0x01	; 1
-	.db #0x3f	; 63
-	.db #0x40	; 64
-	.db #0x40	; 64
-	.db #0x40	; 64
-	.db #0x3f	; 63
-	.db #0x1f	; 31
-	.db #0x20	; 32
-	.db #0x40	; 64
-	.db #0x20	; 32
-	.db #0x1f	; 31
-	.db #0x3f	; 63
-	.db #0x40	; 64
-	.db #0x38	; 56	'8'
-	.db #0x40	; 64
-	.db #0x3f	; 63
-	.db #0x63	; 99	'c'
-	.db #0x14	; 20
-	.db #0x08	; 8
-	.db #0x14	; 20
-	.db #0x63	; 99	'c'
-	.db #0x07	; 7
-	.db #0x08	; 8
-	.db #0x70	; 112	'p'
-	.db #0x08	; 8
-	.db #0x07	; 7
-	.db #0x61	; 97	'a'
-	.db #0x51	; 81	'Q'
-	.db #0x49	; 73	'I'
-	.db #0x45	; 69	'E'
-	.db #0x43	; 67	'C'
-	.db #0x00	; 0
-	.db #0x7f	; 127
-	.db #0x41	; 65	'A'
-	.db #0x41	; 65	'A'
-	.db #0x00	; 0
-	.db #0x02	; 2
-	.db #0x04	; 4
-	.db #0x08	; 8
-	.db #0x10	; 16
-	.db #0x20	; 32
-	.db #0x00	; 0
-	.db #0x41	; 65	'A'
-	.db #0x41	; 65	'A'
-	.db #0x7f	; 127
-	.db #0x00	; 0
-	.db #0x04	; 4
-	.db #0x02	; 2
-	.db #0x01	; 1
-	.db #0x02	; 2
-	.db #0x04	; 4
-	.db #0x40	; 64
-	.db #0x40	; 64
-	.db #0x40	; 64
-	.db #0x40	; 64
-	.db #0x40	; 64
-	.db #0x00	; 0
-	.db #0x60	; 96
-	.db #0x60	; 96
-	.db #0x00	; 0
-	.db #0x00	; 0
 	.area XINIT   (CODE)
 	.area CABS    (ABS,CODE)

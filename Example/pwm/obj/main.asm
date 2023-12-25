@@ -9,8 +9,11 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
+	.globl _delay
+	.globl _SET_DUTY
+	.globl _PWM0_STOP
+	.globl _PWM0_RUN
 	.globl _PWM_Init
-	.globl _Delay_Ms
 	.globl _Delay_Init
 	.globl _GPIO_Init
 	.globl _MOSI
@@ -245,6 +248,7 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
+	.globl _dem
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -496,9 +500,12 @@ _MOSI	=	0x0080
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
+_dem::
+	.ds 1
 ;--------------------------------------------------------
 ; overlayable items in internal ram
 ;--------------------------------------------------------
+	.area	OSEG    (OVR,DATA)
 ;--------------------------------------------------------
 ; Stack segment in internal ram
 ;--------------------------------------------------------
@@ -564,6 +571,8 @@ __interrupt_vect:
 	.globl __mcs51_genXINIT
 	.globl __mcs51_genXRAMCLEAR
 	.globl __mcs51_genRAMCLEAR
+;	main.c:7: uint8_t dem = 0;
+	mov	_dem,#0x00
 	.area GSFINAL (CODE)
 	ljmp	__sdcc_program_startup
 ;--------------------------------------------------------
@@ -579,13 +588,15 @@ __sdcc_program_startup:
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
+;Allocation info for local variables in function 'delay'
 ;------------------------------------------------------------
-;	main.c:8: void main(void)
+;i                         Allocated to registers r4 r5 r6 r7 
+;------------------------------------------------------------
+;	main.c:9: void delay(void)
 ;	-----------------------------------------
-;	 function main
+;	 function delay
 ;	-----------------------------------------
-_main:
+_delay:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -594,28 +605,64 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:11: GPIO_Init();
+;	main.c:11: for (uint32_t i = 0; i < 0xffff; ++i)
+	mov	r4,#0x00
+	mov	r5,#0x00
+	mov	r6,#0x00
+	mov	r7,#0x00
+00103$:
+	clr	c
+	mov	a,r4
+	subb	a,#0xff
+	mov	a,r5
+	subb	a,#0xff
+	mov	a,r6
+	subb	a,#0x00
+	mov	a,r7
+	subb	a,#0x00
+	jnc	00105$
+	inc	r4
+	cjne	r4,#0x00,00117$
+	inc	r5
+	cjne	r5,#0x00,00117$
+	inc	r6
+	cjne	r6,#0x00,00103$
+	inc	r7
+00117$:
+	sjmp	00103$
+00105$:
+;	main.c:14: }
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'main'
+;------------------------------------------------------------
+;	main.c:15: void main(void)
+;	-----------------------------------------
+;	 function main
+;	-----------------------------------------
+_main:
+;	main.c:18: GPIO_Init();
 	lcall	_GPIO_Init
-;	main.c:12: Delay_Init();
+;	main.c:20: Delay_Init();
 	lcall	_Delay_Init
-;	main.c:13: PWM_Init();
+;	main.c:21: PWM_Init();
 	lcall	_PWM_Init
-;	main.c:14: while (1) {
-00102$:
-;	main.c:16: P15 = 0;
-;	assignBit
-	clr	_P15
-;	main.c:17: Delay_Ms(100);
-	mov	dptr,#0x0064
-	lcall	_Delay_Ms
-;	main.c:18: P15 = 1;
+;	main.c:22: while (1)
+00104$:
+;	main.c:24: if (P10 == 0)
+	jb	_P10,00104$
+;	main.c:26: P15 = 1;
 ;	assignBit
 	setb	_P15
-;	main.c:19: Delay_Ms(100);
-	mov	dptr,#0x0064
-	lcall	_Delay_Ms
-;	main.c:21: }
-	sjmp	00102$
+;	main.c:27: PWM0_STOP();
+	lcall	_PWM0_STOP
+;	main.c:28: SET_DUTY(90);
+	mov	dpl,#0x5a
+	lcall	_SET_DUTY
+;	main.c:29: PWM0_RUN();
+	lcall	_PWM0_RUN
+;	main.c:33: }
+	sjmp	00104$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)

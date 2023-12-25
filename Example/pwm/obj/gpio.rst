@@ -557,7 +557,7 @@
                                     557 ;	-----------------------------------------
                                     558 ;	 function GPIO_Init
                                     559 ;	-----------------------------------------
-      00007D                        560 _GPIO_Init:
+      0000A8                        560 _GPIO_Init:
                            000007   561 	ar7 = 0x07
                            000006   562 	ar6 = 0x06
                            000005   563 	ar5 = 0x05
@@ -566,13 +566,15 @@
                            000002   566 	ar2 = 0x02
                            000001   567 	ar1 = 0x01
                            000000   568 	ar0 = 0x00
-                                    569 ;	lib/src/gpio.c:9: P1M1 &= ~(1 << 5);
-      00007D 53 B3 DF         [24]  570 	anl	_P1M1,#0xdf
-                                    571 ;	lib/src/gpio.c:10: P1M2 |= (1 << 5);
-      000080 43 B4 20         [24]  572 	orl	_P1M2,#0x20
-                                    573 ;	lib/src/gpio.c:11: }
-      000083 22               [24]  574 	ret
-                                    575 	.area CSEG    (CODE)
-                                    576 	.area CONST   (CODE)
-                                    577 	.area XINIT   (CODE)
-                                    578 	.area CABS    (ABS,CODE)
+                                    569 ;	lib/src/gpio.c:9: P15_PUSHPULL_MODE;
+      0000A8 53 B3 DF         [24]  570 	anl	_P1M1,#0xdf
+      0000AB 43 B4 20         [24]  571 	orl	_P1M2,#0x20
+                                    572 ;	lib/src/gpio.c:11: P10_INPUT_MODE;;
+      0000AE 43 B3 01         [24]  573 	orl	_P1M1,#0x01
+      0000B1 53 B4 FE         [24]  574 	anl	_P1M2,#0xfe
+                                    575 ;	lib/src/gpio.c:12: }
+      0000B4 22               [24]  576 	ret
+                                    577 	.area CSEG    (CODE)
+                                    578 	.area CONST   (CODE)
+                                    579 	.area XINIT   (CODE)
+                                    580 	.area CABS    (ABS,CODE)

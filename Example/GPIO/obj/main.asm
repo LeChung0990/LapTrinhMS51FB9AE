@@ -8,10 +8,9 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _main
 	.globl _Exti_ISR
+	.globl _main
 	.globl _External_Int_Config
-	.globl _Delay_Ms
 	.globl _MOSI
 	.globl _P00
 	.globl _MISO
@@ -244,7 +243,6 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
-	.globl _ch
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -496,8 +494,6 @@ _MOSI	=	0x0080
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
-_ch::
-	.ds 2
 ;--------------------------------------------------------
 ; overlayable items in internal ram
 ;--------------------------------------------------------
@@ -581,9 +577,6 @@ __interrupt_vect:
 	.globl __mcs51_genXINIT
 	.globl __mcs51_genXRAMCLEAR
 	.globl __mcs51_genRAMCLEAR
-;	main.c:27: int ch = 9;
-	mov	_ch,#0x09
-	mov	(_ch + 1),#0x00
 	.area GSFINAL (CODE)
 	ljmp	__sdcc_program_startup
 ;--------------------------------------------------------
@@ -601,7 +594,7 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'External_Int_Config'
 ;------------------------------------------------------------
-;	main.c:8: void External_Int_Config(void){
+;	main.c:8: void External_Int_Config(void)
 ;	-----------------------------------------
 ;	 function External_Int_Config
 ;	-----------------------------------------
@@ -614,33 +607,51 @@ _External_Int_Config:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:10: set_PICON_PIT1;		/*Edge triggered.*/
+;	main.c:11: set_PICON_PIT1;	  /*Edge triggered.*/
 	orl	_PICON,#0x08
-;	main.c:11: set_PINEN_PINEN1;	/*Low-level/falling edge detect Enabled*/
+;	main.c:12: set_PINEN_PINEN1; /*Low-level/falling edge detect Enabled*/
 	orl	_PINEN,#0x02
-;	main.c:12: set_PICON_PIPS0;
+;	main.c:13: set_PICON_PIPS0;
 	orl	_PICON,#0x01
-;	main.c:15: set_PICON_PIT0;
-	orl	_PICON,#0x04
-;	main.c:16: set_PINEN_PINEN0;
-	orl	_PINEN,#0x01
-;	main.c:17: set_PICON_PIPS0;
-	orl	_PICON,#0x01
-;	main.c:18: set_PICON_PIPS1;
-	orl	_PICON,#0x02
-;	main.c:21: }
+;	main.c:20: }
 	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'main'
+;------------------------------------------------------------
+;	main.c:22: void main(void)
+;	-----------------------------------------
+;	 function main
+;	-----------------------------------------
+_main:
+;	main.c:27: P15_PUSHPULL_MODE;
+	anl	_P1M1,#0xdf
+	orl	_P1M2,#0x20
+;	main.c:29: P15 = 0;
+;	assignBit
+	clr	_P15
+;	main.c:30: External_Int_Config();
+	lcall	_External_Int_Config
+;	main.c:31: P14_INPUT_MODE;
+	orl	_P1M1,#0x10
+	anl	_P1M2,#0xef
+;	main.c:32: while (1)
+00102$:
+;	main.c:43: }
+	sjmp	00102$
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'Exti_ISR'
 ;------------------------------------------------------------
-;	main.c:23: void Exti_ISR(void) __interrupt (7) {
+;	main.c:46: void Exti_ISR(void) __interrupt(7)
 ;	-----------------------------------------
 ;	 function Exti_ISR
 ;	-----------------------------------------
 _Exti_ISR:
-;	main.c:24: PIF &= ~(1<<1);	/*clear Interrupt Flags*/
+;	main.c:48: PIF &= ~(1 << 1); /*clear Interrupt Flags*/
 	anl	_PIF,#0xfd
-;	main.c:26: }
+;	main.c:50: P15 = 1;			  
+;	assignBit
+	setb	_P15
+;	main.c:51: }
 	reti
 ;	eliminated unneeded mov psw,# (no regs used in bank)
 ;	eliminated unneeded push/pop not_psw
@@ -648,34 +659,6 @@ _Exti_ISR:
 ;	eliminated unneeded push/pop dph
 ;	eliminated unneeded push/pop b
 ;	eliminated unneeded push/pop acc
-;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
-;------------------------------------------------------------
-;	main.c:28: void main(void)
-;	-----------------------------------------
-;	 function main
-;	-----------------------------------------
-_main:
-;	main.c:33: set_P1M1_5;
-	orl	_P1M1,#0x20
-;	main.c:34: set_P1M2_1; 
-	orl	_P1M2,#0x02
-;	main.c:35: while (1) {
-00102$:
-;	main.c:36: P15 = 0; /*Chan 10*/
-;	assignBit
-	clr	_P15
-;	main.c:37: Delay_Ms(50);
-	mov	dptr,#0x0032
-	lcall	_Delay_Ms
-;	main.c:38: P15 = 1; /*Chan 10*/
-;	assignBit
-	setb	_P15
-;	main.c:39: Delay_Ms(50);
-	mov	dptr,#0x0032
-	lcall	_Delay_Ms
-;	main.c:41: }
-	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)

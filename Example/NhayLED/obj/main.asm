@@ -9,7 +9,7 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
-	.globl _T0_Delay
+	.globl _DelayT0
 	.globl _DelayT0_Init
 	.globl _MOSI
 	.globl _P00
@@ -243,9 +243,6 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
-	.globl _t
-	.globl _BIT_TMP
-	.globl _a
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -497,8 +494,6 @@ _MOSI	=	0x0080
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
-_a::
-	.ds 1
 ;--------------------------------------------------------
 ; overlayable items in internal ram
 ;--------------------------------------------------------
@@ -522,10 +517,6 @@ __start__stack:
 ; bit data
 ;--------------------------------------------------------
 	.area BSEG    (BIT)
-_BIT_TMP::
-	.ds 1
-_t::
-	.ds 1
 ;--------------------------------------------------------
 ; paged external ram data
 ;--------------------------------------------------------
@@ -588,7 +579,7 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;	main.c:7: void main(void)
+;	main.c:6: void main(void)
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
@@ -601,19 +592,30 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:10: P15_PUSHPULL_MODE;
+;	main.c:9: P15_PUSHPULL_MODE;
 	anl	_P1M1,#0xdf
 	orl	_P1M2,#0x20
-;	main.c:11: DelayT0_Init();
+;	main.c:10: DelayT0_Init();
 	lcall	_DelayT0_Init
-;	main.c:12: while (1)
+;	main.c:11: while (1)
 00102$:
-;	main.c:14: T0_Delay(1,1000);
-	mov	_T0_Delay_PARM_2,#0xe8
-	mov	(_T0_Delay_PARM_2 + 1),#0x03
-	mov	dptr,#0x0001
-	lcall	_T0_Delay
-;	main.c:28: }
+;	main.c:13: P15 = 1;
+;	assignBit
+	setb	_P15
+;	main.c:14: DelayT0(500,CONFIG_1MS);
+	mov	_DelayT0_PARM_2,#0xe8
+	mov	(_DelayT0_PARM_2 + 1),#0x03
+	mov	dptr,#0x01f4
+	lcall	_DelayT0
+;	main.c:15: P15 = 0;
+;	assignBit
+	clr	_P15
+;	main.c:16: DelayT0(500,CONFIG_1MS);
+	mov	_DelayT0_PARM_2,#0xe8
+	mov	(_DelayT0_PARM_2 + 1),#0x03
+	mov	dptr,#0x01f4
+	lcall	_DelayT0
+;	main.c:18: }
 	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

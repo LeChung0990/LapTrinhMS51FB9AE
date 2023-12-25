@@ -2,7 +2,7 @@
 #include "macro.h"
 #include "Function_Define.h"
 #define UART0_RX_FLAG (1 << 0)
-efine UART0_Timer1  0
+#define UART0_Timer1  0
 #define UART0_Timer3  1
 #define UART1_Timer3  2
 #define UART0 0#define UART0_TX_FLAG (1 << 1)

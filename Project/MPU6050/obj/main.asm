@@ -11,7 +11,6 @@
 	.globl _main
 	.globl _ReadData
 	.globl _InitMPU6050
-	.globl _UART0_NUMBER
 	.globl _UART0_STRING
 	.globl _UART0_Init
 	.globl _Delay_Ms
@@ -744,12 +743,26 @@ _main:
 	mov	dptr,#___str_1
 	mov	b,#0x80
 	lcall	_UART0_STRING
+;	main.c:65: I2C_start();
+	lcall	_I2C_start
+;	main.c:66: I2C_Address((uint8_t)0xA1,1);
+	mov	_I2C_Address_PARM_2,#0x01
+	mov	dpl,#0xa1
+	lcall	_I2C_Address
+;	main.c:67: u8Data[0] =  I2C_Read(1);
+	mov	dpl,#0x01
+	lcall	_I2C_Read
+	mov	a,dpl
+	mov	_u8Data,a
+;	main.c:68: u8Data[1] =	 I2C_Read(0);
+	mov	dpl,#0x00
+	lcall	_I2C_Read
+	mov	a,dpl
+	mov	(_u8Data + 0x0001),a
+;	main.c:69: send_stop();
+	lcall	_send_stop
 ;	main.c:76: InitMPU6050();
 	lcall	_InitMPU6050
-;	main.c:77: UART0_STRING("Step1:");
-	mov	dptr,#___str_2
-	mov	b,#0x80
-	lcall	_UART0_STRING
 ;	main.c:79: I2C_start();
 	lcall	_I2C_start
 ;	main.c:80: I2C_Address((uint8_t)0x68 << 1, 0);
@@ -766,36 +779,9 @@ _main:
 	mov	dpl,#0xd0
 	lcall	_I2C_Address
 	mov	_checkAddress,dpl
-;	main.c:87: High = I2C_Read(0);
-	mov	dpl,#0x00
-	lcall	_I2C_Read
-	mov	_High,dpl
-;	main.c:89: UART0_NUMBER(High);
-	mov	r6,_High
-	mov	r7,#0x00
-	mov	dpl,r6
-	mov	dph,r7
-	lcall	_UART0_NUMBER
-;	main.c:90: Low = I2C_Read(0);
-	mov	dpl,#0x00
-	lcall	_I2C_Read
-	mov	_Low,dpl
-;	main.c:91: send_stop();
-	lcall	_send_stop
-;	main.c:92: Res = (High << 8) | Low;
-	mov	r7,_High
-	mov	r6,#0x00
-	mov	r4,_Low
-	mov	r5,#0x00
-	mov	a,r4
-	orl	ar6,a
-	mov	a,r5
-	orl	ar7,a
-	mov	_Res,r6
-	mov	(_Res + 1),r7
 ;	main.c:95: while (1) {
 00102$:
-;	main.c:100: }
+;	main.c:101: }
 	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
@@ -809,11 +795,6 @@ ___str_1:
 	.ascii "Read:"
 	.db 0x0a
 	.ascii " "
-	.db 0x00
-	.area CSEG    (CODE)
-	.area CONST   (CODE)
-___str_2:
-	.ascii "Step1:"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area XINIT   (CODE)

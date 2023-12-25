@@ -1,5 +1,9 @@
-__bit BIT_TMP;
-
+#include <ms51.h>
+/********************************************************************/
+/*  <Macro define custom for SDCC                                   */
+/********************************************************************/
+extern __bit BIT_TMP;
+// __bit BIT_TMP;   /*Error SDCC: Multiple definition of _BIT_TMP */
 #define HIBYTE(v1)              ((uint8_t)((v1)>>8))                      //v1 is UINT16
 #define LOBYTE(v1)              ((uint8_t)((v1)&0xFF))
 

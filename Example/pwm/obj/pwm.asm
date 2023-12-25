@@ -241,6 +241,9 @@
 	.globl _SP
 	.globl _P0
 	.globl _PWM_Init
+	.globl _PWM0_RUN
+	.globl _PWM0_STOP
+	.globl _SET_DUTY
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -495,6 +498,7 @@ _MOSI	=	0x0080
 ;--------------------------------------------------------
 ; overlayable items in internal ram
 ;--------------------------------------------------------
+	.area	OSEG    (OVR,DATA)
 ;--------------------------------------------------------
 ; indirectly addressable internal ram data
 ;--------------------------------------------------------
@@ -553,7 +557,10 @@ _MOSI	=	0x0080
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'PWM_Init'
 ;------------------------------------------------------------
-;	lib/src/pwm.c:4: void PWM_Init(void)
+;high                      Allocated to registers 
+;low                       Allocated to registers 
+;------------------------------------------------------------
+;	lib/src/pwm.c:6: void PWM_Init(void)
 ;	-----------------------------------------
 ;	 function PWM_Init
 ;	-----------------------------------------
@@ -566,33 +573,84 @@ _PWM_Init:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	lib/src/pwm.c:6: CLRPWM = 1;
+;	lib/src/pwm.c:9: set_PWMCON0_CLRPWM;		/*Clearing PWM 16-bit counter*/
 ;	assignBit
 	setb	_CLRPWM
-;	lib/src/pwm.c:7: CKCON &= ~(1 << 6);
+;	lib/src/pwm.c:11: clr_CKCON_PWMCKS;	/*The clock source of PWM is the system clock FSYS.*/
 	anl	_CKCON,#0xbf
-;	lib/src/pwm.c:8: PWMCON1 &= 0x07;
+;	lib/src/pwm.c:14: PWMCON1 &= 0x07;
 	anl	_PWMCON1,#0x07
-;	lib/src/pwm.c:9: PWMCON1 |= 0x00;
+;	lib/src/pwm.c:15: PWMCON1 |= 0x00;
 	mov	_PWMCON1,_PWMCON1
-;	lib/src/pwm.c:10: PWMPH = 0x3e;
+;	lib/src/pwm.c:16: PWMPH = (uint8_t)(16000 >> 8) & 0xFF;
 	mov	_PWMPH,#0x3e
-;	lib/src/pwm.c:11: PWMPL = 0x7f;
-	mov	_PWMPL,#0x7f
-;	lib/src/pwm.c:12: PWM0H = 0x1f;
-	mov	_PWM0H,#0x1f
-;	lib/src/pwm.c:13: PWM0L = 0x40;
-	mov	_PWM0L,#0x40
-;	lib/src/pwm.c:14: P1M1 &= ~(1 << 2);
+;	lib/src/pwm.c:17: PWMPL = (uint8_t)16000 & 0xFF;
+	mov	_PWMPL,#0x80
+;	lib/src/pwm.c:25: PWM0H = (uint8_t)high;
+	mov	_PWM0H,#0x3e
+;	lib/src/pwm.c:26: PWM0L = (uint8_t)low;
+	mov	_PWM0L,#0x80
+;	lib/src/pwm.c:28: P1M1 &= ~(1 << 2);
 	anl	_P1M1,#0xfb
-;	lib/src/pwm.c:15: P1M2 |= (1 << 2);
+;	lib/src/pwm.c:29: P1M2 |= (1 << 2);
 	orl	_P1M2,#0x04
-;	lib/src/pwm.c:16: PIOCON0 |= (1 << 0);
+;	lib/src/pwm.c:30: set_PIOCON0_PIO00; /* P1.2/PWM0 pin functions as PWM0 output.*/
 	orl	_PIOCON0,#0x01
-;	lib/src/pwm.c:17: PWMRUN = 1;
+;	lib/src/pwm.c:32: PWM0_RUN();
+;	lib/src/pwm.c:33: }
+	ljmp	_PWM0_RUN
+;------------------------------------------------------------
+;Allocation info for local variables in function 'PWM0_RUN'
+;------------------------------------------------------------
+;	lib/src/pwm.c:35: void PWM0_RUN(void)
+;	-----------------------------------------
+;	 function PWM0_RUN
+;	-----------------------------------------
+_PWM0_RUN:
+;	lib/src/pwm.c:37: set_PWMCON0_PWMRUN;
 ;	assignBit
 	setb	_PWMRUN
-;	lib/src/pwm.c:18: }
+;	lib/src/pwm.c:38: }
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'PWM0_STOP'
+;------------------------------------------------------------
+;	lib/src/pwm.c:39: void PWM0_STOP(void)
+;	-----------------------------------------
+;	 function PWM0_STOP
+;	-----------------------------------------
+_PWM0_STOP:
+;	lib/src/pwm.c:41: clr_PWMCON0_PWMRUN;
+;	assignBit
+	clr	_PWMRUN
+;	lib/src/pwm.c:42: }
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'SET_DUTY'
+;------------------------------------------------------------
+;dem                       Allocated to registers r7 
+;high                      Allocated to registers 
+;low                       Allocated to registers 
+;------------------------------------------------------------
+;	lib/src/pwm.c:43: void SET_DUTY(uint8_t dem)
+;	-----------------------------------------
+;	 function SET_DUTY
+;	-----------------------------------------
+_SET_DUTY:
+;	lib/src/pwm.c:46: high = (uint8_t) (((16000/100) * dem) >> 8 ) & 0xFF;
+	mov	a,dpl
+	mov	r7,a
+	mov	b,#0xa0
+	mul	ab
+	mov	r6,b
+	mov	_PWM0H,r6
+;	lib/src/pwm.c:47: low = (uint8_t)((16000/100) * dem) & 0xFF;
+	mov	a,r7
+	mov	b,#0xa0
+	mul	ab
+	mov	_PWM0L,a
+;	lib/src/pwm.c:50: PWM0L = (uint8_t)low;
+;	lib/src/pwm.c:51: }
 	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

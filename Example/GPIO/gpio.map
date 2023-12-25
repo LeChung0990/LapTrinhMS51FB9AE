@@ -12,11 +12,11 @@ C:   00000000  l_BSEG
 C:   00000000  l_BSEG_BYTES                    
 C:   00000000  l_CABS                          
 C:   00000000  l_CONST                         
+C:   00000000  l_GSINIT                        
 C:   00000000  l_GSINIT1                       
 C:   00000000  l_GSINIT5                       
 C:   00000000  l_IABS                          
 C:   00000000  l_ISEG                          
-C:   00000000  l_OSEG                          
 C:   00000000  l_PSEG                          
 C:   00000000  l_REG_BANK_1                    
 C:   00000000  l_REG_BANK_2                    
@@ -43,16 +43,16 @@ C:   00000000  s_XABS
 C:   00000001  s_PSEG                          
 C:   00000001  s_XISEG                         
 C:   00000001  s_XSEG                          
+C:   00000002  l_OSEG                          
 C:   00000003  l_GSFINAL                       
 C:   00000003  l_GSINIT0                       
-C:   00000006  l_GSINIT                        
 C:   00000008  l_REG_BANK_0                    
+C:   00000008  s_OSEG                          
 C:   00000008  s_REG_BANK_1                    
 C:   0000000A  l_GSINIT2                       
 C:   0000000A  s_SSEG                          
 C:   00000010  s_REG_BANK_2                    
 C:   00000018  s_BIT_BANK                      
-C:   00000018  s_OSEG                          
 C:   00000018  s_REG_BANK_3                    
 C:   00000020  s_BSEG_BYTES                    
 C:   00000020  s__CODE                         
@@ -75,14 +75,14 @@ C:   0000004E  s_GSINIT3
 C:   00000070  s_GSINIT4                       
 C:   00000080  l_DSEG                          
 C:   00000085  l_CSEG                          
+C:   0000009A  s_GSFINAL                       
 C:   0000009A  s_GSINIT                        
 C:   0000009A  s_GSINIT5                       
-C:   000000A0  s_GSFINAL                       
-C:   000000A3  s_CSEG                          
+C:   0000009D  s_CSEG                          
 C:   000000F6  l_SSEG                          
 C:   00000100  l_IRAM                          
-C:   00000128  s_CONST                         
-C:   00000128  s_XINIT                         
+C:   00000122  s_CONST                         
+C:   00000122  s_XINIT                         
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
 Hexadecimal  [32-Bits]
@@ -381,9 +381,18 @@ DSEG                                00000000    00000080 =         128. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000008  _ch                                main
-
 ASxxxx Linker V03.00/V05.40 + sdld,  page 10.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+OSEG                                00000008    00000002 =           2. bytes (REL,OVR)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000008  _DelayT0_PARM_2                    delay
+
+ASxxxx Linker V03.00/V05.40 + sdld,  page 11.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -394,7 +403,7 @@ SSEG                                0000000A    000000F6 =         246. bytes (R
       -----  --------------------------------   ------------------------
      0000000A  __start__stack                     main
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 11.
+ASxxxx Linker V03.00/V05.40 + sdld,  page 12.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -405,7 +414,7 @@ HOME                                00000000    00000041 =          65. bytes (R
       -----  --------------------------------   ------------------------
 C:   0000003E  __sdcc_program_startup             main
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 12.
+ASxxxx Linker V03.00/V05.40 + sdld,  page 13.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -416,7 +425,7 @@ GSINIT0                             00000041    00000003 =           3. bytes (R
       -----  --------------------------------   ------------------------
 C:   00000041  __sdcc_gsinit_startup              
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 13.
+ASxxxx Linker V03.00/V05.40 + sdld,  page 14.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -425,7 +434,7 @@ GSINIT2                             00000044    0000000A =          10. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-ASxxxx Linker V03.00/V05.40 + sdld,  page 14.
+ASxxxx Linker V03.00/V05.40 + sdld,  page 15.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -436,7 +445,7 @@ GSINIT3                             0000004E    00000022 =          34. bytes (R
       -----  --------------------------------   ------------------------
 C:   0000004E  __mcs51_genXINIT                   
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 15.
+ASxxxx Linker V03.00/V05.40 + sdld,  page 16.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -448,21 +457,12 @@ GSINIT4                             00000070    0000002A =          42. bytes (R
 C:   00000070  __mcs51_genRAMCLEAR                
 C:   00000076  __mcs51_genXRAMCLEAR               
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 16.
-Hexadecimal  [32-Bits]
-
-Area                                    Addr        Size        Decimal Bytes (Attributes)
---------------------------------        ----        ----        ------- ----- ------------
-GSINIT                              0000009A    00000006 =           6. bytes (REL,CON,CODE)
-
-      Value  Global                              Global Defined In Module
-      -----  --------------------------------   ------------------------
 ASxxxx Linker V03.00/V05.40 + sdld,  page 17.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-GSFINAL                             000000A0    00000003 =           3. bytes (REL,CON,CODE)
+GSFINAL                             0000009A    00000003 =           3. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -471,16 +471,16 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CSEG                                000000A3    00000085 =         133. bytes (REL,CON,CODE)
+CSEG                                0000009D    00000085 =         133. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-C:   000000A3  _External_Int_Config               main
-C:   000000B9  _Exti_ISR                          main
-C:   000000BD  _main                              main
-C:   000000D5  _Delay_Init                        delay
-C:   000000E5  _Delay_Ms                          delay
-C:   00000124  ___sdcc_external_startup           _startup
+C:   0000009D  _External_Int_Config               main
+C:   000000A7  _main                              main
+C:   000000BA  _Exti_ISR                          main
+C:   000000C0  _DelayT0_Init                      delay
+C:   000000D0  _DelayT0                           delay
+C:   0000011E  ___sdcc_external_startup           _startup
 ASxxxx Linker V03.00/V05.40 + sdld,  page 19.
 
 Files Linked                              [ module(s) ]
