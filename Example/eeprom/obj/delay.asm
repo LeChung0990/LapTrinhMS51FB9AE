@@ -8,6 +8,7 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
+	.globl _DelayT0_PARM_2
 	.globl _MOSI
 	.globl _P00
 	.globl _MISO
@@ -240,8 +241,8 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
-	.globl _Delay_Init
-	.globl _Delay_Ms
+	.globl _DelayT0_Init
+	.globl _DelayT0
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -496,6 +497,9 @@ _MOSI	=	0x0080
 ;--------------------------------------------------------
 ; overlayable items in internal ram
 ;--------------------------------------------------------
+	.area	OSEG    (OVR,DATA)
+_DelayT0_PARM_2:
+	.ds 2
 ;--------------------------------------------------------
 ; indirectly addressable internal ram data
 ;--------------------------------------------------------
@@ -552,13 +556,13 @@ _MOSI	=	0x0080
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'Delay_Init'
+;Allocation info for local variables in function 'DelayT0_Init'
 ;------------------------------------------------------------
-;	lib/src/delay.c:7: void Delay_Init(void)
+;	lib/src/delay.c:4: void DelayT0_Init(void)
 ;	-----------------------------------------
-;	 function Delay_Init
+;	 function DelayT0_Init
 ;	-----------------------------------------
-_Delay_Init:
+_DelayT0_Init:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -567,88 +571,97 @@ _Delay_Init:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	lib/src/delay.c:9: TMOD |= (1 << 0);
-	orl	_TMOD,#0x01
-;	lib/src/delay.c:10: TMOD &= ~(1 << 1);
-	anl	_TMOD,#0xfd
-;	lib/src/delay.c:11: CKCON |= (1 << 3);
+;	lib/src/delay.c:6: TIMER0_FSYS;		 // T0M=1, Timer0 Clock = Fsys = 16MHz
 	orl	_CKCON,#0x08
-;	lib/src/delay.c:12: TMOD &= ~(1 << 2);
-	anl	_TMOD,#0xfb
-;	lib/src/delay.c:13: TMOD &= ~(1 << 3);
-	anl	_TMOD,#0xf7
-;	lib/src/delay.c:14: }
+;	lib/src/delay.c:7: ENABLE_TIMER0_MODE1; // Timer0 is 16-bit mode
+	anl	_TMOD,#0xf0
+	orl	_TMOD,#0x01
+;	lib/src/delay.c:8: }
 	ret
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'Delay_Ms'
+;Allocation info for local variables in function 'DelayT0'
 ;------------------------------------------------------------
-;u16Delay                  Allocated to registers 
+;configdelay               Allocated with name '_DelayT0_PARM_2'
+;u16Count                  Allocated to registers 
+;TL0TMP                    Allocated to registers r5 
+;TH0TMP                    Allocated to registers r4 
 ;------------------------------------------------------------
-;	lib/src/delay.c:16: void Delay_Ms(uint16_t u16Delay)
+;	lib/src/delay.c:16: void DelayT0(uint16_t u16Count, CONFIG configdelay)
 ;	-----------------------------------------
-;	 function Delay_Ms
+;	 function DelayT0
 ;	-----------------------------------------
-_Delay_Ms:
+_DelayT0:
 	mov	r6,dpl
 	mov	r7,dph
-;	lib/src/delay.c:18: while (u16Delay) {
-00101$:
+;	lib/src/delay.c:19: TL0TMP = LOBYTE(65535 - (16 * configdelay));
+	mov	a,_DelayT0_PARM_2
+	swap	a
+	anl	a,#0xf0
+	mov	r5,a
+	mov	a,#0xff
+	clr	c
+	subb	a,r5
+	mov	r5,a
+;	lib/src/delay.c:20: TH0TMP = HIBYTE(65535 - (16 * configdelay));
+	mov	r3,_DelayT0_PARM_2
+	mov	a,(_DelayT0_PARM_2 + 1)
+	swap	a
+	anl	a,#0xf0
+	xch	a,r3
+	swap	a
+	xch	a,r3
+	xrl	a,r3
+	xch	a,r3
+	anl	a,#0xf0
+	xch	a,r3
+	xrl	a,r3
+	mov	r4,a
+	mov	ar1,r3
+	mov	ar2,r4
+	clr	a
+	mov	r3,a
+	mov	r4,a
+	mov	a,#0xff
+	clr	c
+	subb	a,r1
+	mov	a,#0xff
+	subb	a,r2
+	mov	r2,a
+	clr	a
+	subb	a,r3
+	clr	a
+	subb	a,r4
+	mov	ar4,r2
+;	lib/src/delay.c:21: while (u16Count)
+00104$:
 	mov	a,r6
 	orl	a,r7
-	jz	00104$
-;	lib/src/delay.c:19: --u16Delay;
-	dec	r6
-	cjne	r6,#0xff,00116$
-	dec	r7
-00116$:
-;	lib/src/delay.c:20: delay_1ms();
-	push	ar7
-	push	ar6
-	lcall	_delay_1ms
-	pop	ar6
-	pop	ar7
-	sjmp	00101$
-00104$:
-;	lib/src/delay.c:22: }
-	ret
-;------------------------------------------------------------
-;Allocation info for local variables in function 'delay_1ms'
-;------------------------------------------------------------
-;	lib/src/delay.c:24: void delay_1ms(void)
-;	-----------------------------------------
-;	 function delay_1ms
-;	-----------------------------------------
-_delay_1ms:
-;	lib/src/delay.c:26: TH0 = 0;
-	mov	_TH0,#0x00
-;	lib/src/delay.c:27: TL0 = 0;
-	mov	_TL0,#0x00
-;	lib/src/delay.c:28: TR0 = 1;	/*Timer 0 Enable*/
+	jz	00107$
+;	lib/src/delay.c:23: TL0 = TL0TMP;
+	mov	_TL0,r5
+;	lib/src/delay.c:24: TH0 = TH0TMP;
+	mov	_TH0,r4
+;	lib/src/delay.c:25: set_TCON_TR0; // Start Timer0
 ;	assignBit
 	setb	_TR0
-;	lib/src/delay.c:29: while (TH0 * 256 + TL0 < 16000) {
+;	lib/src/delay.c:26: while (!TF0); // Check Timer0 Time-Out Flag
 00101$:
-	mov	r7,_TH0
-	mov	r6,#0x00
-	mov	r4,_TL0
-	mov	r5,#0x00
-	mov	a,r4
-	add	a,r6
-	mov	r6,a
-	mov	a,r5
-	addc	a,r7
-	mov	r7,a
-	clr	c
-	mov	a,r6
-	subb	a,#0x80
-	mov	a,r7
-	xrl	a,#0x80
-	subb	a,#0xbe
-	jc	00101$
-;	lib/src/delay.c:31: TR0 = 0;	/*Stop Timer0 and the current count will be preserved in TH0,TL0*/
+;	lib/src/delay.c:27: clr_TCON_TF0;
+;	assignBit
+	jbc	_TF0,00127$
+	sjmp	00101$
+00127$:
+;	lib/src/delay.c:28: clr_TCON_TR0; // Stop Timer0
 ;	assignBit
 	clr	_TR0
-;	lib/src/delay.c:32: }
+;	lib/src/delay.c:29: --u16Count;
+	dec	r6
+	cjne	r6,#0xff,00128$
+	dec	r7
+00128$:
+	sjmp	00104$
+00107$:
+;	lib/src/delay.c:31: }
 	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

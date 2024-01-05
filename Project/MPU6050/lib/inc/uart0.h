@@ -19,6 +19,7 @@ void UART0_DisableInterrupt(void);
 void UART0_ClearFlag(uint8_t u8Flag);
 uint8_t UART0_GetFlag(uint8_t u8Flag);
 void UART0_STRING(const char *cy);
+void UART0_NLINE(void);
 void UART0_NUMBER(int number);
 
 #endif

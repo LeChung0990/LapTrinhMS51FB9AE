@@ -52,8 +52,8 @@ C:   00000009  s_GSINIT1
 C:   00000009  s_GSINIT2                       
 C:   0000000A  l_GSINIT2                       
 C:   0000000C  l_GSINIT                        
+C:   00000010  l_CONST                         
 C:   00000010  s_REG_BANK_2                    
-C:   00000011  l_CONST                         
 C:   00000013  s_GSINIT3                       
 C:   00000018  s_BIT_BANK                      
 C:   00000018  s_REG_BANK_3                    
@@ -80,9 +80,9 @@ C:   0000006E  s_CSEG
 C:   0000007D  l_DSEG                          
 C:   000000DF  l_SSEG                          
 C:   00000100  l_IRAM                          
-C:   000005E1  l_CSEG                          
-C:   0000064F  s_CONST                         
-C:   00000660  s_XINIT                         
+C:   000005FD  l_CSEG                          
+C:   0000066B  s_CONST                         
+C:   0000067B  s_XINIT                         
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
 Hexadecimal  [32-Bits]
@@ -502,40 +502,40 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CSEG                                0000006E    000005E1 =        1505. bytes (REL,CON,CODE)
+CSEG                                0000006E    000005FD =        1533. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
 C:   0000006E  _main                              main
-C:   000000C8  _I2C_Init                          i2c
-C:   000000DE  _I2C_Write                         i2c
-C:   000001AE  _I2C_Read                          i2c
-C:   000002E3  _I2C_CheckAddress                  i2c
-C:   000003C7  _UART0_Init                        uart0
-C:   000003F6  _UART0_SendData                    uart0
-C:   000003FA  _UART0_GetData                     uart0
-C:   000003FE  _UART0_EnableInterrupt             uart0
-C:   00000401  _UART0_DisableInterrupt            uart0
-C:   00000404  _UART0_ClearFlag                   uart0
-C:   0000040A  _UART0_GetFlag                     uart0
-C:   00000418  _UART0_STRING                      uart0
-C:   0000045C  _UART0_NUMBER                      uart0
-C:   000004E1  _Delay_Init                        delay
-C:   000004F1  _Delay_Ms                          delay
-C:   00000530  __gptrput                          _gptrput
-C:   0000054B  __moduint                          _moduint
-C:   00000598  __divuint                          _divuint
-C:   000005C1  __gptrget                          _gptrget
-C:   000005DD  __modsint                          _modsint
-C:   00000613  __divsint                          _divsint
-C:   0000064B  ___sdcc_external_startup           _startup
+C:   000000E4  _I2C_Init                          i2c
+C:   000000FA  _I2C_Write                         i2c
+C:   000001CA  _I2C_Read                          i2c
+C:   000002FF  _I2C_CheckAddress                  i2c
+C:   000003E3  _UART0_Init                        uart0
+C:   00000412  _UART0_SendData                    uart0
+C:   00000416  _UART0_GetData                     uart0
+C:   0000041A  _UART0_EnableInterrupt             uart0
+C:   0000041D  _UART0_DisableInterrupt            uart0
+C:   00000420  _UART0_ClearFlag                   uart0
+C:   00000426  _UART0_GetFlag                     uart0
+C:   00000434  _UART0_STRING                      uart0
+C:   00000478  _UART0_NUMBER                      uart0
+C:   000004FD  _Delay_Init                        delay
+C:   0000050D  _Delay_Ms                          delay
+C:   0000054C  __gptrput                          _gptrput
+C:   00000567  __moduint                          _moduint
+C:   000005B4  __divuint                          _divuint
+C:   000005DD  __gptrget                          _gptrget
+C:   000005F9  __modsint                          _modsint
+C:   0000062F  __divsint                          _divsint
+C:   00000667  ___sdcc_external_startup           _startup
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 21.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CONST                               0000064F    00000011 =          17. bytes (REL,CON,CODE)
+CONST                               0000066B    00000010 =          16. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------

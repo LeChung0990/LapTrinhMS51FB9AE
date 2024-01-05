@@ -78,11 +78,11 @@ C:   0000005F  s_GSINIT5
 C:   00000062  s_GSFINAL                       
 C:   00000065  s_CSEG                          
 C:   00000080  l_DSEG                          
-C:   000000DF  l_CSEG                          
 C:   000000F7  l_SSEG                          
 C:   00000100  l_IRAM                          
-C:   00000144  s_CONST                         
-C:   00000144  s_XINIT                         
+C:   00000114  l_CSEG                          
+C:   00000179  s_CONST                         
+C:   00000179  s_XINIT                         
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
 Hexadecimal  [32-Bits]
@@ -471,20 +471,20 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CSEG                                00000065    000000DF =         223. bytes (REL,CON,CODE)
+CSEG                                00000065    00000114 =         276. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
 C:   00000065  _delay                             main
 C:   0000008C  _main                              main
-C:   000000A8  _GPIO_Init                         gpio
-C:   000000B5  _Delay_Init                        delay
-C:   000000C5  _Delay_Ms                          delay
-C:   00000104  _PWM_Init                          pwm
-C:   00000127  _PWM0_RUN                          pwm
-C:   0000012A  _PWM0_STOP                         pwm
-C:   0000012D  _SET_DUTY                          pwm
-C:   00000140  ___sdcc_external_startup           _startup
+C:   000000DD  _GPIO_Init                         gpio
+C:   000000EA  _Delay_Init                        delay
+C:   000000FA  _Delay_Ms                          delay
+C:   00000139  _PWM_Init                          pwm
+C:   0000015C  _PWM0_RUN                          pwm
+C:   0000015F  _PWM0_STOP                         pwm
+C:   00000162  _SET_DUTY                          pwm
+C:   00000175  ___sdcc_external_startup           _startup
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 19.
 

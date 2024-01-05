@@ -564,7 +564,7 @@
                                     564 ;	-----------------------------------------
                                     565 ;	 function PWM_Init
                                     566 ;	-----------------------------------------
-      000104                        567 _PWM_Init:
+      000139                        567 _PWM_Init:
                            000007   568 	ar7 = 0x07
                            000006   569 	ar6 = 0x06
                            000005   570 	ar5 = 0x05
@@ -575,30 +575,30 @@
                            000000   575 	ar0 = 0x00
                                     576 ;	lib/src/pwm.c:9: set_PWMCON0_CLRPWM;		/*Clearing PWM 16-bit counter*/
                                     577 ;	assignBit
-      000104 D2 DC            [12]  578 	setb	_CLRPWM
+      000139 D2 DC            [12]  578 	setb	_CLRPWM
                                     579 ;	lib/src/pwm.c:11: clr_CKCON_PWMCKS;	/*The clock source of PWM is the system clock FSYS.*/
-      000106 53 8E BF         [24]  580 	anl	_CKCON,#0xbf
+      00013B 53 8E BF         [24]  580 	anl	_CKCON,#0xbf
                                     581 ;	lib/src/pwm.c:14: PWMCON1 &= 0x07;
-      000109 53 DF 07         [24]  582 	anl	_PWMCON1,#0x07
+      00013E 53 DF 07         [24]  582 	anl	_PWMCON1,#0x07
                                     583 ;	lib/src/pwm.c:15: PWMCON1 |= 0x00;
-      00010C 85 DF DF         [24]  584 	mov	_PWMCON1,_PWMCON1
+      000141 85 DF DF         [24]  584 	mov	_PWMCON1,_PWMCON1
                                     585 ;	lib/src/pwm.c:16: PWMPH = (uint8_t)(16000 >> 8) & 0xFF;
-      00010F 75 D1 3E         [24]  586 	mov	_PWMPH,#0x3e
+      000144 75 D1 3E         [24]  586 	mov	_PWMPH,#0x3e
                                     587 ;	lib/src/pwm.c:17: PWMPL = (uint8_t)16000 & 0xFF;
-      000112 75 D9 80         [24]  588 	mov	_PWMPL,#0x80
+      000147 75 D9 80         [24]  588 	mov	_PWMPL,#0x80
                                     589 ;	lib/src/pwm.c:25: PWM0H = (uint8_t)high;
-      000115 75 D2 3E         [24]  590 	mov	_PWM0H,#0x3e
+      00014A 75 D2 3E         [24]  590 	mov	_PWM0H,#0x3e
                                     591 ;	lib/src/pwm.c:26: PWM0L = (uint8_t)low;
-      000118 75 DA 80         [24]  592 	mov	_PWM0L,#0x80
+      00014D 75 DA 80         [24]  592 	mov	_PWM0L,#0x80
                                     593 ;	lib/src/pwm.c:28: P1M1 &= ~(1 << 2);
-      00011B 53 B3 FB         [24]  594 	anl	_P1M1,#0xfb
+      000150 53 B3 FB         [24]  594 	anl	_P1M1,#0xfb
                                     595 ;	lib/src/pwm.c:29: P1M2 |= (1 << 2);
-      00011E 43 B4 04         [24]  596 	orl	_P1M2,#0x04
+      000153 43 B4 04         [24]  596 	orl	_P1M2,#0x04
                                     597 ;	lib/src/pwm.c:30: set_PIOCON0_PIO00; /* P1.2/PWM0 pin functions as PWM0 output.*/
-      000121 43 DE 01         [24]  598 	orl	_PIOCON0,#0x01
+      000156 43 DE 01         [24]  598 	orl	_PIOCON0,#0x01
                                     599 ;	lib/src/pwm.c:32: PWM0_RUN();
                                     600 ;	lib/src/pwm.c:33: }
-      000124 02 01 27         [24]  601 	ljmp	_PWM0_RUN
+      000159 02 01 5C         [24]  601 	ljmp	_PWM0_RUN
                                     602 ;------------------------------------------------------------
                                     603 ;Allocation info for local variables in function 'PWM0_RUN'
                                     604 ;------------------------------------------------------------
@@ -606,12 +606,12 @@
                                     606 ;	-----------------------------------------
                                     607 ;	 function PWM0_RUN
                                     608 ;	-----------------------------------------
-      000127                        609 _PWM0_RUN:
+      00015C                        609 _PWM0_RUN:
                                     610 ;	lib/src/pwm.c:37: set_PWMCON0_PWMRUN;
                                     611 ;	assignBit
-      000127 D2 DF            [12]  612 	setb	_PWMRUN
+      00015C D2 DF            [12]  612 	setb	_PWMRUN
                                     613 ;	lib/src/pwm.c:38: }
-      000129 22               [24]  614 	ret
+      00015E 22               [24]  614 	ret
                                     615 ;------------------------------------------------------------
                                     616 ;Allocation info for local variables in function 'PWM0_STOP'
                                     617 ;------------------------------------------------------------
@@ -619,12 +619,12 @@
                                     619 ;	-----------------------------------------
                                     620 ;	 function PWM0_STOP
                                     621 ;	-----------------------------------------
-      00012A                        622 _PWM0_STOP:
+      00015F                        622 _PWM0_STOP:
                                     623 ;	lib/src/pwm.c:41: clr_PWMCON0_PWMRUN;
                                     624 ;	assignBit
-      00012A C2 DF            [12]  625 	clr	_PWMRUN
+      00015F C2 DF            [12]  625 	clr	_PWMRUN
                                     626 ;	lib/src/pwm.c:42: }
-      00012C 22               [24]  627 	ret
+      000161 22               [24]  627 	ret
                                     628 ;------------------------------------------------------------
                                     629 ;Allocation info for local variables in function 'SET_DUTY'
                                     630 ;------------------------------------------------------------
@@ -636,22 +636,22 @@
                                     636 ;	-----------------------------------------
                                     637 ;	 function SET_DUTY
                                     638 ;	-----------------------------------------
-      00012D                        639 _SET_DUTY:
+      000162                        639 _SET_DUTY:
                                     640 ;	lib/src/pwm.c:46: high = (uint8_t) (((16000/100) * dem) >> 8 ) & 0xFF;
-      00012D E5 82            [12]  641 	mov	a,dpl
-      00012F FF               [12]  642 	mov	r7,a
-      000130 75 F0 A0         [24]  643 	mov	b,#0xa0
-      000133 A4               [48]  644 	mul	ab
-      000134 AE F0            [24]  645 	mov	r6,b
-      000136 8E D2            [24]  646 	mov	_PWM0H,r6
+      000162 E5 82            [12]  641 	mov	a,dpl
+      000164 FF               [12]  642 	mov	r7,a
+      000165 75 F0 A0         [24]  643 	mov	b,#0xa0
+      000168 A4               [48]  644 	mul	ab
+      000169 AE F0            [24]  645 	mov	r6,b
+      00016B 8E D2            [24]  646 	mov	_PWM0H,r6
                                     647 ;	lib/src/pwm.c:47: low = (uint8_t)((16000/100) * dem) & 0xFF;
-      000138 EF               [12]  648 	mov	a,r7
-      000139 75 F0 A0         [24]  649 	mov	b,#0xa0
-      00013C A4               [48]  650 	mul	ab
-      00013D F5 DA            [12]  651 	mov	_PWM0L,a
+      00016D EF               [12]  648 	mov	a,r7
+      00016E 75 F0 A0         [24]  649 	mov	b,#0xa0
+      000171 A4               [48]  650 	mul	ab
+      000172 F5 DA            [12]  651 	mov	_PWM0L,a
                                     652 ;	lib/src/pwm.c:50: PWM0L = (uint8_t)low;
                                     653 ;	lib/src/pwm.c:51: }
-      00013F 22               [24]  654 	ret
+      000174 22               [24]  654 	ret
                                     655 	.area CSEG    (CODE)
                                     656 	.area CONST   (CODE)
                                     657 	.area XINIT   (CODE)

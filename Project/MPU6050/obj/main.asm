@@ -11,6 +11,8 @@
 	.globl _main
 	.globl _ReadData
 	.globl _InitMPU6050
+	.globl _UART0_NUMBER
+	.globl _UART0_NLINE
 	.globl _UART0_STRING
 	.globl _UART0_Init
 	.globl _Delay_Ms
@@ -253,7 +255,6 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
-	.globl _a
 	.globl _checkAddress
 	.globl _u8Data
 	.globl _Res
@@ -520,8 +521,6 @@ _u8Data::
 	.ds 2
 _checkAddress::
 	.ds 1
-_a::
-	.ds 6
 ;--------------------------------------------------------
 ; overlayable items in internal ram
 ;--------------------------------------------------------
@@ -590,13 +589,6 @@ __interrupt_vect:
 	.globl __mcs51_genXINIT
 	.globl __mcs51_genXRAMCLEAR
 	.globl __mcs51_genRAMCLEAR
-;	main.c:51: char a[] = "chung";
-	mov	_a,#0x63
-	mov	(_a + 0x0001),#0x68
-	mov	(_a + 0x0002),#0x75
-	mov	(_a + 0x0003),#0x6e
-	mov	(_a + 0x0004),#0x67
-	mov	(_a + 0x0005),#0x00
 	.area GSFINAL (CODE)
 	ljmp	__sdcc_program_startup
 ;--------------------------------------------------------
@@ -629,7 +621,7 @@ _InitMPU6050:
 	ar0 = 0x00
 ;	main.c:17: I2C_start();
 	lcall	_I2C_start
-;	main.c:18: I2C_Address((uint8_t)0x68 << 1, 0);
+;	main.c:18: I2C_Address((uint8_t)0x68 << 1 , 0);
 	mov	_I2C_Address_PARM_2,#0x00
 	mov	dpl,#0xd0
 	lcall	_I2C_Address
@@ -641,8 +633,8 @@ _InitMPU6050:
 	lcall	_I2C_Write
 ;	main.c:21: send_stop();
 	lcall	_send_stop
-;	main.c:22: Delay_Ms(100);
-	mov	dptr,#0x0064
+;	main.c:22: Delay_Ms(10);
+	mov	dptr,#0x000a
 	lcall	_Delay_Ms
 ;	main.c:24: I2C_start();
 	lcall	_I2C_start
@@ -658,12 +650,12 @@ _InitMPU6050:
 	lcall	_I2C_Write
 ;	main.c:28: send_stop();
 	lcall	_send_stop
-;	main.c:29: Delay_Ms(100);
-	mov	dptr,#0x0064
+;	main.c:29: Delay_Ms(10);
+	mov	dptr,#0x000a
 	lcall	_Delay_Ms
 ;	main.c:31: I2C_start();
 	lcall	_I2C_start
-;	main.c:32: I2C_Address((uint8_t)0x68 << 1, 0);
+;	main.c:32: I2C_Address((uint8_t)0x68 << 1, 0);  //D0
 	mov	_I2C_Address_PARM_2,#0x00
 	mov	dpl,#0xd0
 	lcall	_I2C_Address
@@ -675,14 +667,14 @@ _InitMPU6050:
 	lcall	_I2C_Write
 ;	main.c:35: send_stop();
 	lcall	_send_stop
-;	main.c:36: Delay_Ms(100);
-	mov	dptr,#0x0064
+;	main.c:36: Delay_Ms(10);
+	mov	dptr,#0x000a
 ;	main.c:37: }
 	ljmp	_Delay_Ms
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ReadData'
 ;------------------------------------------------------------
-;	main.c:39: uint16_t ReadData()
+;	main.c:39: void ReadData(void)
 ;	-----------------------------------------
 ;	 function ReadData
 ;	-----------------------------------------
@@ -731,70 +723,79 @@ _ReadData:
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	main.c:56: I2C_Init();
+;	main.c:55: P15_PUSHPULL_MODE;
+	anl	_P1M1,#0xdf
+	orl	_P1M2,#0x20
+;	main.c:56: P15 = 0;
+;	assignBit
+	clr	_P15
+;	main.c:57: I2C_Init();
 	lcall	_I2C_Init
-;	main.c:57: UART0_Init();
+;	main.c:58: UART0_Init();
 	lcall	_UART0_Init
-;	main.c:60: UART0_STRING("Start:");
+;	main.c:59: InitMPU6050();
+	lcall	_InitMPU6050
+;	main.c:62: UART0_STRING("Start:");
 	mov	dptr,#___str_0
 	mov	b,#0x80
 	lcall	_UART0_STRING
-;	main.c:62: ");
-	mov	dptr,#___str_1
-	mov	b,#0x80
-	lcall	_UART0_STRING
-;	main.c:65: I2C_start();
+;	main.c:70: while (1) {
+00102$:
+;	main.c:72: I2C_start();
 	lcall	_I2C_start
-;	main.c:66: I2C_Address((uint8_t)0xA1,1);
-	mov	_I2C_Address_PARM_2,#0x01
-	mov	dpl,#0xa1
-	lcall	_I2C_Address
-;	main.c:67: u8Data[0] =  I2C_Read(1);
-	mov	dpl,#0x01
-	lcall	_I2C_Read
-	mov	a,dpl
-	mov	_u8Data,a
-;	main.c:68: u8Data[1] =	 I2C_Read(0);
-	mov	dpl,#0x00
-	lcall	_I2C_Read
-	mov	a,dpl
-	mov	(_u8Data + 0x0001),a
-;	main.c:69: send_stop();
-	lcall	_send_stop
-;	main.c:76: InitMPU6050();
-	lcall	_InitMPU6050
-;	main.c:79: I2C_start();
-	lcall	_I2C_start
-;	main.c:80: I2C_Address((uint8_t)0x68 << 1, 0);
+;	main.c:73: I2C_Address((uint8_t)0xD0, 0);
 	mov	_I2C_Address_PARM_2,#0x00
 	mov	dpl,#0xd0
 	lcall	_I2C_Address
-;	main.c:81: I2C_Write(0x3B);
+;	main.c:74: I2C_Write(0x3B);
 	mov	dpl,#0x3b
 	lcall	_I2C_Write
-;	main.c:83: I2C_RepeatedStart();
+;	main.c:77: I2C_RepeatedStart();
 	lcall	_I2C_RepeatedStart
-;	main.c:84: checkAddress = I2C_Address((uint8_t)0x68 << 1, 0);
-	mov	_I2C_Address_PARM_2,#0x00
-	mov	dpl,#0xd0
+;	main.c:78: I2C_Address((uint8_t)0xD1, 1);
+	mov	_I2C_Address_PARM_2,#0x01
+	mov	dpl,#0xd1
 	lcall	_I2C_Address
-	mov	_checkAddress,dpl
-;	main.c:95: while (1) {
-00102$:
-;	main.c:101: }
+;	main.c:79: High = I2C_Read(1);
+	mov	dpl,#0x01
+	lcall	_I2C_Read
+	mov	_High,dpl
+;	main.c:80: Low = I2C_Read(0);
+	mov	dpl,#0x00
+	lcall	_I2C_Read
+	mov	_Low,dpl
+;	main.c:81: Res = (High << 8) | Low;
+	mov	r7,_High
+	mov	r6,#0x00
+	mov	r4,_Low
+	mov	r5,#0x00
+	mov	a,r4
+	orl	ar6,a
+	mov	a,r5
+	orl	ar7,a
+	mov	_Res,r6
+	mov	(_Res + 1),r7
+;	main.c:82: send_stop();
+	lcall	_send_stop
+;	main.c:84: P15 = 1;
+;	assignBit
+	setb	_P15
+;	main.c:85: Delay_Ms(1000);
+	mov	dptr,#0x03e8
+	lcall	_Delay_Ms
+;	main.c:86: UART0_NLINE();
+	lcall	_UART0_NLINE
+;	main.c:87: UART0_NUMBER(Res);
+	mov	dpl,_Res
+	mov	dph,(_Res + 1)
+	lcall	_UART0_NUMBER
+;	main.c:89: }
 	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area CONST   (CODE)
 ___str_0:
 	.ascii "Start:"
-	.db 0x00
-	.area CSEG    (CODE)
-	.area CONST   (CODE)
-___str_1:
-	.ascii "Read:"
-	.db 0x0a
-	.ascii " "
 	.db 0x00
 	.area CSEG    (CODE)
 	.area XINIT   (CODE)

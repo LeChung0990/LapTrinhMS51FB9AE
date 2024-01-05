@@ -9,6 +9,7 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
+	.globl _UART_Open
 	.globl _DelayT0
 	.globl _DelayT0_Init
 	.globl _MOSI
@@ -243,6 +244,7 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
+	.globl _number
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -494,6 +496,8 @@ _MOSI	=	0x0080
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
+_number::
+	.ds 2
 ;--------------------------------------------------------
 ; overlayable items in internal ram
 ;--------------------------------------------------------
@@ -562,6 +566,9 @@ __interrupt_vect:
 	.globl __mcs51_genXINIT
 	.globl __mcs51_genXRAMCLEAR
 	.globl __mcs51_genRAMCLEAR
+;	main.c:7: int number= 9876;
+	mov	_number,#0x94
+	mov	(_number + 1),#0x26
 	.area GSFINAL (CODE)
 	ljmp	__sdcc_program_startup
 ;--------------------------------------------------------
@@ -579,7 +586,7 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;	main.c:6: void main(void)
+;	main.c:8: void main(void)
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
@@ -592,30 +599,49 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:9: P15_PUSHPULL_MODE;
+;	main.c:11: P15_PUSHPULL_MODE;
 	anl	_P1M1,#0xdf
 	orl	_P1M2,#0x20
-;	main.c:10: DelayT0_Init();
+;	main.c:12: P06 = 1;
+;	assignBit
+	setb	_P06
+;	main.c:13: P0M1 &= ~(1 << 6);
+	anl	_P0M1,#0xbf
+;	main.c:14: P0M2 |= (1 << 6);
+	orl	_P0M2,#0x40
+;	main.c:15: P07 = 1;
+;	assignBit
+	setb	_P07
+;	main.c:16: P0M1 &= ~(1 << 7);
+	anl	_P0M1,#0x7f
+;	main.c:17: P0M2 &= ~(1 << 7);
+	anl	_P0M2,#0x7f
+;	main.c:19: UART_Open(UART0_Timer3, BAUD9600);
+	mov	_UART_Open_PARM_2,#0xcc
+	mov	(_UART_Open_PARM_2 + 1),#0xff
+	mov	dpl,#0x01
+	lcall	_UART_Open
+;	main.c:20: DelayT0_Init();
 	lcall	_DelayT0_Init
-;	main.c:11: while (1)
+;	main.c:21: while (1)
 00102$:
-;	main.c:13: P15 = 1;
+;	main.c:25: P15 = 1;
 ;	assignBit
 	setb	_P15
-;	main.c:14: DelayT0(500,CONFIG_1MS);
+;	main.c:26: DelayT0(1, CONFIG_1MS);
 	mov	_DelayT0_PARM_2,#0xe8
 	mov	(_DelayT0_PARM_2 + 1),#0x03
-	mov	dptr,#0x01f4
+	mov	dptr,#0x0001
 	lcall	_DelayT0
-;	main.c:15: P15 = 0;
+;	main.c:27: P15 = 0;
 ;	assignBit
 	clr	_P15
-;	main.c:16: DelayT0(500,CONFIG_1MS);
+;	main.c:28: DelayT0(1, CONFIG_1MS);
 	mov	_DelayT0_PARM_2,#0xe8
 	mov	(_DelayT0_PARM_2 + 1),#0x03
-	mov	dptr,#0x01f4
+	mov	dptr,#0x0001
 	lcall	_DelayT0
-;	main.c:18: }
+;	main.c:30: }
 	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

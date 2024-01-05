@@ -462,11 +462,12 @@ Symbol Table
     _TXD                                                        =  000086 G
     _TXD_1                                                      =  000096 G
     _UART0_Init                                                    ****** GX
+    _UART0_NLINE                                                   ****** GX
+    _UART0_NUMBER                                                  ****** GX
     _UART0_STRING                                                  ****** GX
     _WDCON                                                      =  0000AA G
     _WKCON                                                      =  00008F G
  18 ___str_0                                                       000000 R
- 18 ___str_1                                                       000007 R
   E __interrupt_vect                                               000000 R
     __mcs51_genRAMCLEAR                                            ****** GX
     __mcs51_genXINIT                                               ****** GX
@@ -474,7 +475,6 @@ Symbol Table
     __sdcc_gsinit_startup                                          ****** GX
   E __sdcc_program_startup                                         000003 GR
   6 __start__stack                                                 000000 GR
-  5 _a                                                             000007 GR
   5 _checkAddress                                                  000006 GR
  17 _main                                                          0000A6 GR
     _send_stop                                                     ****** GX
@@ -695,7 +695,7 @@ Area Table
    2 RSEG0                                      size      0   flags    8
    3 RSEG1                                      size      0   flags    8
    4 REG_BANK_0                                 size      8   flags    4
-   5 DSEG                                       size      D   flags    0
+   5 DSEG                                       size      7   flags    0
    6 SSEG                                       size      1   flags    0
    7 ISEG                                       size      0   flags    0
    8 IABS                                       size      0   flags    8
@@ -711,10 +711,10 @@ Area Table
   12 GSINIT3                                    size      0   flags   20
   13 GSINIT4                                    size      0   flags   20
   14 GSINIT5                                    size      0   flags   20
-  15 GSINIT                                     size     12   flags   20
+  15 GSINIT                                     size      0   flags   20
   16 GSFINAL                                    size      3   flags   20
-  17 CSEG                                       size    107   flags   20
-  18 CONST                                      size      F   flags   20
+  17 CSEG                                       size    11B   flags   20
+  18 CONST                                      size      7   flags   20
   19 XINIT                                      size      0   flags   20
   1A CABS                                       size      0   flags   28
 

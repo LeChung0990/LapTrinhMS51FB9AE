@@ -498,8 +498,8 @@
                                     498 ; overlayable items in internal ram
                                     499 ;--------------------------------------------------------
                                     500 	.area	OSEG    (OVR,DATA)
-      000008                        501 _DelayT0_PARM_2:
-      000008                        502 	.ds 2
+      00000F                        501 _DelayT0_PARM_2:
+      00000F                        502 	.ds 2
                                     503 ;--------------------------------------------------------
                                     504 ; indirectly addressable internal ram data
                                     505 ;--------------------------------------------------------
@@ -562,7 +562,7 @@
                                     562 ;	-----------------------------------------
                                     563 ;	 function DelayT0_Init
                                     564 ;	-----------------------------------------
-      000089                        565 _DelayT0_Init:
+      0000AB                        565 _DelayT0_Init:
                            000007   566 	ar7 = 0x07
                            000006   567 	ar6 = 0x06
                            000005   568 	ar5 = 0x05
@@ -572,100 +572,98 @@
                            000001   572 	ar1 = 0x01
                            000000   573 	ar0 = 0x00
                                     574 ;	lib/src/delay.c:6: TIMER0_FSYS;		 // T0M=1, Timer0 Clock = Fsys = 16MHz
-      000089 43 8E 08         [24]  575 	orl	_CKCON,#0x08
+      0000AB 43 8E 08         [24]  575 	orl	_CKCON,#0x08
                                     576 ;	lib/src/delay.c:7: ENABLE_TIMER0_MODE1; // Timer0 is 16-bit mode
-      00008C 53 89 F7         [24]  577 	anl	_TMOD,#0xf7
-      00008F 53 89 FB         [24]  578 	anl	_TMOD,#0xfb
-      000092 53 89 FD         [24]  579 	anl	_TMOD,#0xfd
-      000095 43 89 01         [24]  580 	orl	_TMOD,#0x01
-                                    581 ;	lib/src/delay.c:8: }
-      000098 22               [24]  582 	ret
+      0000AE 53 89 F0         [24]  577 	anl	_TMOD,#0xf0
+      0000B1 43 89 01         [24]  578 	orl	_TMOD,#0x01
+                                    579 ;	lib/src/delay.c:8: }
+      0000B4 22               [24]  580 	ret
+                                    581 ;------------------------------------------------------------
+                                    582 ;Allocation info for local variables in function 'DelayT0'
                                     583 ;------------------------------------------------------------
-                                    584 ;Allocation info for local variables in function 'DelayT0'
-                                    585 ;------------------------------------------------------------
-                                    586 ;configdelay               Allocated with name '_DelayT0_PARM_2'
-                                    587 ;u16Count                  Allocated to registers 
-                                    588 ;TL0TMP                    Allocated to registers r5 
-                                    589 ;TH0TMP                    Allocated to registers r4 
-                                    590 ;------------------------------------------------------------
-                                    591 ;	lib/src/delay.c:18: void DelayT0(uint16_t u16Count, CONFIG configdelay)
+                                    584 ;configdelay               Allocated with name '_DelayT0_PARM_2'
+                                    585 ;u16Count                  Allocated to registers 
+                                    586 ;TL0TMP                    Allocated to registers r5 
+                                    587 ;TH0TMP                    Allocated to registers r4 
+                                    588 ;------------------------------------------------------------
+                                    589 ;	lib/src/delay.c:16: void DelayT0(uint16_t u16Count, CONFIG configdelay)
+                                    590 ;	-----------------------------------------
+                                    591 ;	 function DelayT0
                                     592 ;	-----------------------------------------
-                                    593 ;	 function DelayT0
-                                    594 ;	-----------------------------------------
-      000099                        595 _DelayT0:
-      000099 AE 82            [24]  596 	mov	r6,dpl
-      00009B AF 83            [24]  597 	mov	r7,dph
-                                    598 ;	lib/src/delay.c:21: TL0TMP = LOBYTE(65535 - (16 * configdelay));
-      00009D E5 08            [12]  599 	mov	a,_DelayT0_PARM_2
-      00009F C4               [12]  600 	swap	a
-      0000A0 54 F0            [12]  601 	anl	a,#0xf0
-      0000A2 FD               [12]  602 	mov	r5,a
-      0000A3 74 FF            [12]  603 	mov	a,#0xff
-      0000A5 C3               [12]  604 	clr	c
-      0000A6 9D               [12]  605 	subb	a,r5
-      0000A7 FD               [12]  606 	mov	r5,a
-                                    607 ;	lib/src/delay.c:22: TH0TMP = HIBYTE(65535 - (16 * configdelay));
-      0000A8 AB 08            [24]  608 	mov	r3,_DelayT0_PARM_2
-      0000AA E5 09            [12]  609 	mov	a,(_DelayT0_PARM_2 + 1)
-      0000AC C4               [12]  610 	swap	a
-      0000AD 54 F0            [12]  611 	anl	a,#0xf0
-      0000AF CB               [12]  612 	xch	a,r3
-      0000B0 C4               [12]  613 	swap	a
-      0000B1 CB               [12]  614 	xch	a,r3
-      0000B2 6B               [12]  615 	xrl	a,r3
-      0000B3 CB               [12]  616 	xch	a,r3
-      0000B4 54 F0            [12]  617 	anl	a,#0xf0
-      0000B6 CB               [12]  618 	xch	a,r3
-      0000B7 6B               [12]  619 	xrl	a,r3
-      0000B8 FC               [12]  620 	mov	r4,a
-      0000B9 8B 01            [24]  621 	mov	ar1,r3
-      0000BB 8C 02            [24]  622 	mov	ar2,r4
-      0000BD E4               [12]  623 	clr	a
-      0000BE FB               [12]  624 	mov	r3,a
-      0000BF FC               [12]  625 	mov	r4,a
-      0000C0 74 FF            [12]  626 	mov	a,#0xff
-      0000C2 C3               [12]  627 	clr	c
-      0000C3 99               [12]  628 	subb	a,r1
-      0000C4 74 FF            [12]  629 	mov	a,#0xff
-      0000C6 9A               [12]  630 	subb	a,r2
-      0000C7 FA               [12]  631 	mov	r2,a
-      0000C8 E4               [12]  632 	clr	a
-      0000C9 9B               [12]  633 	subb	a,r3
-      0000CA E4               [12]  634 	clr	a
-      0000CB 9C               [12]  635 	subb	a,r4
-      0000CC 8A 04            [24]  636 	mov	ar4,r2
-                                    637 ;	lib/src/delay.c:23: while (u16Count)
-      0000CE                        638 00104$:
-      0000CE EE               [12]  639 	mov	a,r6
-      0000CF 4F               [12]  640 	orl	a,r7
-      0000D0 60 14            [24]  641 	jz	00107$
-                                    642 ;	lib/src/delay.c:25: TL0 = TL0TMP;
-      0000D2 8D 8A            [24]  643 	mov	_TL0,r5
-                                    644 ;	lib/src/delay.c:26: TH0 = TH0TMP;
-      0000D4 8C 8C            [24]  645 	mov	_TH0,r4
-                                    646 ;	lib/src/delay.c:27: set_TCON_TR0; // Start Timer0
-                                    647 ;	assignBit
-      0000D6 D2 8C            [12]  648 	setb	_TR0
-                                    649 ;	lib/src/delay.c:28: while (!TF0); // Check Timer0 Time-Out Flag
-      0000D8                        650 00101$:
-                                    651 ;	lib/src/delay.c:29: clr_TCON_TF0;
-                                    652 ;	assignBit
-      0000D8 10 8D 02         [24]  653 	jbc	_TF0,00127$
-      0000DB 80 FB            [24]  654 	sjmp	00101$
-      0000DD                        655 00127$:
-                                    656 ;	lib/src/delay.c:30: clr_TCON_TR0; // Stop Timer0
-                                    657 ;	assignBit
-      0000DD C2 8C            [12]  658 	clr	_TR0
-                                    659 ;	lib/src/delay.c:31: --u16Count;
-      0000DF 1E               [12]  660 	dec	r6
-      0000E0 BE FF 01         [24]  661 	cjne	r6,#0xff,00128$
-      0000E3 1F               [12]  662 	dec	r7
-      0000E4                        663 00128$:
-      0000E4 80 E8            [24]  664 	sjmp	00104$
-      0000E6                        665 00107$:
-                                    666 ;	lib/src/delay.c:33: }
-      0000E6 22               [24]  667 	ret
-                                    668 	.area CSEG    (CODE)
-                                    669 	.area CONST   (CODE)
-                                    670 	.area XINIT   (CODE)
-                                    671 	.area CABS    (ABS,CODE)
+      0000B5                        593 _DelayT0:
+      0000B5 AE 82            [24]  594 	mov	r6,dpl
+      0000B7 AF 83            [24]  595 	mov	r7,dph
+                                    596 ;	lib/src/delay.c:19: TL0TMP = LOBYTE(65535 - (16 * configdelay));
+      0000B9 E5 0F            [12]  597 	mov	a,_DelayT0_PARM_2
+      0000BB C4               [12]  598 	swap	a
+      0000BC 54 F0            [12]  599 	anl	a,#0xf0
+      0000BE FD               [12]  600 	mov	r5,a
+      0000BF 74 FF            [12]  601 	mov	a,#0xff
+      0000C1 C3               [12]  602 	clr	c
+      0000C2 9D               [12]  603 	subb	a,r5
+      0000C3 FD               [12]  604 	mov	r5,a
+                                    605 ;	lib/src/delay.c:20: TH0TMP = HIBYTE(65535 - (16 * configdelay));
+      0000C4 AB 0F            [24]  606 	mov	r3,_DelayT0_PARM_2
+      0000C6 E5 10            [12]  607 	mov	a,(_DelayT0_PARM_2 + 1)
+      0000C8 C4               [12]  608 	swap	a
+      0000C9 54 F0            [12]  609 	anl	a,#0xf0
+      0000CB CB               [12]  610 	xch	a,r3
+      0000CC C4               [12]  611 	swap	a
+      0000CD CB               [12]  612 	xch	a,r3
+      0000CE 6B               [12]  613 	xrl	a,r3
+      0000CF CB               [12]  614 	xch	a,r3
+      0000D0 54 F0            [12]  615 	anl	a,#0xf0
+      0000D2 CB               [12]  616 	xch	a,r3
+      0000D3 6B               [12]  617 	xrl	a,r3
+      0000D4 FC               [12]  618 	mov	r4,a
+      0000D5 8B 01            [24]  619 	mov	ar1,r3
+      0000D7 8C 02            [24]  620 	mov	ar2,r4
+      0000D9 E4               [12]  621 	clr	a
+      0000DA FB               [12]  622 	mov	r3,a
+      0000DB FC               [12]  623 	mov	r4,a
+      0000DC 74 FF            [12]  624 	mov	a,#0xff
+      0000DE C3               [12]  625 	clr	c
+      0000DF 99               [12]  626 	subb	a,r1
+      0000E0 74 FF            [12]  627 	mov	a,#0xff
+      0000E2 9A               [12]  628 	subb	a,r2
+      0000E3 FA               [12]  629 	mov	r2,a
+      0000E4 E4               [12]  630 	clr	a
+      0000E5 9B               [12]  631 	subb	a,r3
+      0000E6 E4               [12]  632 	clr	a
+      0000E7 9C               [12]  633 	subb	a,r4
+      0000E8 8A 04            [24]  634 	mov	ar4,r2
+                                    635 ;	lib/src/delay.c:21: while (u16Count)
+      0000EA                        636 00104$:
+      0000EA EE               [12]  637 	mov	a,r6
+      0000EB 4F               [12]  638 	orl	a,r7
+      0000EC 60 14            [24]  639 	jz	00107$
+                                    640 ;	lib/src/delay.c:23: TL0 = TL0TMP;
+      0000EE 8D 8A            [24]  641 	mov	_TL0,r5
+                                    642 ;	lib/src/delay.c:24: TH0 = TH0TMP;
+      0000F0 8C 8C            [24]  643 	mov	_TH0,r4
+                                    644 ;	lib/src/delay.c:25: set_TCON_TR0; // Start Timer0
+                                    645 ;	assignBit
+      0000F2 D2 8C            [12]  646 	setb	_TR0
+                                    647 ;	lib/src/delay.c:26: while (!TF0); // Check Timer0 Time-Out Flag
+      0000F4                        648 00101$:
+                                    649 ;	lib/src/delay.c:27: clr_TCON_TF0;
+                                    650 ;	assignBit
+      0000F4 10 8D 02         [24]  651 	jbc	_TF0,00127$
+      0000F7 80 FB            [24]  652 	sjmp	00101$
+      0000F9                        653 00127$:
+                                    654 ;	lib/src/delay.c:28: clr_TCON_TR0; // Stop Timer0
+                                    655 ;	assignBit
+      0000F9 C2 8C            [12]  656 	clr	_TR0
+                                    657 ;	lib/src/delay.c:29: --u16Count;
+      0000FB 1E               [12]  658 	dec	r6
+      0000FC BE FF 01         [24]  659 	cjne	r6,#0xff,00128$
+      0000FF 1F               [12]  660 	dec	r7
+      000100                        661 00128$:
+      000100 80 E8            [24]  662 	sjmp	00104$
+      000102                        663 00107$:
+                                    664 ;	lib/src/delay.c:31: }
+      000102 22               [24]  665 	ret
+                                    666 	.area CSEG    (CODE)
+                                    667 	.area CONST   (CODE)
+                                    668 	.area XINIT   (CODE)
+                                    669 	.area CABS    (ABS,CODE)

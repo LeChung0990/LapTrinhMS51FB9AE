@@ -76,6 +76,14 @@ void UART0_STRING(const char *cy)
         cy++;
     }
 }
+
+void UART0_NLINE(void)
+{
+    SBUF = 0x0a;
+	while (UART0_GetFlag(UART0_TX_FLAG) == 0) {}
+	UART0_ClearFlag(UART0_TX_FLAG);
+}
+
 void UART0_NUMBER(int number)
 {
     char count = 0;

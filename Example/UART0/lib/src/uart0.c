@@ -11,6 +11,7 @@ void UART0_Init(void)
 	/* Interrupt */
 	/*Timer 3 interrupt Disabled*/
 	EIE1 &= ~(1 << 1);
+	/*19200*/
 	RH3 = 0xff;
 	RL3 = 0xe6;
 	/*Timer 3 starts running*/

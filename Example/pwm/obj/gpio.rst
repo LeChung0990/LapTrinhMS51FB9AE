@@ -557,7 +557,7 @@
                                     557 ;	-----------------------------------------
                                     558 ;	 function GPIO_Init
                                     559 ;	-----------------------------------------
-      0000A8                        560 _GPIO_Init:
+      0000DD                        560 _GPIO_Init:
                            000007   561 	ar7 = 0x07
                            000006   562 	ar6 = 0x06
                            000005   563 	ar5 = 0x05
@@ -567,13 +567,13 @@
                            000001   567 	ar1 = 0x01
                            000000   568 	ar0 = 0x00
                                     569 ;	lib/src/gpio.c:9: P15_PUSHPULL_MODE;
-      0000A8 53 B3 DF         [24]  570 	anl	_P1M1,#0xdf
-      0000AB 43 B4 20         [24]  571 	orl	_P1M2,#0x20
+      0000DD 53 B3 DF         [24]  570 	anl	_P1M1,#0xdf
+      0000E0 43 B4 20         [24]  571 	orl	_P1M2,#0x20
                                     572 ;	lib/src/gpio.c:11: P10_INPUT_MODE;;
-      0000AE 43 B3 01         [24]  573 	orl	_P1M1,#0x01
-      0000B1 53 B4 FE         [24]  574 	anl	_P1M2,#0xfe
+      0000E3 43 B3 01         [24]  573 	orl	_P1M1,#0x01
+      0000E6 53 B4 FE         [24]  574 	anl	_P1M2,#0xfe
                                     575 ;	lib/src/gpio.c:12: }
-      0000B4 22               [24]  576 	ret
+      0000E9 22               [24]  576 	ret
                                     577 	.area CSEG    (CODE)
                                     578 	.area CONST   (CODE)
                                     579 	.area XINIT   (CODE)

@@ -13,17 +13,20 @@ void main(void)
 	/* init */
 	Delay_Init();
 	I2C_Init();
+	P1M1&=0xDF;P1M2|=0x20;
+	P15 = 0;
 	UART0_Init();
 	UART0_STRING("Start:");
 
-	UART0_STRING("Read:
-	");
+	UART0_STRING("Read:-");
 
+	I2C_Write((uint8_t)0x68<<1, 0x3B, 1);
 	/* read data */
-	if (!I2C_Read(0xA1, u8Data, 2))
+	if (!I2C_Read( (uint8_t)(0x68<<1), u8Data, 2))
 	{
 		while (1)
 		{
+			P15 = 1;
 		}
 	}
 	UART0_NUMBER(u8Data[0]);

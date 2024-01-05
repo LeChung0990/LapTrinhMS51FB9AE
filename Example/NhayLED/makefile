@@ -12,6 +12,7 @@ OBJ_DIR = obj
 
 SRC = main.c
 SRC += delay.c
+SRC += uart.c
 
 VPATH = lib/src
 

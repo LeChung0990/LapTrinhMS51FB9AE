@@ -248,6 +248,7 @@
 	.globl _UART0_ClearFlag
 	.globl _UART0_GetFlag
 	.globl _UART0_STRING
+	.globl _UART0_NLINE
 	.globl _UART0_NUMBER
 ;--------------------------------------------------------
 ; special function registers
@@ -500,7 +501,7 @@ _MOSI	=	0x0080
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
-_UART0_NUMBER_digit_65536_31:
+_UART0_NUMBER_digit_65536_35:
 	.ds 5
 ;--------------------------------------------------------
 ; overlayable items in internal ram
@@ -763,44 +764,64 @@ _UART0_STRING:
 ;	lib/src/uart0.c:78: }
 	ret
 ;------------------------------------------------------------
+;Allocation info for local variables in function 'UART0_NLINE'
+;------------------------------------------------------------
+;	lib/src/uart0.c:80: void UART0_NLINE(void)
+;	-----------------------------------------
+;	 function UART0_NLINE
+;	-----------------------------------------
+_UART0_NLINE:
+;	lib/src/uart0.c:82: SBUF = 0x0a;
+	mov	_SBUF,#0x0a
+;	lib/src/uart0.c:83: while (UART0_GetFlag(UART0_TX_FLAG) == 0) {}
+00101$:
+	mov	dpl,#0x02
+	lcall	_UART0_GetFlag
+	mov	a,dpl
+	jz	00101$
+;	lib/src/uart0.c:84: UART0_ClearFlag(UART0_TX_FLAG);
+	mov	dpl,#0x02
+;	lib/src/uart0.c:85: }
+	ljmp	_UART0_ClearFlag
+;------------------------------------------------------------
 ;Allocation info for local variables in function 'UART0_NUMBER'
 ;------------------------------------------------------------
 ;number                    Allocated to registers r6 r7 
 ;count                     Allocated to registers r5 
-;digit                     Allocated with name '_UART0_NUMBER_digit_65536_31'
+;digit                     Allocated with name '_UART0_NUMBER_digit_65536_35'
 ;------------------------------------------------------------
-;	lib/src/uart0.c:79: void UART0_NUMBER(int number)
+;	lib/src/uart0.c:87: void UART0_NUMBER(int number)
 ;	-----------------------------------------
 ;	 function UART0_NUMBER
 ;	-----------------------------------------
 _UART0_NUMBER:
 	mov	r6,dpl
 	mov	r7,dph
-;	lib/src/uart0.c:81: char count = 0;
+;	lib/src/uart0.c:89: char count = 0;
 	mov	r5,#0x00
-;	lib/src/uart0.c:82: char digit[5] = "";
-	mov	_UART0_NUMBER_digit_65536_31,r5
-	mov	(_UART0_NUMBER_digit_65536_31 + 0x0001),r5
-	mov	(_UART0_NUMBER_digit_65536_31 + 0x0002),r5
-	mov	(_UART0_NUMBER_digit_65536_31 + 0x0003),r5
-	mov	(_UART0_NUMBER_digit_65536_31 + 0x0004),r5
-;	lib/src/uart0.c:83: if (number == 0)
+;	lib/src/uart0.c:90: char digit[5] = "";
+	mov	_UART0_NUMBER_digit_65536_35,r5
+	mov	(_UART0_NUMBER_digit_65536_35 + 0x0001),r5
+	mov	(_UART0_NUMBER_digit_65536_35 + 0x0002),r5
+	mov	(_UART0_NUMBER_digit_65536_35 + 0x0003),r5
+	mov	(_UART0_NUMBER_digit_65536_35 + 0x0004),r5
+;	lib/src/uart0.c:91: if (number == 0)
 	mov	a,r6
 	orl	a,r7
-;	lib/src/uart0.c:85: digit[0] = 0;
+;	lib/src/uart0.c:93: digit[0] = 0;
 	jnz	00116$
-	mov	_UART0_NUMBER_digit_65536_31,a
-;	lib/src/uart0.c:86: count = 1;
+	mov	_UART0_NUMBER_digit_65536_35,a
+;	lib/src/uart0.c:94: count = 1;
 	mov	r5,#0x01
-;	lib/src/uart0.c:88: while(number != 0)
+;	lib/src/uart0.c:96: while(number != 0)
 00116$:
 00103$:
 	mov	a,r6
 	orl	a,r7
 	jz	00120$
-;	lib/src/uart0.c:90: digit[count] = number%10;   //lay chu so ngoai cung xxxx8;
+;	lib/src/uart0.c:98: digit[count] = number%10;   //lay chu so ngoai cung xxxx8;
 	mov	a,r5
-	add	a,#_UART0_NUMBER_digit_65536_31
+	add	a,#_UART0_NUMBER_digit_65536_35
 	mov	r1,a
 	mov	__modsint_PARM_2,#0x0a
 	mov	(__modsint_PARM_2 + 1),#0x00
@@ -817,9 +838,9 @@ _UART0_NUMBER:
 	pop	ar6
 	pop	ar7
 	mov	@r1,ar3
-;	lib/src/uart0.c:91: ++count;
+;	lib/src/uart0.c:99: ++count;
 	inc	r5
-;	lib/src/uart0.c:92: number = number/10;         //chia so number cho 10 de bo so ngoai cung xxxx
+;	lib/src/uart0.c:100: number = number/10;         //chia so number cho 10 de bo so ngoai cung xxxx
 	mov	__divsint_PARM_2,#0x0a
 	mov	(__divsint_PARM_2 + 1),#0x00
 	mov	dpl,r6
@@ -829,24 +850,24 @@ _UART0_NUMBER:
 	mov	r6,dpl
 	mov	r7,dph
 	pop	ar5
-;	lib/src/uart0.c:94: while (count!=0)
+;	lib/src/uart0.c:102: while (count!=0)
 	sjmp	00103$
 00120$:
 	mov	ar7,r5
 00109$:
 	mov	a,r7
 	jz	00112$
-;	lib/src/uart0.c:96: SBUF = (digit[count - 1] + 0x30); // 0x30 = 48 ;
+;	lib/src/uart0.c:104: SBUF = (digit[count - 1] + 0x30); // 0x30 = 48 ;
 	mov	ar6,r7
 	mov	a,r6
 	dec	a
-	add	a,#_UART0_NUMBER_digit_65536_31
+	add	a,#_UART0_NUMBER_digit_65536_35
 	mov	r1,a
 	mov	ar6,@r1
 	mov	a,#0x30
 	add	a,r6
 	mov	_SBUF,a
-;	lib/src/uart0.c:97: while (UART0_GetFlag(UART0_TX_FLAG) == 0) {}
+;	lib/src/uart0.c:105: while (UART0_GetFlag(UART0_TX_FLAG) == 0) {}
 00106$:
 	mov	dpl,#0x02
 	push	ar7
@@ -854,16 +875,16 @@ _UART0_NUMBER:
 	mov	a,dpl
 	pop	ar7
 	jz	00106$
-;	lib/src/uart0.c:98: UART0_ClearFlag(UART0_TX_FLAG);
+;	lib/src/uart0.c:106: UART0_ClearFlag(UART0_TX_FLAG);
 	mov	dpl,#0x02
 	push	ar7
 	lcall	_UART0_ClearFlag
 	pop	ar7
-;	lib/src/uart0.c:99: --count;
+;	lib/src/uart0.c:107: --count;
 	dec	r7
 	sjmp	00109$
 00112$:
-;	lib/src/uart0.c:101: }
+;	lib/src/uart0.c:109: }
 	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

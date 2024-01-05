@@ -15,5 +15,6 @@
 -l libfloat
 obj/main.rel
 obj/delay.rel
+obj/uart.rel
 
 -e

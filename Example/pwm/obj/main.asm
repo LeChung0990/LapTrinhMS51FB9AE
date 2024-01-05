@@ -10,12 +10,6 @@
 ;--------------------------------------------------------
 	.globl _main
 	.globl _delay
-	.globl _SET_DUTY
-	.globl _PWM0_STOP
-	.globl _PWM0_RUN
-	.globl _PWM_Init
-	.globl _Delay_Init
-	.globl _GPIO_Init
 	.globl _MOSI
 	.globl _P00
 	.globl _MISO
@@ -641,28 +635,66 @@ _delay:
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	main.c:18: GPIO_Init();
-	lcall	_GPIO_Init
-;	main.c:20: Delay_Init();
-	lcall	_Delay_Init
-;	main.c:21: PWM_Init();
-	lcall	_PWM_Init
-;	main.c:22: while (1)
-00104$:
-;	main.c:24: if (P10 == 0)
-	jb	_P10,00104$
-;	main.c:26: P15 = 1;
+;	main.c:23: CLRPWM = 1;
 ;	assignBit
-	setb	_P15
-;	main.c:27: PWM0_STOP();
-	lcall	_PWM0_STOP
-;	main.c:28: SET_DUTY(90);
-	mov	dpl,#0x5a
-	lcall	_SET_DUTY
-;	main.c:29: PWM0_RUN();
-	lcall	_PWM0_RUN
-;	main.c:33: }
-	sjmp	00104$
+	setb	_CLRPWM
+;	main.c:24: CKCON &= ~(1 << 6);
+	anl	_CKCON,#0xbf
+;	main.c:25: PWMCON1 &= 0x07;
+	anl	_PWMCON1,#0x07
+;	main.c:26: PWMCON1 |= 0x00;
+	mov	_PWMCON1,_PWMCON1
+;	main.c:27: PWMPH = 0x1;
+	mov	_PWMPH,#0x01
+;	main.c:28: PWMPL = 0x3f;
+	mov	_PWMPL,#0x3f
+;	main.c:29: PWM0H = 0x0;
+	mov	_PWM0H,#0x00
+;	main.c:30: PWM0L = 0x20;
+	mov	_PWM0L,#0x20
+;	main.c:31: P1M1 &= ~(1 << 2);
+	anl	_P1M1,#0xfb
+;	main.c:32: P1M2 |= (1 << 2);
+	orl	_P1M2,#0x04
+;	main.c:33: PIOCON0 |= (1 << 0);
+	orl	_PIOCON0,#0x01
+;	main.c:34: PWM1H = 0x0;
+	mov	_PWM1H,#0x00
+;	main.c:35: PWM1L = 0x40;
+	mov	_PWM1L,#0x40
+;	main.c:36: P1M1 &= ~(1 << 1);
+	anl	_P1M1,#0xfd
+;	main.c:37: P1M2 |= (1 << 1);
+	orl	_P1M2,#0x02
+;	main.c:38: PIOCON0 |= (1 << 1);
+	orl	_PIOCON0,#0x02
+;	main.c:39: PWM2H = 0x0;
+	mov	_PWM2H,#0x00
+;	main.c:40: PWM2L = 0x60;
+	mov	_PWM2L,#0x60
+;	main.c:41: P1M1 &= ~(1 << 0);
+	anl	_P1M1,#0xfe
+;	main.c:42: P1M2 |= (1 << 0);
+	orl	_P1M2,#0x01
+;	main.c:43: PIOCON0 |= (1 << 2);
+	orl	_PIOCON0,#0x04
+;	main.c:44: PWM3H = 0x0;
+	mov	_PWM3H,#0x00
+;	main.c:45: PWM3L = 0x80;
+	mov	_PWM3L,#0x80
+;	main.c:46: P0M1 &= ~(1 << 0);
+	anl	_P0M1,#0xfe
+;	main.c:47: P0M2 |= (1 << 0);
+	orl	_P0M2,#0x01
+;	main.c:48: PIOCON0 |= (1 << 3);
+	orl	_PIOCON0,#0x08
+;	main.c:49: PWMRUN = 1;
+;	assignBit
+	setb	_PWMRUN
+;	main.c:50: while (1)
+00102$:
+;	main.c:61: }
+	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)

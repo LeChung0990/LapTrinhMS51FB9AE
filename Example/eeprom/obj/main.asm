@@ -8,19 +8,14 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
+	.globl _u8Data
 	.globl _main
+	.globl _Read_APROM_BYTE
 	.globl _UART0_NUMBER
-	.globl _UART0_NLINE
 	.globl _UART0_STRING
-	.globl _UART0_Init
-	.globl _Delay_Ms
-	.globl _I2C_Read
-	.globl _I2C_Write
-	.globl _I2C_Address
-	.globl _I2C_RepeatedStart
-	.globl _I2C_start
-	.globl _send_stop
-	.globl _I2C_Init
+	.globl _UART_Open
+	.globl _DelayT0
+	.globl _DelayT0_Init
 	.globl _MOSI
 	.globl _P00
 	.globl _MISO
@@ -253,11 +248,12 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
-	.globl _checkAddress
-	.globl _u8Data
-	.globl _Res
-	.globl _High
-	.globl _Low
+	.globl _BIT_TMP
+	.globl _Write_DATAFLASH_BYTE_PARM_2
+	.globl _page_buffer
+	.globl _Result
+	.globl _number
+	.globl _Write_DATAFLASH_BYTE
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -509,19 +505,20 @@ _MOSI	=	0x0080
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
-_Low::
+_number::
 	.ds 1
-_High::
+_Result::
 	.ds 1
-_Res::
+_page_buffer::
+	.ds 64
+_Write_DATAFLASH_BYTE_PARM_2:
+	.ds 1
+_Write_DATAFLASH_BYTE_u16EPAddr_65536_18:
 	.ds 2
-_u8Data::
-	.ds 2
-_checkAddress::
-	.ds 1
 ;--------------------------------------------------------
 ; overlayable items in internal ram
 ;--------------------------------------------------------
+	.area	OSEG    (OVR,DATA)
 ;--------------------------------------------------------
 ; Stack segment in internal ram
 ;--------------------------------------------------------
@@ -542,6 +539,8 @@ __start__stack:
 ; bit data
 ;--------------------------------------------------------
 	.area BSEG    (BIT)
+_BIT_TMP::
+	.ds 1
 ;--------------------------------------------------------
 ; paged external ram data
 ;--------------------------------------------------------
@@ -587,8 +586,8 @@ __interrupt_vect:
 	.globl __mcs51_genXINIT
 	.globl __mcs51_genXRAMCLEAR
 	.globl __mcs51_genRAMCLEAR
-;	main.c:13: uint8_t checkAddress = 0;
-	mov	_checkAddress,#0x00
+;	main.c:13: uint8_t number= 0x34;
+	mov	_number,#0x34
 	.area GSFINAL (CODE)
 	ljmp	__sdcc_program_startup
 ;--------------------------------------------------------
@@ -604,13 +603,16 @@ __sdcc_program_startup:
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
+;Allocation info for local variables in function 'Read_APROM_BYTE'
 ;------------------------------------------------------------
-;	main.c:15: void main(void)
+;u16_addr                  Allocated to registers r6 r7 
+;rdata                     Allocated to registers 
+;------------------------------------------------------------
+;	main.c:20: unsigned char Read_APROM_BYTE(unsigned int __code* u16_addr)
 ;	-----------------------------------------
-;	 function main
+;	 function Read_APROM_BYTE
 ;	-----------------------------------------
-_main:
+_Read_APROM_BYTE:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -619,85 +621,261 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:19: I2C_Init();
-	lcall	_I2C_Init
-;	main.c:20: UART0_Init();
-	lcall	_UART0_Init
-;	main.c:23: UART0_STRING("Start:");
+;	main.c:23: rdata = *u16_addr >> 8;
+	clr	a
+	movc	a,@a+dptr
+	inc	dptr
+	clr	a
+	movc	a,@a+dptr
+;	main.c:24: return rdata;
+;	main.c:25: }
+	mov	dpl,a
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'main'
+;------------------------------------------------------------
+;	main.c:26: void main(void)
+;	-----------------------------------------
+;	 function main
+;	-----------------------------------------
+_main:
+;	main.c:78: UART_Open(UART0_Timer3, BAUD9600);
+	mov	_UART_Open_PARM_2,#0xcc
+	mov	(_UART_Open_PARM_2 + 1),#0xff
+	mov	dpl,#0x01
+	lcall	_UART_Open
+;	main.c:79: DelayT0_Init();
+	lcall	_DelayT0_Init
+;	main.c:80: UART0_STRING("Start:");
 	mov	dptr,#___str_0
 	mov	b,#0x80
 	lcall	_UART0_STRING
-;	main.c:24: UART0_STRING("Read:");
-	mov	dptr,#___str_1
-	mov	b,#0x80
-	lcall	_UART0_STRING
-;	main.c:45: while (1) {
+;	main.c:84: while (1)
 00102$:
-;	main.c:46: I2C_start();
-	lcall	_I2C_start
-;	main.c:47: I2C_Address((uint8_t)0x68<<1, 0);
-	mov	_I2C_Address_PARM_2,#0x00
-	mov	dpl,#0xd0
-	lcall	_I2C_Address
-;	main.c:48: I2C_Write(0x3B);
-	mov	dpl,#0x3b
-	lcall	_I2C_Write
-;	main.c:55: I2C_RepeatedStart();
-	lcall	_I2C_RepeatedStart
-;	main.c:56: checkAddress = I2C_Address((uint8_t)0x68<<1, 1);
-	mov	_I2C_Address_PARM_2,#0x01
-	mov	dpl,#0xd0
-	lcall	_I2C_Address
-	mov	_checkAddress,dpl
-;	main.c:57: High = I2C_Read(1);
-	mov	dpl,#0x01
-	lcall	_I2C_Read
-	mov	_High,dpl
-;	main.c:58: Low = I2C_Read(0);
-	mov	dpl,#0x00
-	lcall	_I2C_Read
-	mov	_Low,dpl
-;	main.c:59: send_stop();
-	lcall	_send_stop
-;	main.c:62: UART0_NUMBER(checkAddress);
-	mov	r6,_checkAddress
+;	main.c:86: number = Read_APROM_BYTE(0x200);
+	mov	dptr,#0x0200
+	lcall	_Read_APROM_BYTE
+	mov	_number,dpl
+;	main.c:87: UART0_NUMBER(number);
+	mov	r6,_number
 	mov	r7,#0x00
 	mov	dpl,r6
 	mov	dph,r7
 	lcall	_UART0_NUMBER
-;	main.c:63: UART0_NLINE();
-	lcall	_UART0_NLINE
-;	main.c:64: UART0_NUMBER(High);
-	mov	r6,_High
-	mov	r7,#0x00
-	mov	dpl,r6
-	mov	dph,r7
-	lcall	_UART0_NUMBER
-;	main.c:65: UART0_NLINE();
-	lcall	_UART0_NLINE
-;	main.c:66: UART0_NUMBER(Low);
-	mov	r6,_Low
-	mov	r7,#0x00
-	mov	dpl,r6
-	mov	dph,r7
-	lcall	_UART0_NUMBER
-;	main.c:67: UART0_NLINE();
-	lcall	_UART0_NLINE
-;	main.c:68: Delay_Ms(1000);
+;	main.c:96: DelayT0(1000, CONFIG_1MS);
+	mov	_DelayT0_PARM_2,#0xe8
+	mov	(_DelayT0_PARM_2 + 1),#0x03
 	mov	dptr,#0x03e8
-	lcall	_Delay_Ms
-;	main.c:70: }
+	lcall	_DelayT0
+;	main.c:98: }
 	sjmp	00102$
+;------------------------------------------------------------
+;Allocation info for local variables in function 'Write_DATAFLASH_BYTE'
+;------------------------------------------------------------
+;u8EPData                  Allocated with name '_Write_DATAFLASH_BYTE_PARM_2'
+;u16EPAddr                 Allocated with name '_Write_DATAFLASH_BYTE_u16EPAddr_65536_18'
+;looptmp                   Allocated to registers r3 
+;u16_addrl_r               Allocated to registers r4 r5 
+;RAMtmp                    Allocated to registers 
+;------------------------------------------------------------
+;	main.c:101: void Write_DATAFLASH_BYTE(unsigned int u16EPAddr,unsigned char u8EPData)
+;	-----------------------------------------
+;	 function Write_DATAFLASH_BYTE
+;	-----------------------------------------
+_Write_DATAFLASH_BYTE:
+	mov	_Write_DATAFLASH_BYTE_u16EPAddr_65536_18,dpl
+	mov	(_Write_DATAFLASH_BYTE_u16EPAddr_65536_18 + 1),dph
+;	main.c:108: u16_addrl_r=(u16EPAddr/128)*128;
+	mov	r4,_Write_DATAFLASH_BYTE_u16EPAddr_65536_18
+	mov	a,(_Write_DATAFLASH_BYTE_u16EPAddr_65536_18 + 1)
+	mov	c,acc.7
+	xch	a,r4
+	rlc	a
+	xch	a,r4
+	rlc	a
+	xch	a,r4
+	anl	a,#(0x01&0x01)
+	mov	c,acc.0
+	xch	a,r4
+	rrc	a
+	xch	a,r4
+	rrc	a
+	xch	a,r4
+	mov	r5,a
+;	main.c:110: for(looptmp=0;looptmp<0x80;looptmp++)
+	mov	r3,#0x00
+00103$:
+;	main.c:112: RAMtmp = Read_APROM_BYTE((uint16_t  __code*) (u16_addrl_r+looptmp));
+	mov	ar2,r3
+	mov	r7,#0x00
+	mov	a,r2
+	add	a,r4
+	mov	r2,a
+	mov	a,r7
+	addc	a,r5
+	mov	r7,a
+	mov	dpl,r2
+	mov	dph,r7
+	push	ar5
+	push	ar4
+	push	ar3
+	lcall	_Read_APROM_BYTE
+	mov	r7,dpl
+	pop	ar3
+	pop	ar4
+	pop	ar5
+;	main.c:113: page_buffer[looptmp]=RAMtmp;
+	mov	a,r3
+	add	a,#_page_buffer
+	mov	r0,a
+	mov	@r0,ar7
+;	main.c:110: for(looptmp=0;looptmp<0x80;looptmp++)
+	inc	r3
+	cjne	r3,#0x80,00127$
+00127$:
+	jc	00103$
+;	main.c:116: page_buffer[u16EPAddr&0x7f] = u8EPData;
+	mov	a,#0x7f
+	anl	a,_Write_DATAFLASH_BYTE_u16EPAddr_65536_18
+	add	a,#_page_buffer
+	mov	r0,a
+	mov	@r0,_Write_DATAFLASH_BYTE_PARM_2
+;	main.c:119: IAPAL = u16_addrl_r&0xff;
+	mov	ar7,r4
+	mov	_IAPAL,r7
+;	main.c:120: IAPAH = (u16_addrl_r>>8)&0xff;
+	mov	ar6,r5
+	mov	_IAPAH,r6
+;	main.c:121: IAPFD = 0xFF;
+	mov	_IAPFD,#0xff
+;	main.c:122: set_CHPCON_IAPEN; 
+;	assignBit
+	mov	c,_EA
+	mov	_BIT_TMP,c
+;	assignBit
+	clr	_EA
+	mov	_TA,#0xaa
+	mov	_TA,#0x55
+	orl	_CHPCON,#0x01
+;	assignBit
+	mov	c,_BIT_TMP
+	mov	_EA,c
+;	main.c:123: set_IAPUEN_APUEN;
+;	assignBit
+	mov	c,_EA
+	mov	_BIT_TMP,c
+;	assignBit
+	clr	_EA
+	mov	_TA,#0xaa
+	mov	_TA,#0x55
+	orl	_IAPUEN,#0x01
+;	assignBit
+	mov	c,_BIT_TMP
+	mov	_EA,c
+;	main.c:124: IAPCN = 0x22;     
+	mov	_IAPCN,#0x22
+;	main.c:125: set_IAPTRG_IAPGO; 
+;	assignBit
+	mov	c,_EA
+	mov	_BIT_TMP,c
+;	assignBit
+	clr	_EA
+	mov	_TA,#0xaa
+	mov	_TA,#0x55
+	orl	_IAPTRG,#0x01
+;	assignBit
+	mov	c,_BIT_TMP
+	mov	_EA,c
+;	main.c:128: set_CHPCON_IAPEN; 
+;	assignBit
+	mov	c,_EA
+	mov	_BIT_TMP,c
+;	assignBit
+	clr	_EA
+	mov	_TA,#0xaa
+	mov	_TA,#0x55
+	orl	_CHPCON,#0x01
+;	assignBit
+	mov	c,_BIT_TMP
+	mov	_EA,c
+;	main.c:129: set_IAPUEN_APUEN;
+;	assignBit
+	mov	c,_EA
+	mov	_BIT_TMP,c
+;	assignBit
+	clr	_EA
+	mov	_TA,#0xaa
+	mov	_TA,#0x55
+	orl	_IAPUEN,#0x01
+;	assignBit
+	mov	c,_BIT_TMP
+	mov	_EA,c
+;	main.c:130: IAPCN = 0x21;
+	mov	_IAPCN,#0x21
+;	main.c:131: for(looptmp=0;looptmp<0x80;looptmp++)
+	mov	r5,#0x00
+00105$:
+;	main.c:133: IAPAL = (u16_addrl_r&0xff)+looptmp;
+	mov	a,r5
+	add	a,r7
+	mov	_IAPAL,a
+;	main.c:134: IAPAH = (u16_addrl_r>>8)&0xff;
+	mov	_IAPAH,r6
+;	main.c:135: IAPFD = page_buffer[looptmp];
+	mov	a,r5
+	add	a,#_page_buffer
+	mov	r1,a
+	mov	_IAPFD,@r1
+;	main.c:136: set_IAPTRG_IAPGO;      
+;	assignBit
+	mov	c,_EA
+	mov	_BIT_TMP,c
+;	assignBit
+	clr	_EA
+	mov	_TA,#0xaa
+	mov	_TA,#0x55
+	orl	_IAPTRG,#0x01
+;	assignBit
+	mov	c,_BIT_TMP
+	mov	_EA,c
+;	main.c:131: for(looptmp=0;looptmp<0x80;looptmp++)
+	inc	r5
+	cjne	r5,#0x80,00129$
+00129$:
+	jc	00105$
+;	main.c:138: clr_IAPUEN_APUEN;
+;	assignBit
+	mov	c,_EA
+	mov	_BIT_TMP,c
+;	assignBit
+	clr	_EA
+	mov	_TA,#0xaa
+	mov	_TA,#0x55
+	anl	_IAPUEN,#0xfe
+;	assignBit
+	mov	c,_BIT_TMP
+	mov	_EA,c
+;	main.c:139: clr_CHPCON_IAPEN;
+;	assignBit
+	mov	c,_EA
+	mov	_BIT_TMP,c
+;	assignBit
+	clr	_EA
+	mov	_TA,#0xaa
+	mov	_TA,#0x55
+	anl	_CHPCON,#0xfe
+;	assignBit
+	mov	c,_BIT_TMP
+	mov	_EA,c
+;	main.c:140: }  
+	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
+_u8Data:
+	.db #0x38	; 56	'8'
 	.area CONST   (CODE)
 ___str_0:
 	.ascii "Start:"
-	.db 0x00
-	.area CSEG    (CODE)
-	.area CONST   (CODE)
-___str_1:
-	.ascii "Read:"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area XINIT   (CODE)

@@ -12,7 +12,6 @@ C:   00000000  l_BSEG
 C:   00000000  l_BSEG_BYTES                    
 C:   00000000  l_CABS                          
 C:   00000000  l_CONST                         
-C:   00000000  l_GSINIT                        
 C:   00000000  l_GSINIT1                       
 C:   00000000  l_GSINIT5                       
 C:   00000000  l_IABS                          
@@ -46,16 +45,17 @@ C:   00000000  s_XSEG
 C:   00000002  l_OSEG                          
 C:   00000003  l_GSFINAL                       
 C:   00000003  l_GSINIT0                       
+C:   00000006  l_GSINIT                        
 C:   00000006  l_HOME                          
 C:   00000006  s_GSINIT0                       
 C:   00000008  l_REG_BANK_0                    
-C:   00000008  s_OSEG                          
 C:   00000008  s_REG_BANK_1                    
 C:   00000009  s_GSINIT1                       
 C:   00000009  s_GSINIT2                       
 C:   0000000A  l_GSINIT2                       
-C:   0000000A  s_SSEG                          
+C:   0000000F  s_OSEG                          
 C:   00000010  s_REG_BANK_2                    
+C:   00000011  s_SSEG                          
 C:   00000013  s_GSINIT3                       
 ASxxxx Linker V03.00/V05.40 + sdld,  page 2.
 Hexadecimal  [32-Bits]
@@ -73,16 +73,16 @@ C:   00000020  s__CODE
 C:   00000022  l_GSINIT3                       
 C:   0000002A  l_GSINIT4                       
 C:   00000035  s_GSINIT4                       
-C:   0000005F  s_GSFINAL                       
 C:   0000005F  s_GSINIT                        
 C:   0000005F  s_GSINIT5                       
-C:   00000062  s_CSEG                          
+C:   00000065  s_GSFINAL                       
+C:   00000068  s_CSEG                          
 C:   00000080  l_DSEG                          
-C:   00000089  l_CSEG                          
-C:   000000EB  s_CONST                         
-C:   000000EB  s_XINIT                         
-C:   000000F6  l_SSEG                          
+C:   000000EF  l_SSEG                          
 C:   00000100  l_IRAM                          
+C:   0000031F  l_CSEG                          
+C:   00000387  s_CONST                         
+C:   00000387  s_XINIT                         
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
 Hexadecimal  [32-Bits]
@@ -94,55 +94,55 @@ Area                                    Addr        Size        Decimal Bytes (A
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
      00000000  .__.ABS.                           _startup
-     00000080  _MOSI                              delay
-     00000080  _P0                                delay
-     00000080  _P00                               delay
-     00000081  _MISO                              delay
-     00000081  _P01                               delay
-     00000081  _SP                                delay
-     00000082  _DPL                               delay
-     00000082  _P02                               delay
-     00000082  _RXD_1                             delay
-     00000083  _DPH                               delay
-     00000083  _P03                               delay
-     00000084  _P04                               delay
-     00000084  _RCTRIM0                           delay
-     00000084  _STADC                             delay
-     00000085  _P05                               delay
-     00000085  _RCTRIM1                           delay
-     00000086  _P06                               delay
-     00000086  _RWK                               delay
-     00000086  _TXD                               delay
-     00000087  _P07                               delay
-     00000087  _PCON                              delay
-     00000087  _RXD                               delay
-     00000088  _IT0                               delay
-     00000088  _TCON                              delay
-     00000089  _IE0                               delay
-     00000089  _TMOD                              delay
-     0000008A  _IT1                               delay
-     0000008A  _TL0                               delay
-     0000008B  _IE1                               delay
-     0000008B  _TL1                               delay
-     0000008C  _TH0                               delay
-     0000008C  _TR0                               delay
-     0000008D  _TF0                               delay
-     0000008D  _TH1                               delay
-     0000008E  _CKCON                             delay
-     0000008E  _TR1                               delay
-     0000008F  _TF1                               delay
-     0000008F  _WKCON                             delay
-     00000090  _P1                                delay
-     00000090  _P10                               delay
-     00000091  _P11                               delay
-     00000091  _SFRS                              delay
-     00000092  _CAPCON0                           delay
-     00000092  _P12                               delay
-     00000093  _CAPCON1                           delay
-     00000093  _P13                               delay
-     00000093  _SCL                               delay
-     00000094  _CAPCON2                           delay
-     00000094  _P14                               delay
+     00000080  _MOSI                              uart
+     00000080  _P0                                uart
+     00000080  _P00                               uart
+     00000081  _MISO                              uart
+     00000081  _P01                               uart
+     00000081  _SP                                uart
+     00000082  _DPL                               uart
+     00000082  _P02                               uart
+     00000082  _RXD_1                             uart
+     00000083  _DPH                               uart
+     00000083  _P03                               uart
+     00000084  _P04                               uart
+     00000084  _RCTRIM0                           uart
+     00000084  _STADC                             uart
+     00000085  _P05                               uart
+     00000085  _RCTRIM1                           uart
+     00000086  _P06                               uart
+     00000086  _RWK                               uart
+     00000086  _TXD                               uart
+     00000087  _P07                               uart
+     00000087  _PCON                              uart
+     00000087  _RXD                               uart
+     00000088  _IT0                               uart
+     00000088  _TCON                              uart
+     00000089  _IE0                               uart
+     00000089  _TMOD                              uart
+     0000008A  _IT1                               uart
+     0000008A  _TL0                               uart
+     0000008B  _IE1                               uart
+     0000008B  _TL1                               uart
+     0000008C  _TH0                               uart
+     0000008C  _TR0                               uart
+     0000008D  _TF0                               uart
+     0000008D  _TH1                               uart
+     0000008E  _CKCON                             uart
+     0000008E  _TR1                               uart
+     0000008F  _TF1                               uart
+     0000008F  _WKCON                             uart
+     00000090  _P1                                uart
+     00000090  _P10                               uart
+     00000091  _P11                               uart
+     00000091  _SFRS                              uart
+     00000092  _CAPCON0                           uart
+     00000092  _P12                               uart
+     00000093  _CAPCON1                           uart
+     00000093  _P13                               uart
+     00000093  _SCL                               uart
+     00000094  _CAPCON2                           uart
+     00000094  _P14                               uart
 ASxxxx Linker V03.00/V05.40 + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
@@ -152,57 +152,57 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000094  _SDA                               delay
-     00000095  _CKDIV                             delay
-     00000095  _P15                               delay
-     00000096  _CKSWT                             delay
-     00000096  _P16                               delay
-     00000096  _TXD_1                             delay
-     00000097  _CKEN                              delay
-     00000097  _P17                               delay
-     00000098  _RI                                delay
-     00000098  _SCON                              delay
-     00000099  _SBUF                              delay
-     00000099  _TI                                delay
-     0000009A  _RB8                               delay
-     0000009A  _SBUF_1                            delay
-     0000009B  _EIE                               delay
-     0000009B  _TB8                               delay
-     0000009C  _EIE1                              delay
-     0000009C  _REN                               delay
-     0000009D  _SM2                               delay
-     0000009E  _SM1                               delay
-     0000009F  _CHPCON                            delay
-     0000009F  _FE                                delay
-     0000009F  _SM0                               delay
-     000000A0  _P2                                delay
-     000000A0  _P20                               delay
+     00000094  _SDA                               uart
+     00000095  _CKDIV                             uart
+     00000095  _P15                               uart
+     00000096  _CKSWT                             uart
+     00000096  _P16                               uart
+     00000096  _TXD_1                             uart
+     00000097  _CKEN                              uart
+     00000097  _P17                               uart
+     00000098  _RI                                uart
+     00000098  _SCON                              uart
+     00000099  _SBUF                              uart
+     00000099  _TI                                uart
+     0000009A  _RB8                               uart
+     0000009A  _SBUF_1                            uart
+     0000009B  _EIE                               uart
+     0000009B  _TB8                               uart
+     0000009C  _EIE1                              uart
+     0000009C  _REN                               uart
+     0000009D  _SM2                               uart
+     0000009E  _SM1                               uart
+     0000009F  _CHPCON                            uart
+     0000009F  _FE                                uart
+     0000009F  _SM0                               uart
+     000000A0  _P2                                uart
+     000000A0  _P20                               uart
      000000A0  __XPAGE                            
-     000000A2  _AUXR1                             delay
-     000000A3  _BODCON0                           delay
-     000000A4  _IAPTRG                            delay
-     000000A5  _IAPUEN                            delay
-     000000A6  _IAPAL                             delay
-     000000A7  _IAPAH                             delay
-     000000A8  _EX0                               delay
-     000000A8  _IE                                delay
-     000000A9  _ET0                               delay
-     000000A9  _SADDR                             delay
-     000000AA  _EX1                               delay
-     000000AA  _WDCON                             delay
-     000000AB  _BODCON1                           delay
-     000000AB  _ET1                               delay
-     000000AC  _ES                                delay
-     000000AC  _P3M1                              delay
-     000000AC  _P3S                               delay
-     000000AD  _EBOD                              delay
-     000000AD  _P3M2                              delay
-     000000AD  _P3SR                              delay
-     000000AE  _EADC                              delay
-     000000AE  _IAPFD                             delay
-     000000AF  _EA                                delay
-     000000AF  _IAPCN                             delay
-     000000B0  _P3                                delay
+     000000A2  _AUXR1                             uart
+     000000A3  _BODCON0                           uart
+     000000A4  _IAPTRG                            uart
+     000000A5  _IAPUEN                            uart
+     000000A6  _IAPAL                             uart
+     000000A7  _IAPAH                             uart
+     000000A8  _EX0                               uart
+     000000A8  _IE                                uart
+     000000A9  _ET0                               uart
+     000000A9  _SADDR                             uart
+     000000AA  _EX1                               uart
+     000000AA  _WDCON                             uart
+     000000AB  _BODCON1                           uart
+     000000AB  _ET1                               uart
+     000000AC  _ES                                uart
+     000000AC  _P3M1                              uart
+     000000AC  _P3S                               uart
+     000000AD  _EBOD                              uart
+     000000AD  _P3M2                              uart
+     000000AD  _P3SR                              uart
+     000000AE  _EADC                              uart
+     000000AE  _IAPFD                             uart
+     000000AF  _EA                                uart
+     000000AF  _IAPCN                             uart
+     000000B0  _P3                                uart
 ASxxxx Linker V03.00/V05.40 + sdld,  page 5.
 Hexadecimal  [32-Bits]
 
@@ -212,57 +212,57 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000000B0  _P30                               delay
-     000000B1  _P0M1                              delay
-     000000B1  _P0S                               delay
-     000000B2  _P0M2                              delay
-     000000B2  _P0SR                              delay
-     000000B3  _P1M1                              delay
-     000000B3  _P1S                               delay
-     000000B4  _P1M2                              delay
-     000000B4  _P1SR                              delay
-     000000B5  _P2S                               delay
-     000000B7  _IPH                               delay
-     000000B7  _PWMINTC                           delay
-     000000B8  _IP                                delay
-     000000B8  _PX0                               delay
-     000000B9  _PT0                               delay
-     000000B9  _SADEN                             delay
-     000000BA  _PX1                               delay
-     000000BA  _SADEN_1                           delay
-     000000BB  _PT1                               delay
-     000000BB  _SADDR_1                           delay
-     000000BC  _I2DAT                             delay
-     000000BC  _PS                                delay
-     000000BD  _I2STAT                            delay
-     000000BD  _PBOD                              delay
-     000000BE  _I2CLK                             delay
-     000000BE  _PADC                              delay
-     000000BF  _I2TOC                             delay
-     000000C0  _I2CON                             delay
-     000000C0  _I2CPX                             delay
-     000000C1  _I2ADDR                            delay
-     000000C2  _AA                                delay
-     000000C2  _ADCRL                             delay
-     000000C3  _ADCRH                             delay
-     000000C3  _SI                                delay
-     000000C4  _PWM4H                             delay
-     000000C4  _STO                               delay
-     000000C4  _T3CON                             delay
-     000000C5  _PWM5H                             delay
-     000000C5  _RL3                               delay
-     000000C5  _STA                               delay
-     000000C6  _I2CEN                             delay
-     000000C6  _PIOCON1                           delay
-     000000C6  _RH3                               delay
-     000000C7  _TA                                delay
-     000000C8  _CM_RL2                            delay
-     000000C8  _T2CON                             delay
-     000000C9  _T2MOD                             delay
-     000000CA  _RCMP2L                            delay
-     000000CA  _TR2                               delay
-     000000CB  _RCMP2H                            delay
-     000000CC  _PWM4L                             delay
+     000000B0  _P30                               uart
+     000000B1  _P0M1                              uart
+     000000B1  _P0S                               uart
+     000000B2  _P0M2                              uart
+     000000B2  _P0SR                              uart
+     000000B3  _P1M1                              uart
+     000000B3  _P1S                               uart
+     000000B4  _P1M2                              uart
+     000000B4  _P1SR                              uart
+     000000B5  _P2S                               uart
+     000000B7  _IPH                               uart
+     000000B7  _PWMINTC                           uart
+     000000B8  _IP                                uart
+     000000B8  _PX0                               uart
+     000000B9  _PT0                               uart
+     000000B9  _SADEN                             uart
+     000000BA  _PX1                               uart
+     000000BA  _SADEN_1                           uart
+     000000BB  _PT1                               uart
+     000000BB  _SADDR_1                           uart
+     000000BC  _I2DAT                             uart
+     000000BC  _PS                                uart
+     000000BD  _I2STAT                            uart
+     000000BD  _PBOD                              uart
+     000000BE  _I2CLK                             uart
+     000000BE  _PADC                              uart
+     000000BF  _I2TOC                             uart
+     000000C0  _I2CON                             uart
+     000000C0  _I2CPX                             uart
+     000000C1  _I2ADDR                            uart
+     000000C2  _AA                                uart
+     000000C2  _ADCRL                             uart
+     000000C3  _ADCRH                             uart
+     000000C3  _SI                                uart
+     000000C4  _PWM4H                             uart
+     000000C4  _STO                               uart
+     000000C4  _T3CON                             uart
+     000000C5  _PWM5H                             uart
+     000000C5  _RL3                               uart
+     000000C5  _STA                               uart
+     000000C6  _I2CEN                             uart
+     000000C6  _PIOCON1                           uart
+     000000C6  _RH3                               uart
+     000000C7  _TA                                uart
+     000000C8  _CM_RL2                            uart
+     000000C8  _T2CON                             uart
+     000000C9  _T2MOD                             uart
+     000000CA  _RCMP2L                            uart
+     000000CA  _TR2                               uart
+     000000CB  _RCMP2H                            uart
+     000000CC  _PWM4L                             uart
 ASxxxx Linker V03.00/V05.40 + sdld,  page 6.
 Hexadecimal  [32-Bits]
 
@@ -272,57 +272,57 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000000CC  _TL2                               delay
-     000000CD  _PWM5L                             delay
-     000000CD  _TH2                               delay
-     000000CE  _ADCMPL                            delay
-     000000CF  _ADCMPH                            delay
-     000000CF  _TF2                               delay
-     000000D0  _P                                 delay
-     000000D0  _PSW                               delay
-     000000D1  _PWMPH                             delay
-     000000D2  _OV                                delay
-     000000D2  _PWM0H                             delay
-     000000D3  _PWM1H                             delay
-     000000D3  _RS0                               delay
-     000000D4  _PWM2H                             delay
-     000000D4  _RS1                               delay
-     000000D5  _F0                                delay
-     000000D5  _PWM3H                             delay
-     000000D6  _AC                                delay
-     000000D6  _PNP                               delay
-     000000D7  _CY                                delay
-     000000D7  _FBD                               delay
-     000000D8  _PWMCON0                           delay
-     000000D9  _PWMPL                             delay
-     000000DA  _PWM0L                             delay
-     000000DB  _PWM1L                             delay
-     000000DC  _CLRPWM                            delay
-     000000DC  _PWM2L                             delay
-     000000DD  _PWM3L                             delay
-     000000DD  _PWMF                              delay
-     000000DE  _LOAD                              delay
-     000000DE  _PIOCON0                           delay
-     000000DF  _PWMCON1                           delay
-     000000DF  _PWMRUN                            delay
-     000000E0  _ACC                               delay
-     000000E1  _ADCCON1                           delay
-     000000E2  _ADCCON2                           delay
-     000000E3  _ADCDLY                            delay
-     000000E4  _C0L                               delay
-     000000E5  _C0H                               delay
-     000000E6  _C1L                               delay
-     000000E7  _C1H                               delay
-     000000E8  _ADCCON0                           delay
-     000000E8  _ADCHS0                            delay
-     000000E9  _ADCHS1                            delay
-     000000E9  _PICON                             delay
-     000000EA  _ADCHS2                            delay
-     000000EA  _PINEN                             delay
-     000000EB  _ADCHS3                            delay
-     000000EB  _PIPEN                             delay
-     000000EC  _ETGSEL0                           delay
-     000000EC  _PIF                               delay
+     000000CC  _TL2                               uart
+     000000CD  _PWM5L                             uart
+     000000CD  _TH2                               uart
+     000000CE  _ADCMPL                            uart
+     000000CF  _ADCMPH                            uart
+     000000CF  _TF2                               uart
+     000000D0  _P                                 uart
+     000000D0  _PSW                               uart
+     000000D1  _PWMPH                             uart
+     000000D2  _OV                                uart
+     000000D2  _PWM0H                             uart
+     000000D3  _PWM1H                             uart
+     000000D3  _RS0                               uart
+     000000D4  _PWM2H                             uart
+     000000D4  _RS1                               uart
+     000000D5  _F0                                uart
+     000000D5  _PWM3H                             uart
+     000000D6  _AC                                uart
+     000000D6  _PNP                               uart
+     000000D7  _CY                                uart
+     000000D7  _FBD                               uart
+     000000D8  _PWMCON0                           uart
+     000000D9  _PWMPL                             uart
+     000000DA  _PWM0L                             uart
+     000000DB  _PWM1L                             uart
+     000000DC  _CLRPWM                            uart
+     000000DC  _PWM2L                             uart
+     000000DD  _PWM3L                             uart
+     000000DD  _PWMF                              uart
+     000000DE  _LOAD                              uart
+     000000DE  _PIOCON0                           uart
+     000000DF  _PWMCON1                           uart
+     000000DF  _PWMRUN                            uart
+     000000E0  _ACC                               uart
+     000000E1  _ADCCON1                           uart
+     000000E2  _ADCCON2                           uart
+     000000E3  _ADCDLY                            uart
+     000000E4  _C0L                               uart
+     000000E5  _C0H                               uart
+     000000E6  _C1L                               uart
+     000000E7  _C1H                               uart
+     000000E8  _ADCCON0                           uart
+     000000E8  _ADCHS0                            uart
+     000000E9  _ADCHS1                            uart
+     000000E9  _PICON                             uart
+     000000EA  _ADCHS2                            uart
+     000000EA  _PINEN                             uart
+     000000EB  _ADCHS3                            uart
+     000000EB  _PIPEN                             uart
+     000000EC  _ETGSEL0                           uart
+     000000EC  _PIF                               uart
 ASxxxx Linker V03.00/V05.40 + sdld,  page 7.
 Hexadecimal  [32-Bits]
 
@@ -332,37 +332,40 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000000ED  _C2L                               delay
-     000000ED  _ETGSEL1                           delay
-     000000EE  _ADCS                              delay
-     000000EE  _C2H                               delay
-     000000EF  _ADCF                              delay
-     000000EF  _EIP                               delay
-     000000F0  _B                                 delay
-     000000F1  _CAPCON3                           delay
-     000000F2  _CAPCON4                           delay
-     000000F3  _SPCR                              delay
-     000000F3  _SPCR2                             delay
-     000000F4  _SPSR                              delay
-     000000F5  _SPDR                              delay
-     000000F6  _AINDIDS                           delay
-     000000F7  _EIPH                              delay
-     000000F8  _RI_1                              delay
-     000000F8  _SCON_1                            delay
-     000000F9  _PDTEN                             delay
-     000000F9  _TI_1                              delay
-     000000FA  _PDTCNT                            delay
-     000000FA  _RB8_1                             delay
-     000000FB  _PMEN                              delay
-     000000FB  _TB8_1                             delay
-     000000FC  _PMD                               delay
-     000000FC  _REN_1                             delay
-     000000FD  _SM2_1                             delay
-     000000FE  _EIP1                              delay
-     000000FE  _SM1_1                             delay
-     000000FF  _EIPH1                             delay
-     000000FF  _FE_1                              delay
-     000000FF  _SM0_1                             delay
+     000000ED  _C2L                               uart
+     000000ED  _ETGSEL1                           uart
+     000000EE  _ADCS                              uart
+     000000EE  _C2H                               uart
+     000000EF  _ADCF                              uart
+     000000EF  _EIP                               uart
+     000000F0  _B                                 uart
+     000000F1  _CAPCON3                           uart
+     000000F2  _CAPCON4                           uart
+     000000F3  _SPCR                              uart
+     000000F3  _SPCR2                             uart
+     000000F4  _SPSR                              uart
+     000000F5  _B_5                               _gptrget
+     000000F5  _SPDR                              uart
+     000000F6  _AINDIDS                           uart
+     000000F6  _B_6                               _gptrget
+     000000F7  _B_7                               _gptrget
+     000000F7  _EIPH                              uart
+     000000F8  _RI_1                              uart
+     000000F8  _SCON_1                            uart
+     000000F9  _PDTEN                             uart
+     000000F9  _TI_1                              uart
+     000000FA  _PDTCNT                            uart
+     000000FA  _RB8_1                             uart
+     000000FB  _PMEN                              uart
+     000000FB  _TB8_1                             uart
+     000000FC  _PMD                               uart
+     000000FC  _REN_1                             uart
+     000000FD  _SM2_1                             uart
+     000000FE  _EIP1                              uart
+     000000FE  _SM1_1                             uart
+     000000FF  _EIPH1                             uart
+     000000FF  _FE_1                              uart
+     000000FF  _SM0_1                             uart
 ASxxxx Linker V03.00/V05.40 + sdld,  page 8.
 Hexadecimal  [32-Bits]
 
@@ -381,27 +384,35 @@ DSEG                                00000000    00000080 =         128. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
+     00000008  _number                            main
+
 ASxxxx Linker V03.00/V05.40 + sdld,  page 10.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-OSEG                                00000008    00000002 =           2. bytes (REL,OVR)
+OSEG                                0000000F    00000002 =           2. bytes (REL,OVR)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000008  _DelayT0_PARM_2                    delay
+     0000000F  _DelayT0_PARM_2                    delay
+     0000000F  _UART_Open_PARM_2                  uart
+     0000000F  _UART_Send_Data_PARM_2             uart
+     0000000F  __divsint_PARM_2                   _divuint
+     0000000F  __divuint_PARM_2                   _divuint
+     0000000F  __modsint_PARM_2                   _moduint
+     0000000F  __moduint_PARM_2                   _moduint
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 11.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-SSEG                                0000000A    000000F6 =         246. bytes (REL,OVR)
+SSEG                                00000011    000000EF =         239. bytes (REL,OVR)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000000A  __start__stack                     main
+     00000011  __start__stack                     main
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 12.
 Hexadecimal  [32-Bits]
@@ -462,7 +473,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-GSFINAL                             0000005F    00000003 =           3. bytes (REL,CON,CODE)
+GSINIT                              0000005F    00000006 =           6. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -471,21 +482,44 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CSEG                                00000062    00000089 =         137. bytes (REL,CON,CODE)
+GSFINAL                             00000065    00000003 =           3. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-C:   00000062  _main                              main
-C:   00000089  _DelayT0_Init                      delay
-C:   00000099  _DelayT0                           delay
-C:   000000E7  ___sdcc_external_startup           _startup
-
 ASxxxx Linker V03.00/V05.40 + sdld,  page 19.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+CSEG                                00000068    0000031F =         799. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   00000068  _main                              main
+C:   000000AB  _DelayT0_Init                      delay
+C:   000000B5  _DelayT0                           delay
+C:   00000103  _UART_Open                         uart
+C:   0000014C  _UART_Send_Data                    uart
+C:   00000160  _Receive_Data                      uart
+C:   00000181  _UART0_EnableInterrupt             uart
+C:   00000184  _UART0_DisableInterrupt            uart
+C:   00000187  _UART0_ClearFlag                   uart
+C:   0000018D  _UART0_GetFlag                     uart
+C:   0000019B  _UART0_STRING                      uart
+C:   000001F1  _UART0_NUMBER                      uart
+C:   00000283  __moduint                          _moduint
+C:   000002D0  __divuint                          _divuint
+C:   000002F9  __gptrget                          _gptrget
+C:   00000315  __modsint                          _modsint
+C:   0000034B  __divsint                          _divsint
+C:   00000383  ___sdcc_external_startup           _startup
+ASxxxx Linker V03.00/V05.40 + sdld,  page 20.
 
 Files Linked                              [ module(s) ]
 
 obj/main.rel                              [  ]
 obj/delay.rel                             [  ]
+obj/uart.rel                              [  ]
 
 
 Libraries Linked                          [ object file ]
@@ -494,6 +528,10 @@ C:\Program Files\SDCC\bin\..\lib\small/mcs51.lib
                                           [ crtclear.rel ]
 C:\Program Files\SDCC\bin\..\lib\small/mcs51.lib
                                           [ crtxinit.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/libint.lib
+                                          [ _moduint.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/libint.lib
+                                          [ _divuint.rel ]
 C:\Program Files\SDCC\bin\..\lib\small/mcs51.lib
                                           [ crtxclear.rel ]
 C:\Program Files\SDCC\bin\..\lib\small/mcs51.lib
@@ -501,9 +539,15 @@ C:\Program Files\SDCC\bin\..\lib\small/mcs51.lib
 C:\Program Files\SDCC\bin\..\lib\small/mcs51.lib
                                           [ crtstart.rel ]
 C:\Program Files\SDCC\bin\..\lib\small/libsdcc.lib
+                                          [ _gptrget.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/libint.lib
+                                          [ _modsint.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/libint.lib
+                                          [ _divsint.rel ]
+C:\Program Files\SDCC\bin\..\lib\small/libsdcc.lib
                                           [ _startup.rel ]
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 20.
+ASxxxx Linker V03.00/V05.40 + sdld,  page 21.
 
 User Base Address Definitions
 

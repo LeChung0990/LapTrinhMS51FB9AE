@@ -15,6 +15,7 @@
 	.globl _UART0_STRING
 	.globl _UART0_Init
 	.globl _I2C_Read
+	.globl _I2C_Write
 	.globl _I2C_Init
 	.globl _MOSI
 	.globl _P00
@@ -612,51 +613,67 @@ _main:
 	lcall	_Delay_Init
 ;	main.c:15: I2C_Init();
 	lcall	_I2C_Init
-;	main.c:16: UART0_Init();
+;	main.c:16: P1M1&=0xDF;P1M2|=0x20;
+	anl	_P1M1,#0xdf
+	orl	_P1M2,#0x20
+;	main.c:17: P15 = 0;
+;	assignBit
+	clr	_P15
+;	main.c:18: UART0_Init();
 	lcall	_UART0_Init
-;	main.c:17: UART0_STRING("Start:");
+;	main.c:19: UART0_STRING("Start:");
 	mov	dptr,#___str_0
 	mov	b,#0x80
 	lcall	_UART0_STRING
-;	main.c:20: ");
+;	main.c:21: UART0_STRING("Read:-");
 	mov	dptr,#___str_1
 	mov	b,#0x80
 	lcall	_UART0_STRING
-;	main.c:23: if (!I2C_Read(0xA1, u8Data, 2))
+;	main.c:23: I2C_Write((uint8_t)0x68<<1, 0x3B, 1);
+	mov	_I2C_Write_PARM_2,#0x3b
+	mov	(_I2C_Write_PARM_2 + 1),#0x00
+	mov	(_I2C_Write_PARM_2 + 2),#0x00
+	mov	_I2C_Write_PARM_3,#0x01
+	mov	dpl,#0xd0
+	lcall	_I2C_Write
+;	main.c:25: if (!I2C_Read( (uint8_t)(0x68<<1), u8Data, 2))
 	mov	_I2C_Read_PARM_2,#_u8Data
 	mov	(_I2C_Read_PARM_2 + 1),#0x00
 	mov	(_I2C_Read_PARM_2 + 2),#0x40
 	mov	_I2C_Read_PARM_3,#0x02
-	mov	dpl,#0xa1
+	mov	dpl,#0xd0
 	lcall	_I2C_Read
 	mov	a,dpl
 	jnz	00105$
-;	main.c:25: while (1)
+;	main.c:27: while (1)
 00102$:
+;	main.c:29: P15 = 1;
+;	assignBit
+	setb	_P15
 	sjmp	00102$
 00105$:
-;	main.c:29: UART0_NUMBER(u8Data[0]);
+;	main.c:32: UART0_NUMBER(u8Data[0]);
 	mov	r6,_u8Data
 	mov	r7,#0x00
 	mov	dpl,r6
 	mov	dph,r7
 	lcall	_UART0_NUMBER
-;	main.c:30: UART0_STRING(",");
+;	main.c:33: UART0_STRING(",");
 	mov	dptr,#___str_2
 	mov	b,#0x80
 	lcall	_UART0_STRING
-;	main.c:31: UART0_NUMBER(u8Data[1]);
+;	main.c:34: UART0_NUMBER(u8Data[1]);
 	mov	r6,(_u8Data + 0x0001)
 	mov	r7,#0x00
 	mov	dpl,r6
 	mov	dph,r7
 	lcall	_UART0_NUMBER
-;	main.c:32: Delay_Ms(1000);
+;	main.c:35: Delay_Ms(1000);
 	mov	dptr,#0x03e8
 	lcall	_Delay_Ms
-;	main.c:49: while (1)
+;	main.c:52: while (1)
 00107$:
-;	main.c:53: }
+;	main.c:56: }
 	sjmp	00107$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
@@ -667,9 +684,7 @@ ___str_0:
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_1:
-	.ascii "Read:"
-	.db 0x0a
-	.ascii " "
+	.ascii "Read:-"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
