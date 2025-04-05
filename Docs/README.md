@@ -1,12 +1,13 @@
 # Giới thiệu về vi điều khiển MS51FB9AE
 
-<img src = "Anh Chip MS51.jpg">
+<img src = "image/Anh Chip MS51.jpg" width ="350">
 
 - Con **N76E003AT20** là sản phẩm có trước, sau này được thay thế bằng con **MS51FB9AE**. **N76E003** là vi điều khiển họ 8051 1T hiệu suất cao, hoàn toàn tương thích với tiêu chuẩn 80C51 của hãng Nuvoton. VĐK có bộ nhớ flash ROM lên đến 18K Bytes, có thể cấu hình bộ nhớ data flash và hỗ trợ IAP; làm việc dưới mức điện áp rộng 2.4- 5.5V; chống nhiễu cao (7KV ESD, 4KV EFT); ngoài ra còn tích hợp 3 nguồn xung clock: clock nội tốc độ thấp 10KHz, clock nội tốc độ cao 16MHz ± 1% (VDD=5V), ±2% (điều kiện khác) và clock ngoại.
 
 >   Ở đây mình viết về con MS51 vì nó mới hơn nhưng đối với con N76E003 cũng y hệt như vậy. Thậm chí con N76E003 và con MS51 thì con MS51 còn có thể dùng chung file HEX mà không cần dịch lại.
 
-<img src = cautrucchip.png>
+>**Structure of ms51fb9ae**
+<img src = image/cautrucchip.png>
 
 - CPU 8051: tần số hoạt động tối đa 24MHz (đối với N76E003 tối đa là 16MHz).
 - Dải điện áp hoạt động từ 2.4V đến 5.5V.
@@ -24,7 +25,7 @@
 - ADC 12 bit tốc độ tối đa 500Ksps
 
 > **Sơ đồ chân:**
-<img src = "Schematic.png">
+<img src = "image/pinout.png">
 
 ## Tài nguyên phát triển
 
@@ -35,13 +36,73 @@
 
 ## Mạch phát triển:
 Mạch ra chân đơn giản, chưa có LED tại chân P1.5(sẽ cập nhật sau)
-<img src = test.png>
+<img src = image/test.png>
 
+> **Update: Linux**
+
+Sau nay minh su dung Ubuntu 18.04 nen chuyen sang mot so phan mem ma nguon mo de lap trinh ms51fb9ae, bien dich van su dung SDCC
+
+![Alt text](image/sdcc.png)
+
+Vi khong co mach nap Nu-link nen minh van su dung mach nap cua anh Ngo Hung Cuong va phan mem ISP Prog v6:
+
+<img src = "image/machnap.jpg" width = "300">
+ 
+Muc dich cac lan truoc la de nap flash cho ms51 tuy nhien lan nay de nap bootloader cho ms51, luc do viec phat trien ung dung tren linux se de dang hon.
+
+tool: **NuMicro-8051-prog** Day la 1 ban bootloader cho ms51 dung uart va code python de nap chuong trinh
+> https://github.com/nikitalita/NuMicro-8051-prog/tree/master/nuvoprogpy
+
+how to build bootloader? run command: 
+> make PLATFORM=<PLATFORM_GOES_HERE> 
+
+PLATFORM_GOES_HERE la cac header duoi day: voi ms51fb9ae thi la MS5116K
+![Alt text](image/bootloader.png)
+Sau khi build bootloader thu duoc cac file sau:
+![Alt text](image/bootloader2.png)
+Luc nay co the dung file .bin hoac .hex de nap vao ms51fb9ae. dung luong file bootloader la 2K, chung ta con lai 14KB flash cho chip.
+
+sau khi nap bootloader, chi can ket noi chan reset keo len vcc bang tro 10k, keo xuong gnd bang tu 104, va co them nut nhan reset. ket noi voi usb to uart la co the nap code cho vi dieu khien
+```c
+P05	        |1	    20| P04			
+u0_txd		|2	    19| P03
+u0_rxd		|3	    18| P02/ICPDK
+	    	  MS51FB9AE
+VSS       	|7	    14| P11
+ICPDA		|8	    13| P12
+VDD	     	|9	    12| P14/SCL 
+P15        	|10	    11| P13/SDA
+
+------------      ------------------
+      3.3/5V|-----VDD     
+ch340/   TXD|-----u0_rxd   ms51fb9ae
+pl2303   RXD|-----u0_txd
+         GND|-----VSS
+------------      -----------------  
+```
+De nap code cho vi dieu khien, di chuyen den thu muc NuMicro-8051-prog va chay cau lenh sau:
+
+> python3 -m nuvoprogpy.nuvoispy -p /dev/ttyUSB0 -w [directory].bin
+
+co the kiem tra bang cau lenh :
+
+> python3 -m nuvoprogpy.nuvoispy -p /dev/ttyUSB0 -u
+![Alt text](image/numicro.png)
+
+Nhan nut reset:
+
+![Alt text](image/numicro1.png)
+
+
+## Tham khao
+> https://circuitdigest.com/tags/n76e003
+> https://machdientu.org/tai-lieu-tim-hieu-vi-dieu-khien-n76e003
+> https://blog.csdn.net/qq_19760839/article/details/121736672
 ## Example
 
 ### 1. GPIO 
 Các chân có thể cấu hình ở 4 chế độ:
-![Alt text](gpio1.png)
+<img src  = "image/gpio1.png" width = "500">
 
 |PnM1.X|PnM2.X   |  |
 |:-|:-|:-|
@@ -51,10 +112,9 @@ Các chân có thể cấu hình ở 4 chế độ:
 |1  |1  |Open-drain                     |
 
 **a. Chế độ Quasi:**
-- Theo như mình tìm hiểu trong datasheet Quasi là chế độ gần như hai chiều, nó là cấu trúc I/O tiêu chuẩn của 8051, có thể điều khiển cả đầu vào và đầu ra. Khi cổng xuất ra mức logic cao, nó| được điều khiển yếu, cho phép thiết bị bên ngoài kéo chân xuống mức thấp. có nghĩa nó chỉ có thể cung cấp một lượng dòng điện nhỏ và một thiết bị bên ngoài có thể kéo nó xuống thấp mà không tốn nhiều công sức và không làm hỏng chân. Khi chốt được kéo xuống thấp, nó được dẫn động mạnh và có thể nhấn chìm một dòng điện lớn. 
-Hoạt động ghi giá trị 0 1 như sau:
-<img src ="Quasi0.png" width="550">
-<img src = "Quasi1.png" width = "550">
+- Theo như mình tìm hiểu trong datasheet Quasi là chế độ gần như hai chiều, nó là cấu trúc I/O tiêu chuẩn của 8051, có thể điều khiển cả đầu vào và đầu ra. Khi cổng xuất ra mức logic cao, nó| được điều khiển yếu, cho phép thiết bị bên ngoài kéo chân xuống mức thấp. có nghĩa nó chỉ có thể cung cấp một lượng dòng điện nhỏ và một thiết bị bên ngoài có thể kéo nó xuống thấp mà không tốn nhiều công sức và không làm hỏng chân. Khi chốt được kéo xuống thấp, nó được dẫn động mạnh và có thể nhấn chìm một dòng điện lớn.Hoạt động ghi giá trị 0 1 như sau:
+<img src ="image/Quasi0.png" width="350" >
+<img src = "image/Quasi1.png" width ="350">
 
 Ngoài ra có các chế độ Push-pull, Input and Open-drain cho giao tiếp I2C. Chế độ Open-drain cần điện trở kéo lên bên ngoài.
 [Tham khảo thêm tại đây](http://vidieukhien.org/ms51fb9ae-gpio.html)
@@ -63,7 +123,7 @@ Ngoài ra có các chế độ Push-pull, Input and Open-drain cho giao tiếp I
 **a. Mode 0 (13-Bit Timer) và Mode 1 (16-Bit Timer)**
 Chế độ 0 và chế độ 1 hoạt động rất giống nhau chỉ khác nhau về số bit.
 
-<img src="Timer0_1.png">
+<img src="image/Timer0_1.png">
 
 Như datasheet mô tả thì xung hệ thống Fsys được chọn qua bit T0M(hoặc T1M)
 - Nếu **T0M (hoặc T1M) = 0** thì xung đầu vào bằng xung hệ thống Fsys / 12
@@ -94,7 +154,7 @@ Tiếp theo bit C/T nếu bằng 0 thì timer dùng xung clock hệ thống. Cò
 |7      |6      |5      |4      |3      |2      |1      |0  |
 |FASTWK |PWMCKS |T1OE   |T1M    |T0M    |T0OE   |CLOEN  | x |
 
-
+<span style="color: red"> Hàm khởi tạo Timer0: 
 ```c
 void Delay_Init(void)
 {
@@ -122,8 +182,24 @@ void delay_1ms(void)
     TR0 = 0;	/*Stop Timer0 and the current count will be preserved in TH0,TL0*/
 }
 ```
+## 3. ADC
+Ham khoi tao ADC 12-bit
+```c
+void ADC_Init(void)
+{
+	ADCCON1 |= (1 << 0);
+	/* Clock  = Fsys/8 */
+	ADCCON1 &= ~(0x30);
+	ADCCON1 |= 0x30;
+	/* Channel 4, Chan so 1 cua IC */ 
+	P0M1 |= (1 << 5);
+	P0M2 &= ~(1 << 5);
+	AINDIDS |= (1 << 4);
+}
+```
 
-## 3. I2C
+
+## 4. I2C
 
 ```c
 

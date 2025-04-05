@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "delay.h": "c",
+        "tm1637.h": "c",
+        "nrf.h": "c",
+        "ms51.h": "c"
+    }
+}

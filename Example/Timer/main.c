@@ -4,8 +4,10 @@
 // #include <macro.h>
 void Delay_Init(void)
 {
+	/*mode 1*/
 	TMOD |= (1 << 0);
 	TMOD &= ~(1 << 1);
+	/*Choose Ftimer = Fsys = 16mhz*/
 	CKCON |= (1 << 3);
 	TMOD &= ~(1 << 2);
 	TMOD &= ~(1 << 3);
