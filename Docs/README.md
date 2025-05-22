@@ -1,6 +1,4 @@
-# Giới thiệu về vi điều khiển MS51FB9AE
-
-<img src = "image/Anh Chip MS51.jpg" width ="350">
+# Introduction about ms51fb9ae microcontroller 8051 of Nuvoton
 
 - Con **N76E003AT20** là sản phẩm có trước, sau này được thay thế bằng con **MS51FB9AE**. **N76E003** là vi điều khiển họ 8051 1T hiệu suất cao, hoàn toàn tương thích với tiêu chuẩn 80C51 của hãng Nuvoton. VĐK có bộ nhớ flash ROM lên đến 18K Bytes, có thể cấu hình bộ nhớ data flash và hỗ trợ IAP; làm việc dưới mức điện áp rộng 2.4- 5.5V; chống nhiễu cao (7KV ESD, 4KV EFT); ngoài ra còn tích hợp 3 nguồn xung clock: clock nội tốc độ thấp 10KHz, clock nội tốc độ cao 16MHz ± 1% (VDD=5V), ±2% (điều kiện khác) và clock ngoại.
 

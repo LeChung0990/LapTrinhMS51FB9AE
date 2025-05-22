@@ -1,0 +1,965 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.5.0 #9253 (Apr  3 2018) (Linux)
+                                      4 ; This file was generated Sat Apr 26 09:29:46 2025
+                                      5 ;--------------------------------------------------------
+                                      6 	.module tm1628
+                                      7 	.optsdcc -mmcs51 --model-small
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _TM1628_SEND_CONFIG
+                                     13 	.globl _TM1628_SEND_COMMAND
+                                     14 	.globl _SEND_WRITE
+                                     15 	.globl _SEND_START
+                                     16 	.globl _SEND_STOP
+                                     17 	.globl _MOSI
+                                     18 	.globl _P00
+                                     19 	.globl _MISO
+                                     20 	.globl _P01
+                                     21 	.globl _RXD_1
+                                     22 	.globl _P02
+                                     23 	.globl _P03
+                                     24 	.globl _STADC
+                                     25 	.globl _P04
+                                     26 	.globl _P05
+                                     27 	.globl _TXD
+                                     28 	.globl _P06
+                                     29 	.globl _RXD
+                                     30 	.globl _P07
+                                     31 	.globl _IT0
+                                     32 	.globl _IE0
+                                     33 	.globl _IT1
+                                     34 	.globl _IE1
+                                     35 	.globl _TR0
+                                     36 	.globl _TF0
+                                     37 	.globl _TR1
+                                     38 	.globl _TF1
+                                     39 	.globl _P10
+                                     40 	.globl _P11
+                                     41 	.globl _P12
+                                     42 	.globl _SCL
+                                     43 	.globl _P13
+                                     44 	.globl _SDA
+                                     45 	.globl _P14
+                                     46 	.globl _P15
+                                     47 	.globl _TXD_1
+                                     48 	.globl _P16
+                                     49 	.globl _P17
+                                     50 	.globl _RI
+                                     51 	.globl _TI
+                                     52 	.globl _RB8
+                                     53 	.globl _TB8
+                                     54 	.globl _REN
+                                     55 	.globl _SM2
+                                     56 	.globl _SM1
+                                     57 	.globl _FE
+                                     58 	.globl _SM0
+                                     59 	.globl _P20
+                                     60 	.globl _EX0
+                                     61 	.globl _ET0
+                                     62 	.globl _EX1
+                                     63 	.globl _ET1
+                                     64 	.globl _ES
+                                     65 	.globl _EBOD
+                                     66 	.globl _EADC
+                                     67 	.globl _EA
+                                     68 	.globl _P30
+                                     69 	.globl _PX0
+                                     70 	.globl _PT0
+                                     71 	.globl _PX1
+                                     72 	.globl _PT1
+                                     73 	.globl _PS
+                                     74 	.globl _PBOD
+                                     75 	.globl _PADC
+                                     76 	.globl _I2CPX
+                                     77 	.globl _AA
+                                     78 	.globl _SI
+                                     79 	.globl _STO
+                                     80 	.globl _STA
+                                     81 	.globl _I2CEN
+                                     82 	.globl _CM_RL2
+                                     83 	.globl _TR2
+                                     84 	.globl _TF2
+                                     85 	.globl _P
+                                     86 	.globl _OV
+                                     87 	.globl _RS0
+                                     88 	.globl _RS1
+                                     89 	.globl _F0
+                                     90 	.globl _AC
+                                     91 	.globl _CY
+                                     92 	.globl _CLRPWM
+                                     93 	.globl _PWMF
+                                     94 	.globl _LOAD
+                                     95 	.globl _PWMRUN
+                                     96 	.globl _ADCHS0
+                                     97 	.globl _ADCHS1
+                                     98 	.globl _ADCHS2
+                                     99 	.globl _ADCHS3
+                                    100 	.globl _ETGSEL0
+                                    101 	.globl _ETGSEL1
+                                    102 	.globl _ADCS
+                                    103 	.globl _ADCF
+                                    104 	.globl _RI_1
+                                    105 	.globl _TI_1
+                                    106 	.globl _RB8_1
+                                    107 	.globl _TB8_1
+                                    108 	.globl _REN_1
+                                    109 	.globl _SM2_1
+                                    110 	.globl _SM1_1
+                                    111 	.globl _FE_1
+                                    112 	.globl _SM0_1
+                                    113 	.globl _EIPH1
+                                    114 	.globl _EIP1
+                                    115 	.globl _PMD
+                                    116 	.globl _PMEN
+                                    117 	.globl _PDTCNT
+                                    118 	.globl _PDTEN
+                                    119 	.globl _SCON_1
+                                    120 	.globl _EIPH
+                                    121 	.globl _AINDIDS
+                                    122 	.globl _SPDR
+                                    123 	.globl _SPSR
+                                    124 	.globl _SPCR2
+                                    125 	.globl _SPCR
+                                    126 	.globl _CAPCON4
+                                    127 	.globl _CAPCON3
+                                    128 	.globl _B
+                                    129 	.globl _EIP
+                                    130 	.globl _C2H
+                                    131 	.globl _C2L
+                                    132 	.globl _PIF
+                                    133 	.globl _PIPEN
+                                    134 	.globl _PINEN
+                                    135 	.globl _PICON
+                                    136 	.globl _ADCCON0
+                                    137 	.globl _C1H
+                                    138 	.globl _C1L
+                                    139 	.globl _C0H
+                                    140 	.globl _C0L
+                                    141 	.globl _ADCDLY
+                                    142 	.globl _ADCCON2
+                                    143 	.globl _ADCCON1
+                                    144 	.globl _ACC
+                                    145 	.globl _PWMCON1
+                                    146 	.globl _PIOCON0
+                                    147 	.globl _PWM3L
+                                    148 	.globl _PWM2L
+                                    149 	.globl _PWM1L
+                                    150 	.globl _PWM0L
+                                    151 	.globl _PWMPL
+                                    152 	.globl _PWMCON0
+                                    153 	.globl _FBD
+                                    154 	.globl _PNP
+                                    155 	.globl _PWM3H
+                                    156 	.globl _PWM2H
+                                    157 	.globl _PWM1H
+                                    158 	.globl _PWM0H
+                                    159 	.globl _PWMPH
+                                    160 	.globl _PSW
+                                    161 	.globl _ADCMPH
+                                    162 	.globl _ADCMPL
+                                    163 	.globl _PWM5L
+                                    164 	.globl _TH2
+                                    165 	.globl _PWM4L
+                                    166 	.globl _TL2
+                                    167 	.globl _RCMP2H
+                                    168 	.globl _RCMP2L
+                                    169 	.globl _T2MOD
+                                    170 	.globl _T2CON
+                                    171 	.globl _TA
+                                    172 	.globl _PIOCON1
+                                    173 	.globl _RH3
+                                    174 	.globl _PWM5H
+                                    175 	.globl _RL3
+                                    176 	.globl _PWM4H
+                                    177 	.globl _T3CON
+                                    178 	.globl _ADCRH
+                                    179 	.globl _ADCRL
+                                    180 	.globl _I2ADDR
+                                    181 	.globl _I2CON
+                                    182 	.globl _I2TOC
+                                    183 	.globl _I2CLK
+                                    184 	.globl _I2STAT
+                                    185 	.globl _I2DAT
+                                    186 	.globl _SADDR_1
+                                    187 	.globl _SADEN_1
+                                    188 	.globl _SADEN
+                                    189 	.globl _IP
+                                    190 	.globl _PWMINTC
+                                    191 	.globl _IPH
+                                    192 	.globl _P2S
+                                    193 	.globl _P1SR
+                                    194 	.globl _P1M2
+                                    195 	.globl _P1S
+                                    196 	.globl _P1M1
+                                    197 	.globl _P0SR
+                                    198 	.globl _P0M2
+                                    199 	.globl _P0S
+                                    200 	.globl _P0M1
+                                    201 	.globl _P3
+                                    202 	.globl _IAPCN
+                                    203 	.globl _IAPFD
+                                    204 	.globl _P3SR
+                                    205 	.globl _P3M2
+                                    206 	.globl _P3S
+                                    207 	.globl _P3M1
+                                    208 	.globl _BODCON1
+                                    209 	.globl _WDCON
+                                    210 	.globl _SADDR
+                                    211 	.globl _IE
+                                    212 	.globl _IAPAH
+                                    213 	.globl _IAPAL
+                                    214 	.globl _IAPUEN
+                                    215 	.globl _IAPTRG
+                                    216 	.globl _BODCON0
+                                    217 	.globl _AUXR1
+                                    218 	.globl _P2
+                                    219 	.globl _CHPCON
+                                    220 	.globl _EIE1
+                                    221 	.globl _EIE
+                                    222 	.globl _SBUF_1
+                                    223 	.globl _SBUF
+                                    224 	.globl _SCON
+                                    225 	.globl _CKEN
+                                    226 	.globl _CKSWT
+                                    227 	.globl _CKDIV
+                                    228 	.globl _CAPCON2
+                                    229 	.globl _CAPCON1
+                                    230 	.globl _CAPCON0
+                                    231 	.globl _SFRS
+                                    232 	.globl _P1
+                                    233 	.globl _WKCON
+                                    234 	.globl _CKCON
+                                    235 	.globl _TH1
+                                    236 	.globl _TH0
+                                    237 	.globl _TL1
+                                    238 	.globl _TL0
+                                    239 	.globl _TMOD
+                                    240 	.globl _TCON
+                                    241 	.globl _PCON
+                                    242 	.globl _RWK
+                                    243 	.globl _RCTRIM1
+                                    244 	.globl _RCTRIM0
+                                    245 	.globl _DPH
+                                    246 	.globl _DPL
+                                    247 	.globl _SP
+                                    248 	.globl _P0
+                                    249 	.globl _TM1628_display_segments_PARM_3
+                                    250 	.globl _TM1628_display_segments_PARM_2
+                                    251 	.globl _TM1628_INIT_PARM_2
+                                    252 	.globl _TM1628_SEND_CONFIG_PARM_2
+                                    253 	.globl _delay_nop
+                                    254 	.globl _TM1628_INIT
+                                    255 	.globl _TM1628_display_segments
+                                    256 	.globl _TM1628_clear
+                                    257 ;--------------------------------------------------------
+                                    258 ; special function registers
+                                    259 ;--------------------------------------------------------
+                                    260 	.area RSEG    (ABS,DATA)
+      000000                        261 	.org 0x0000
+                           000080   262 _P0	=	0x0080
+                           000081   263 _SP	=	0x0081
+                           000082   264 _DPL	=	0x0082
+                           000083   265 _DPH	=	0x0083
+                           000084   266 _RCTRIM0	=	0x0084
+                           000085   267 _RCTRIM1	=	0x0085
+                           000086   268 _RWK	=	0x0086
+                           000087   269 _PCON	=	0x0087
+                           000088   270 _TCON	=	0x0088
+                           000089   271 _TMOD	=	0x0089
+                           00008A   272 _TL0	=	0x008a
+                           00008B   273 _TL1	=	0x008b
+                           00008C   274 _TH0	=	0x008c
+                           00008D   275 _TH1	=	0x008d
+                           00008E   276 _CKCON	=	0x008e
+                           00008F   277 _WKCON	=	0x008f
+                           000090   278 _P1	=	0x0090
+                           000091   279 _SFRS	=	0x0091
+                           000092   280 _CAPCON0	=	0x0092
+                           000093   281 _CAPCON1	=	0x0093
+                           000094   282 _CAPCON2	=	0x0094
+                           000095   283 _CKDIV	=	0x0095
+                           000096   284 _CKSWT	=	0x0096
+                           000097   285 _CKEN	=	0x0097
+                           000098   286 _SCON	=	0x0098
+                           000099   287 _SBUF	=	0x0099
+                           00009A   288 _SBUF_1	=	0x009a
+                           00009B   289 _EIE	=	0x009b
+                           00009C   290 _EIE1	=	0x009c
+                           00009F   291 _CHPCON	=	0x009f
+                           0000A0   292 _P2	=	0x00a0
+                           0000A2   293 _AUXR1	=	0x00a2
+                           0000A3   294 _BODCON0	=	0x00a3
+                           0000A4   295 _IAPTRG	=	0x00a4
+                           0000A5   296 _IAPUEN	=	0x00a5
+                           0000A6   297 _IAPAL	=	0x00a6
+                           0000A7   298 _IAPAH	=	0x00a7
+                           0000A8   299 _IE	=	0x00a8
+                           0000A9   300 _SADDR	=	0x00a9
+                           0000AA   301 _WDCON	=	0x00aa
+                           0000AB   302 _BODCON1	=	0x00ab
+                           0000AC   303 _P3M1	=	0x00ac
+                           0000AC   304 _P3S	=	0x00ac
+                           0000AD   305 _P3M2	=	0x00ad
+                           0000AD   306 _P3SR	=	0x00ad
+                           0000AE   307 _IAPFD	=	0x00ae
+                           0000AF   308 _IAPCN	=	0x00af
+                           0000B0   309 _P3	=	0x00b0
+                           0000B1   310 _P0M1	=	0x00b1
+                           0000B1   311 _P0S	=	0x00b1
+                           0000B2   312 _P0M2	=	0x00b2
+                           0000B2   313 _P0SR	=	0x00b2
+                           0000B3   314 _P1M1	=	0x00b3
+                           0000B3   315 _P1S	=	0x00b3
+                           0000B4   316 _P1M2	=	0x00b4
+                           0000B4   317 _P1SR	=	0x00b4
+                           0000B5   318 _P2S	=	0x00b5
+                           0000B7   319 _IPH	=	0x00b7
+                           0000B7   320 _PWMINTC	=	0x00b7
+                           0000B8   321 _IP	=	0x00b8
+                           0000B9   322 _SADEN	=	0x00b9
+                           0000BA   323 _SADEN_1	=	0x00ba
+                           0000BB   324 _SADDR_1	=	0x00bb
+                           0000BC   325 _I2DAT	=	0x00bc
+                           0000BD   326 _I2STAT	=	0x00bd
+                           0000BE   327 _I2CLK	=	0x00be
+                           0000BF   328 _I2TOC	=	0x00bf
+                           0000C0   329 _I2CON	=	0x00c0
+                           0000C1   330 _I2ADDR	=	0x00c1
+                           0000C2   331 _ADCRL	=	0x00c2
+                           0000C3   332 _ADCRH	=	0x00c3
+                           0000C4   333 _T3CON	=	0x00c4
+                           0000C4   334 _PWM4H	=	0x00c4
+                           0000C5   335 _RL3	=	0x00c5
+                           0000C5   336 _PWM5H	=	0x00c5
+                           0000C6   337 _RH3	=	0x00c6
+                           0000C6   338 _PIOCON1	=	0x00c6
+                           0000C7   339 _TA	=	0x00c7
+                           0000C8   340 _T2CON	=	0x00c8
+                           0000C9   341 _T2MOD	=	0x00c9
+                           0000CA   342 _RCMP2L	=	0x00ca
+                           0000CB   343 _RCMP2H	=	0x00cb
+                           0000CC   344 _TL2	=	0x00cc
+                           0000CC   345 _PWM4L	=	0x00cc
+                           0000CD   346 _TH2	=	0x00cd
+                           0000CD   347 _PWM5L	=	0x00cd
+                           0000CE   348 _ADCMPL	=	0x00ce
+                           0000CF   349 _ADCMPH	=	0x00cf
+                           0000D0   350 _PSW	=	0x00d0
+                           0000D1   351 _PWMPH	=	0x00d1
+                           0000D2   352 _PWM0H	=	0x00d2
+                           0000D3   353 _PWM1H	=	0x00d3
+                           0000D4   354 _PWM2H	=	0x00d4
+                           0000D5   355 _PWM3H	=	0x00d5
+                           0000D6   356 _PNP	=	0x00d6
+                           0000D7   357 _FBD	=	0x00d7
+                           0000D8   358 _PWMCON0	=	0x00d8
+                           0000D9   359 _PWMPL	=	0x00d9
+                           0000DA   360 _PWM0L	=	0x00da
+                           0000DB   361 _PWM1L	=	0x00db
+                           0000DC   362 _PWM2L	=	0x00dc
+                           0000DD   363 _PWM3L	=	0x00dd
+                           0000DE   364 _PIOCON0	=	0x00de
+                           0000DF   365 _PWMCON1	=	0x00df
+                           0000E0   366 _ACC	=	0x00e0
+                           0000E1   367 _ADCCON1	=	0x00e1
+                           0000E2   368 _ADCCON2	=	0x00e2
+                           0000E3   369 _ADCDLY	=	0x00e3
+                           0000E4   370 _C0L	=	0x00e4
+                           0000E5   371 _C0H	=	0x00e5
+                           0000E6   372 _C1L	=	0x00e6
+                           0000E7   373 _C1H	=	0x00e7
+                           0000E8   374 _ADCCON0	=	0x00e8
+                           0000E9   375 _PICON	=	0x00e9
+                           0000EA   376 _PINEN	=	0x00ea
+                           0000EB   377 _PIPEN	=	0x00eb
+                           0000EC   378 _PIF	=	0x00ec
+                           0000ED   379 _C2L	=	0x00ed
+                           0000EE   380 _C2H	=	0x00ee
+                           0000EF   381 _EIP	=	0x00ef
+                           0000F0   382 _B	=	0x00f0
+                           0000F1   383 _CAPCON3	=	0x00f1
+                           0000F2   384 _CAPCON4	=	0x00f2
+                           0000F3   385 _SPCR	=	0x00f3
+                           0000F3   386 _SPCR2	=	0x00f3
+                           0000F4   387 _SPSR	=	0x00f4
+                           0000F5   388 _SPDR	=	0x00f5
+                           0000F6   389 _AINDIDS	=	0x00f6
+                           0000F7   390 _EIPH	=	0x00f7
+                           0000F8   391 _SCON_1	=	0x00f8
+                           0000F9   392 _PDTEN	=	0x00f9
+                           0000FA   393 _PDTCNT	=	0x00fa
+                           0000FB   394 _PMEN	=	0x00fb
+                           0000FC   395 _PMD	=	0x00fc
+                           0000FE   396 _EIP1	=	0x00fe
+                           0000FF   397 _EIPH1	=	0x00ff
+                                    398 ;--------------------------------------------------------
+                                    399 ; special function bits
+                                    400 ;--------------------------------------------------------
+                                    401 	.area RSEG    (ABS,DATA)
+      000000                        402 	.org 0x0000
+                           0000FF   403 _SM0_1	=	0x00ff
+                           0000FF   404 _FE_1	=	0x00ff
+                           0000FE   405 _SM1_1	=	0x00fe
+                           0000FD   406 _SM2_1	=	0x00fd
+                           0000FC   407 _REN_1	=	0x00fc
+                           0000FB   408 _TB8_1	=	0x00fb
+                           0000FA   409 _RB8_1	=	0x00fa
+                           0000F9   410 _TI_1	=	0x00f9
+                           0000F8   411 _RI_1	=	0x00f8
+                           0000EF   412 _ADCF	=	0x00ef
+                           0000EE   413 _ADCS	=	0x00ee
+                           0000ED   414 _ETGSEL1	=	0x00ed
+                           0000EC   415 _ETGSEL0	=	0x00ec
+                           0000EB   416 _ADCHS3	=	0x00eb
+                           0000EA   417 _ADCHS2	=	0x00ea
+                           0000E9   418 _ADCHS1	=	0x00e9
+                           0000E8   419 _ADCHS0	=	0x00e8
+                           0000DF   420 _PWMRUN	=	0x00df
+                           0000DE   421 _LOAD	=	0x00de
+                           0000DD   422 _PWMF	=	0x00dd
+                           0000DC   423 _CLRPWM	=	0x00dc
+                           0000D7   424 _CY	=	0x00d7
+                           0000D6   425 _AC	=	0x00d6
+                           0000D5   426 _F0	=	0x00d5
+                           0000D4   427 _RS1	=	0x00d4
+                           0000D3   428 _RS0	=	0x00d3
+                           0000D2   429 _OV	=	0x00d2
+                           0000D0   430 _P	=	0x00d0
+                           0000CF   431 _TF2	=	0x00cf
+                           0000CA   432 _TR2	=	0x00ca
+                           0000C8   433 _CM_RL2	=	0x00c8
+                           0000C6   434 _I2CEN	=	0x00c6
+                           0000C5   435 _STA	=	0x00c5
+                           0000C4   436 _STO	=	0x00c4
+                           0000C3   437 _SI	=	0x00c3
+                           0000C2   438 _AA	=	0x00c2
+                           0000C0   439 _I2CPX	=	0x00c0
+                           0000BE   440 _PADC	=	0x00be
+                           0000BD   441 _PBOD	=	0x00bd
+                           0000BC   442 _PS	=	0x00bc
+                           0000BB   443 _PT1	=	0x00bb
+                           0000BA   444 _PX1	=	0x00ba
+                           0000B9   445 _PT0	=	0x00b9
+                           0000B8   446 _PX0	=	0x00b8
+                           0000B0   447 _P30	=	0x00b0
+                           0000AF   448 _EA	=	0x00af
+                           0000AE   449 _EADC	=	0x00ae
+                           0000AD   450 _EBOD	=	0x00ad
+                           0000AC   451 _ES	=	0x00ac
+                           0000AB   452 _ET1	=	0x00ab
+                           0000AA   453 _EX1	=	0x00aa
+                           0000A9   454 _ET0	=	0x00a9
+                           0000A8   455 _EX0	=	0x00a8
+                           0000A0   456 _P20	=	0x00a0
+                           00009F   457 _SM0	=	0x009f
+                           00009F   458 _FE	=	0x009f
+                           00009E   459 _SM1	=	0x009e
+                           00009D   460 _SM2	=	0x009d
+                           00009C   461 _REN	=	0x009c
+                           00009B   462 _TB8	=	0x009b
+                           00009A   463 _RB8	=	0x009a
+                           000099   464 _TI	=	0x0099
+                           000098   465 _RI	=	0x0098
+                           000097   466 _P17	=	0x0097
+                           000096   467 _P16	=	0x0096
+                           000096   468 _TXD_1	=	0x0096
+                           000095   469 _P15	=	0x0095
+                           000094   470 _P14	=	0x0094
+                           000094   471 _SDA	=	0x0094
+                           000093   472 _P13	=	0x0093
+                           000093   473 _SCL	=	0x0093
+                           000092   474 _P12	=	0x0092
+                           000091   475 _P11	=	0x0091
+                           000090   476 _P10	=	0x0090
+                           00008F   477 _TF1	=	0x008f
+                           00008E   478 _TR1	=	0x008e
+                           00008D   479 _TF0	=	0x008d
+                           00008C   480 _TR0	=	0x008c
+                           00008B   481 _IE1	=	0x008b
+                           00008A   482 _IT1	=	0x008a
+                           000089   483 _IE0	=	0x0089
+                           000088   484 _IT0	=	0x0088
+                           000087   485 _P07	=	0x0087
+                           000087   486 _RXD	=	0x0087
+                           000086   487 _P06	=	0x0086
+                           000086   488 _TXD	=	0x0086
+                           000085   489 _P05	=	0x0085
+                           000084   490 _P04	=	0x0084
+                           000084   491 _STADC	=	0x0084
+                           000083   492 _P03	=	0x0083
+                           000082   493 _P02	=	0x0082
+                           000082   494 _RXD_1	=	0x0082
+                           000081   495 _P01	=	0x0081
+                           000081   496 _MISO	=	0x0081
+                           000080   497 _P00	=	0x0080
+                           000080   498 _MOSI	=	0x0080
+                                    499 ;--------------------------------------------------------
+                                    500 ; overlayable register banks
+                                    501 ;--------------------------------------------------------
+                                    502 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        503 	.ds 8
+                                    504 ;--------------------------------------------------------
+                                    505 ; internal ram data
+                                    506 ;--------------------------------------------------------
+                                    507 	.area DSEG    (DATA)
+      000036                        508 __config:
+      000036                        509 	.ds 1
+      000037                        510 __segments:
+      000037                        511 	.ds 1
+      000038                        512 _TM1628_SEND_CONFIG_PARM_2:
+      000038                        513 	.ds 1
+      000039                        514 _TM1628_INIT_PARM_2:
+      000039                        515 	.ds 1
+      00003A                        516 _TM1628_display_segments_PARM_2:
+      00003A                        517 	.ds 1
+      00003B                        518 _TM1628_display_segments_PARM_3:
+      00003B                        519 	.ds 1
+                                    520 ;--------------------------------------------------------
+                                    521 ; overlayable items in internal ram 
+                                    522 ;--------------------------------------------------------
+                                    523 	.area	OSEG    (OVR,DATA)
+                                    524 ;--------------------------------------------------------
+                                    525 ; indirectly addressable internal ram data
+                                    526 ;--------------------------------------------------------
+                                    527 	.area ISEG    (DATA)
+                                    528 ;--------------------------------------------------------
+                                    529 ; absolute internal ram data
+                                    530 ;--------------------------------------------------------
+                                    531 	.area IABS    (ABS,DATA)
+                                    532 	.area IABS    (ABS,DATA)
+                                    533 ;--------------------------------------------------------
+                                    534 ; bit data
+                                    535 ;--------------------------------------------------------
+                                    536 	.area BSEG    (BIT)
+                                    537 ;--------------------------------------------------------
+                                    538 ; paged external ram data
+                                    539 ;--------------------------------------------------------
+                                    540 	.area PSEG    (PAG,XDATA)
+                                    541 ;--------------------------------------------------------
+                                    542 ; external ram data
+                                    543 ;--------------------------------------------------------
+                                    544 	.area XSEG    (XDATA)
+                                    545 ;--------------------------------------------------------
+                                    546 ; absolute external ram data
+                                    547 ;--------------------------------------------------------
+                                    548 	.area XABS    (ABS,XDATA)
+                                    549 ;--------------------------------------------------------
+                                    550 ; external initialized ram data
+                                    551 ;--------------------------------------------------------
+                                    552 	.area XISEG   (XDATA)
+                                    553 	.area HOME    (CODE)
+                                    554 	.area GSINIT0 (CODE)
+                                    555 	.area GSINIT1 (CODE)
+                                    556 	.area GSINIT2 (CODE)
+                                    557 	.area GSINIT3 (CODE)
+                                    558 	.area GSINIT4 (CODE)
+                                    559 	.area GSINIT5 (CODE)
+                                    560 	.area GSINIT  (CODE)
+                                    561 	.area GSFINAL (CODE)
+                                    562 	.area CSEG    (CODE)
+                                    563 ;--------------------------------------------------------
+                                    564 ; global & static initialisations
+                                    565 ;--------------------------------------------------------
+                                    566 	.area HOME    (CODE)
+                                    567 	.area GSINIT  (CODE)
+                                    568 	.area GSFINAL (CODE)
+                                    569 	.area GSINIT  (CODE)
+                                    570 ;	tm1628.c:5: static uint8_t _config = TM1628_SET_DISPLAY_ON | TM1628_BRIGHTNESS_MAX;
+      00009E 75 36 0F         [24]  571 	mov	__config,#0x0F
+                                    572 ;	tm1628.c:6: static uint8_t _segments = 0xff;
+      0000A1 75 37 FF         [24]  573 	mov	__segments,#0xFF
+                                    574 ;--------------------------------------------------------
+                                    575 ; Home
+                                    576 ;--------------------------------------------------------
+                                    577 	.area HOME    (CODE)
+                                    578 	.area HOME    (CODE)
+                                    579 ;--------------------------------------------------------
+                                    580 ; code
+                                    581 ;--------------------------------------------------------
+                                    582 	.area CSEG    (CODE)
+                                    583 ;------------------------------------------------------------
+                                    584 ;Allocation info for local variables in function 'delay_nop'
+                                    585 ;------------------------------------------------------------
+                                    586 ;us                        Allocated to registers 
+                                    587 ;------------------------------------------------------------
+                                    588 ;	tm1628.c:22: void delay_nop(unsigned long int  us) {
+                                    589 ;	-----------------------------------------
+                                    590 ;	 function delay_nop
+                                    591 ;	-----------------------------------------
+      00030C                        592 _delay_nop:
+                           000007   593 	ar7 = 0x07
+                           000006   594 	ar6 = 0x06
+                           000005   595 	ar5 = 0x05
+                           000004   596 	ar4 = 0x04
+                           000003   597 	ar3 = 0x03
+                           000002   598 	ar2 = 0x02
+                           000001   599 	ar1 = 0x01
+                           000000   600 	ar0 = 0x00
+      00030C AC 82            [24]  601 	mov	r4,dpl
+      00030E AD 83            [24]  602 	mov	r5,dph
+      000310 AE F0            [24]  603 	mov	r6,b
+      000312 FF               [12]  604 	mov	r7,a
+      000313                        605 00103$:
+                                    606 ;	tm1628.c:23: for(;us > 0; us--) {
+      000313 EC               [12]  607 	mov	a,r4
+      000314 4D               [12]  608 	orl	a,r5
+      000315 4E               [12]  609 	orl	a,r6
+      000316 4F               [12]  610 	orl	a,r7
+      000317 60 10            [24]  611 	jz	00105$
+                                    612 ;	tm1628.c:26: __endasm; 
+      000319 00               [12]  613 	nop;
+                                    614 ;	tm1628.c:23: for(;us > 0; us--) {
+      00031A 1C               [12]  615 	dec	r4
+      00031B BC FF 09         [24]  616 	cjne	r4,#0xFF,00117$
+      00031E 1D               [12]  617 	dec	r5
+      00031F BD FF 05         [24]  618 	cjne	r5,#0xFF,00117$
+      000322 1E               [12]  619 	dec	r6
+      000323 BE FF 01         [24]  620 	cjne	r6,#0xFF,00117$
+      000326 1F               [12]  621 	dec	r7
+      000327                        622 00117$:
+      000327 80 EA            [24]  623 	sjmp	00103$
+      000329                        624 00105$:
+      000329 22               [24]  625 	ret
+                                    626 ;------------------------------------------------------------
+                                    627 ;Allocation info for local variables in function 'SEND_STOP'
+                                    628 ;------------------------------------------------------------
+                                    629 ;	tm1628.c:31: void SEND_STOP(void)
+                                    630 ;	-----------------------------------------
+                                    631 ;	 function SEND_STOP
+                                    632 ;	-----------------------------------------
+      00032A                        633 _SEND_STOP:
+                                    634 ;	tm1628.c:33: STB_1;
+      00032A D2 80            [12]  635 	setb	_P00
+                                    636 ;	tm1628.c:34: DIO_0; I2C_DELAY;  
+      00032C C2 91            [12]  637 	clr	_P11
+      00032E 90 00 64         [24]  638 	mov	dptr,#(0x64&0x00ff)
+      000331 E4               [12]  639 	clr	a
+      000332 F5 F0            [12]  640 	mov	b,a
+      000334 12 03 0C         [24]  641 	lcall	_delay_nop
+                                    642 ;	tm1628.c:35: CLK_1; I2C_DELAY;
+      000337 D2 90            [12]  643 	setb	_P10
+      000339 90 00 64         [24]  644 	mov	dptr,#(0x64&0x00ff)
+      00033C E4               [12]  645 	clr	a
+      00033D F5 F0            [12]  646 	mov	b,a
+      00033F 12 03 0C         [24]  647 	lcall	_delay_nop
+                                    648 ;	tm1628.c:36: DIO_1; I2C_DELAY;
+      000342 D2 91            [12]  649 	setb	_P11
+      000344 90 00 64         [24]  650 	mov	dptr,#(0x64&0x00ff)
+      000347 E4               [12]  651 	clr	a
+      000348 F5 F0            [12]  652 	mov	b,a
+      00034A 02 03 0C         [24]  653 	ljmp	_delay_nop
+                                    654 ;------------------------------------------------------------
+                                    655 ;Allocation info for local variables in function 'SEND_START'
+                                    656 ;------------------------------------------------------------
+                                    657 ;	tm1628.c:38: void SEND_START(void)
+                                    658 ;	-----------------------------------------
+                                    659 ;	 function SEND_START
+                                    660 ;	-----------------------------------------
+      00034D                        661 _SEND_START:
+                                    662 ;	tm1628.c:40: CLK_1; I2C_DELAY;
+      00034D D2 90            [12]  663 	setb	_P10
+      00034F 90 00 64         [24]  664 	mov	dptr,#(0x64&0x00ff)
+      000352 E4               [12]  665 	clr	a
+      000353 F5 F0            [12]  666 	mov	b,a
+      000355 12 03 0C         [24]  667 	lcall	_delay_nop
+                                    668 ;	tm1628.c:41: DIO_1; I2C_DELAY;
+      000358 D2 91            [12]  669 	setb	_P11
+      00035A 90 00 64         [24]  670 	mov	dptr,#(0x64&0x00ff)
+      00035D E4               [12]  671 	clr	a
+      00035E F5 F0            [12]  672 	mov	b,a
+      000360 12 03 0C         [24]  673 	lcall	_delay_nop
+                                    674 ;	tm1628.c:42: STB_0;
+      000363 C2 80            [12]  675 	clr	_P00
+                                    676 ;	tm1628.c:43: DIO_0; I2C_DELAY;
+      000365 C2 91            [12]  677 	clr	_P11
+      000367 90 00 64         [24]  678 	mov	dptr,#(0x64&0x00ff)
+      00036A E4               [12]  679 	clr	a
+      00036B F5 F0            [12]  680 	mov	b,a
+      00036D 12 03 0C         [24]  681 	lcall	_delay_nop
+                                    682 ;	tm1628.c:44: CLK_0; I2C_DELAY;
+      000370 C2 90            [12]  683 	clr	_P10
+      000372 90 00 64         [24]  684 	mov	dptr,#(0x64&0x00ff)
+      000375 E4               [12]  685 	clr	a
+      000376 F5 F0            [12]  686 	mov	b,a
+      000378 02 03 0C         [24]  687 	ljmp	_delay_nop
+                                    688 ;------------------------------------------------------------
+                                    689 ;Allocation info for local variables in function 'SEND_WRITE'
+                                    690 ;------------------------------------------------------------
+                                    691 ;data                      Allocated to registers r7 
+                                    692 ;i                         Allocated to registers r6 
+                                    693 ;------------------------------------------------------------
+                                    694 ;	tm1628.c:46: void SEND_WRITE(uint8_t data)
+                                    695 ;	-----------------------------------------
+                                    696 ;	 function SEND_WRITE
+                                    697 ;	-----------------------------------------
+      00037B                        698 _SEND_WRITE:
+      00037B AF 82            [24]  699 	mov	r7,dpl
+                                    700 ;	tm1628.c:49: for (i = 0; i < 8; ++i)
+      00037D 7E 00            [12]  701 	mov	r6,#0x00
+      00037F                        702 00105$:
+                                    703 ;	tm1628.c:51: if (data & 0x01) {DIO_1;}
+      00037F EF               [12]  704 	mov	a,r7
+      000380 30 E0 04         [24]  705 	jnb	acc.0,00102$
+      000383 D2 91            [12]  706 	setb	_P11
+      000385 80 02            [24]  707 	sjmp	00103$
+      000387                        708 00102$:
+                                    709 ;	tm1628.c:52: else {DIO_0;}
+      000387 C2 91            [12]  710 	clr	_P11
+      000389                        711 00103$:
+                                    712 ;	tm1628.c:53: I2C_DELAY;	
+      000389 90 00 64         [24]  713 	mov	dptr,#(0x64&0x00ff)
+      00038C E4               [12]  714 	clr	a
+      00038D F5 F0            [12]  715 	mov	b,a
+      00038F C0 07            [24]  716 	push	ar7
+      000391 C0 06            [24]  717 	push	ar6
+      000393 12 03 0C         [24]  718 	lcall	_delay_nop
+                                    719 ;	tm1628.c:54: CLK_1;
+      000396 D2 90            [12]  720 	setb	_P10
+                                    721 ;	tm1628.c:55: I2C_DELAY;
+      000398 90 00 64         [24]  722 	mov	dptr,#(0x64&0x00ff)
+      00039B E4               [12]  723 	clr	a
+      00039C F5 F0            [12]  724 	mov	b,a
+      00039E 12 03 0C         [24]  725 	lcall	_delay_nop
+      0003A1 D0 06            [24]  726 	pop	ar6
+      0003A3 D0 07            [24]  727 	pop	ar7
+                                    728 ;	tm1628.c:56: CLK_0;
+      0003A5 C2 90            [12]  729 	clr	_P10
+                                    730 ;	tm1628.c:57: data >>= 1;	//1.37u
+      0003A7 EF               [12]  731 	mov	a,r7
+      0003A8 C3               [12]  732 	clr	c
+      0003A9 13               [12]  733 	rrc	a
+      0003AA FF               [12]  734 	mov	r7,a
+                                    735 ;	tm1628.c:49: for (i = 0; i < 8; ++i)
+      0003AB 0E               [12]  736 	inc	r6
+      0003AC BE 08 00         [24]  737 	cjne	r6,#0x08,00117$
+      0003AF                        738 00117$:
+      0003AF 40 CE            [24]  739 	jc	00105$
+      0003B1 22               [24]  740 	ret
+                                    741 ;------------------------------------------------------------
+                                    742 ;Allocation info for local variables in function 'TM1628_SEND_COMMAND'
+                                    743 ;------------------------------------------------------------
+                                    744 ;value                     Allocated to registers r7 
+                                    745 ;------------------------------------------------------------
+                                    746 ;	tm1628.c:61: void TM1628_SEND_COMMAND(const unsigned char value)
+                                    747 ;	-----------------------------------------
+                                    748 ;	 function TM1628_SEND_COMMAND
+                                    749 ;	-----------------------------------------
+      0003B2                        750 _TM1628_SEND_COMMAND:
+      0003B2 AF 82            [24]  751 	mov	r7,dpl
+                                    752 ;	tm1628.c:63: SEND_START();
+      0003B4 C0 07            [24]  753 	push	ar7
+      0003B6 12 03 4D         [24]  754 	lcall	_SEND_START
+      0003B9 D0 07            [24]  755 	pop	ar7
+                                    756 ;	tm1628.c:64: SEND_WRITE(value);
+      0003BB 8F 82            [24]  757 	mov	dpl,r7
+      0003BD 12 03 7B         [24]  758 	lcall	_SEND_WRITE
+                                    759 ;	tm1628.c:65: SEND_STOP();
+      0003C0 12 03 2A         [24]  760 	lcall	_SEND_STOP
+                                    761 ;	tm1628.c:66: I2C_DELAY;
+      0003C3 90 00 64         [24]  762 	mov	dptr,#(0x64&0x00ff)
+      0003C6 E4               [12]  763 	clr	a
+      0003C7 F5 F0            [12]  764 	mov	b,a
+      0003C9 02 03 0C         [24]  765 	ljmp	_delay_nop
+                                    766 ;------------------------------------------------------------
+                                    767 ;Allocation info for local variables in function 'TM1628_SEND_CONFIG'
+                                    768 ;------------------------------------------------------------
+                                    769 ;brightness                Allocated with name '_TM1628_SEND_CONFIG_PARM_2'
+                                    770 ;enable                    Allocated to registers r7 
+                                    771 ;------------------------------------------------------------
+                                    772 ;	tm1628.c:68: void TM1628_SEND_CONFIG(const unsigned char enable, const unsigned char brightness)
+                                    773 ;	-----------------------------------------
+                                    774 ;	 function TM1628_SEND_CONFIG
+                                    775 ;	-----------------------------------------
+      0003CC                        776 _TM1628_SEND_CONFIG:
+      0003CC AF 82            [24]  777 	mov	r7,dpl
+                                    778 ;	tm1628.c:70: TM1628_SEND_COMMAND(TM1628_CMD_MODE_DIS_2);
+      0003CE 75 82 03         [24]  779 	mov	dpl,#0x03
+      0003D1 C0 07            [24]  780 	push	ar7
+      0003D3 12 03 B2         [24]  781 	lcall	_TM1628_SEND_COMMAND
+      0003D6 D0 07            [24]  782 	pop	ar7
+                                    783 ;	tm1628.c:71: _config = (enable ? TM1628_SET_DISPLAY_ON : TM1628_SET_DISPLAY_OFF) |
+      0003D8 EF               [12]  784 	mov	a,r7
+      0003D9 60 04            [24]  785 	jz	00103$
+      0003DB 7F 08            [12]  786 	mov	r7,#0x08
+      0003DD 80 02            [24]  787 	sjmp	00104$
+      0003DF                        788 00103$:
+      0003DF 7F 00            [12]  789 	mov	r7,#0x00
+      0003E1                        790 00104$:
+                                    791 ;	tm1628.c:72: (brightness > TM1628_BRIGHTNESS_MAX ? TM1628_BRIGHTNESS_MAX : brightness);
+      0003E1 E5 38            [12]  792 	mov	a,_TM1628_SEND_CONFIG_PARM_2
+      0003E3 24 F8            [12]  793 	add	a,#0xff - 0x07
+      0003E5 50 04            [24]  794 	jnc	00105$
+      0003E7 7E 07            [12]  795 	mov	r6,#0x07
+      0003E9 80 02            [24]  796 	sjmp	00106$
+      0003EB                        797 00105$:
+      0003EB AE 38            [24]  798 	mov	r6,_TM1628_SEND_CONFIG_PARM_2
+      0003ED                        799 00106$:
+      0003ED EE               [12]  800 	mov	a,r6
+      0003EE 4F               [12]  801 	orl	a,r7
+      0003EF F5 36            [12]  802 	mov	__config,a
+                                    803 ;	tm1628.c:74: TM1628_SEND_COMMAND(TM1628_CMD_SET_DSIPLAY | _config);
+      0003F1 74 80            [12]  804 	mov	a,#0x80
+      0003F3 45 36            [12]  805 	orl	a,__config
+      0003F5 F5 82            [12]  806 	mov	dpl,a
+      0003F7 02 03 B2         [24]  807 	ljmp	_TM1628_SEND_COMMAND
+                                    808 ;------------------------------------------------------------
+                                    809 ;Allocation info for local variables in function 'TM1628_INIT'
+                                    810 ;------------------------------------------------------------
+                                    811 ;brightness                Allocated with name '_TM1628_INIT_PARM_2'
+                                    812 ;enable                    Allocated to registers 
+                                    813 ;------------------------------------------------------------
+                                    814 ;	tm1628.c:77: void TM1628_INIT(unsigned char enable, const unsigned char brightness)
+                                    815 ;	-----------------------------------------
+                                    816 ;	 function TM1628_INIT
+                                    817 ;	-----------------------------------------
+      0003FA                        818 _TM1628_INIT:
+                                    819 ;	tm1628.c:80: P11_PUSHPULL_MODE;
+      0003FA 53 B3 FD         [24]  820 	anl	_P1M1,#0xFD
+      0003FD 43 B4 02         [24]  821 	orl	_P1M2,#0x02
+                                    822 ;	tm1628.c:82: P10_PUSHPULL_MODE;
+      000400 53 B3 FE         [24]  823 	anl	_P1M1,#0xFE
+      000403 43 B4 01         [24]  824 	orl	_P1M2,#0x01
+                                    825 ;	tm1628.c:83: P00_PUSHPULL_MODE;
+      000406 53 B1 FE         [24]  826 	anl	_P0M1,#0xFE
+      000409 43 B2 01         [24]  827 	orl	_P0M2,#0x01
+                                    828 ;	tm1628.c:85: PIN_CLK = 1;
+      00040C D2 90            [12]  829 	setb	_P10
+                                    830 ;	tm1628.c:86: PIN_DIO = 1;	
+      00040E D2 91            [12]  831 	setb	_P11
+                                    832 ;	tm1628.c:87: PIN_STB = 1;
+      000410 D2 80            [12]  833 	setb	_P00
+                                    834 ;	tm1628.c:90: TM1628_SEND_CONFIG(enable, brightness);
+      000412 85 39 38         [24]  835 	mov	_TM1628_SEND_CONFIG_PARM_2,_TM1628_INIT_PARM_2
+      000415 02 03 CC         [24]  836 	ljmp	_TM1628_SEND_CONFIG
+                                    837 ;------------------------------------------------------------
+                                    838 ;Allocation info for local variables in function 'TM1628_display_segments'
+                                    839 ;------------------------------------------------------------
+                                    840 ;digit                     Allocated with name '_TM1628_display_segments_PARM_2'
+                                    841 ;dot                       Allocated with name '_TM1628_display_segments_PARM_3'
+                                    842 ;position                  Allocated to registers r7 
+                                    843 ;segments                  Allocated to registers r6 
+                                    844 ;------------------------------------------------------------
+                                    845 ;	tm1628.c:92: void TM1628_display_segments(const unsigned char position, const unsigned char digit, unsigned char dot)
+                                    846 ;	-----------------------------------------
+                                    847 ;	 function TM1628_display_segments
+                                    848 ;	-----------------------------------------
+      000418                        849 _TM1628_display_segments:
+      000418 AF 82            [24]  850 	mov	r7,dpl
+                                    851 ;	tm1628.c:95: if (digit < 10)
+      00041A 74 F6            [12]  852 	mov	a,#0x100 - 0x0A
+      00041C 25 3A            [12]  853 	add	a,_TM1628_display_segments_PARM_2
+      00041E 40 09            [24]  854 	jc	00102$
+                                    855 ;	tm1628.c:97: segments = _digit2segments[digit];
+      000420 E5 3A            [12]  856 	mov	a,_TM1628_display_segments_PARM_2
+      000422 90 09 F3         [24]  857 	mov	dptr,#__digit2segments
+      000425 93               [24]  858 	movc	a,@a+dptr
+      000426 FE               [12]  859 	mov	r6,a
+      000427 80 02            [24]  860 	sjmp	00103$
+      000429                        861 00102$:
+                                    862 ;	tm1628.c:100: segments = 0x00;	
+      000429 7E 00            [12]  863 	mov	r6,#0x00
+      00042B                        864 00103$:
+                                    865 ;	tm1628.c:102: if ( (dot == 1 & (position == 2 )) | (dot == 2 & (position == 0 )) ) {
+      00042B 74 01            [12]  866 	mov	a,#0x01
+      00042D B5 3B 04         [24]  867 	cjne	a,_TM1628_display_segments_PARM_3,00115$
+      000430 74 01            [12]  868 	mov	a,#0x01
+      000432 80 01            [24]  869 	sjmp	00116$
+      000434                        870 00115$:
+      000434 E4               [12]  871 	clr	a
+      000435                        872 00116$:
+      000435 FD               [12]  873 	mov	r5,a
+      000436 E4               [12]  874 	clr	a
+      000437 BF 02 01         [24]  875 	cjne	r7,#0x02,00117$
+      00043A 04               [12]  876 	inc	a
+      00043B                        877 00117$:
+      00043B 52 05            [12]  878 	anl	ar5,a
+      00043D 74 02            [12]  879 	mov	a,#0x02
+      00043F B5 3B 04         [24]  880 	cjne	a,_TM1628_display_segments_PARM_3,00119$
+      000442 74 01            [12]  881 	mov	a,#0x01
+      000444 80 01            [24]  882 	sjmp	00120$
+      000446                        883 00119$:
+      000446 E4               [12]  884 	clr	a
+      000447                        885 00120$:
+      000447 FC               [12]  886 	mov	r4,a
+      000448 EF               [12]  887 	mov	a,r7
+      000449 B4 01 00         [24]  888 	cjne	a,#0x01,00121$
+      00044C                        889 00121$:
+      00044C E4               [12]  890 	clr	a
+      00044D 33               [12]  891 	rlc	a
+      00044E FB               [12]  892 	mov	r3,a
+      00044F 5C               [12]  893 	anl	a,r4
+      000450 4D               [12]  894 	orl	a,r5
+      000451 60 03            [24]  895 	jz	00105$
+                                    896 ;	tm1628.c:103: segments = segments | 0x80;
+      000453 43 06 80         [24]  897 	orl	ar6,#0x80
+      000456                        898 00105$:
+                                    899 ;	tm1628.c:105: TM1628_SEND_COMMAND(TM1628_CMD_SET_DATA | TM1628_SET_DATA_F_ADDR);
+      000456 75 82 44         [24]  900 	mov	dpl,#0x44
+      000459 C0 07            [24]  901 	push	ar7
+      00045B C0 06            [24]  902 	push	ar6
+      00045D 12 03 B2         [24]  903 	lcall	_TM1628_SEND_COMMAND
+                                    904 ;	tm1628.c:106: SEND_START();
+      000460 12 03 4D         [24]  905 	lcall	_SEND_START
+      000463 D0 06            [24]  906 	pop	ar6
+      000465 D0 07            [24]  907 	pop	ar7
+                                    908 ;	tm1628.c:107: SEND_WRITE(TM1628_CMD_SET_ADDR | position );
+      000467 74 C0            [12]  909 	mov	a,#0xC0
+      000469 4F               [12]  910 	orl	a,r7
+      00046A F5 82            [12]  911 	mov	dpl,a
+      00046C C0 06            [24]  912 	push	ar6
+      00046E 12 03 7B         [24]  913 	lcall	_SEND_WRITE
+      000471 D0 06            [24]  914 	pop	ar6
+                                    915 ;	tm1628.c:108: SEND_WRITE(segments);
+      000473 8E 82            [24]  916 	mov	dpl,r6
+      000475 12 03 7B         [24]  917 	lcall	_SEND_WRITE
+                                    918 ;	tm1628.c:109: SEND_STOP();
+      000478 12 03 2A         [24]  919 	lcall	_SEND_STOP
+                                    920 ;	tm1628.c:110: I2C_DELAY;
+      00047B 90 00 64         [24]  921 	mov	dptr,#(0x64&0x00ff)
+      00047E E4               [12]  922 	clr	a
+      00047F F5 F0            [12]  923 	mov	b,a
+      000481 02 03 0C         [24]  924 	ljmp	_delay_nop
+                                    925 ;------------------------------------------------------------
+                                    926 ;Allocation info for local variables in function 'TM1628_clear'
+                                    927 ;------------------------------------------------------------
+                                    928 ;i                         Allocated to registers r7 
+                                    929 ;------------------------------------------------------------
+                                    930 ;	tm1628.c:112: void TM1628_clear(void)
+                                    931 ;	-----------------------------------------
+                                    932 ;	 function TM1628_clear
+                                    933 ;	-----------------------------------------
+      000484                        934 _TM1628_clear:
+                                    935 ;	tm1628.c:116: for (i = 0; i < TM1628_POSITION_MAX; ++i) {
+      000484 7F 00            [12]  936 	mov	r7,#0x00
+      000486                        937 00102$:
+                                    938 ;	tm1628.c:117: TM1628_display_segments(i, 0x00, 0);
+      000486 75 3A 00         [24]  939 	mov	_TM1628_display_segments_PARM_2,#0x00
+      000489 75 3B 00         [24]  940 	mov	_TM1628_display_segments_PARM_3,#0x00
+      00048C 8F 82            [24]  941 	mov	dpl,r7
+      00048E C0 07            [24]  942 	push	ar7
+      000490 12 04 18         [24]  943 	lcall	_TM1628_display_segments
+      000493 D0 07            [24]  944 	pop	ar7
+                                    945 ;	tm1628.c:116: for (i = 0; i < TM1628_POSITION_MAX; ++i) {
+      000495 0F               [12]  946 	inc	r7
+      000496 BF 04 00         [24]  947 	cjne	r7,#0x04,00110$
+      000499                        948 00110$:
+      000499 40 EB            [24]  949 	jc	00102$
+      00049B 22               [24]  950 	ret
+                                    951 	.area CSEG    (CODE)
+                                    952 	.area CONST   (CODE)
+      0009F3                        953 __digit2segments:
+      0009F3 3F                     954 	.db #0x3F	; 63
+      0009F4 06                     955 	.db #0x06	; 6
+      0009F5 5B                     956 	.db #0x5B	; 91
+      0009F6 4F                     957 	.db #0x4F	; 79	'O'
+      0009F7 66                     958 	.db #0x66	; 102	'f'
+      0009F8 6D                     959 	.db #0x6D	; 109	'm'
+      0009F9 7D                     960 	.db #0x7D	; 125
+      0009FA 07                     961 	.db #0x07	; 7
+      0009FB 7F                     962 	.db #0x7F	; 127
+      0009FC 6F                     963 	.db #0x6F	; 111	'o'
+                                    964 	.area XINIT   (CODE)
+                                    965 	.area CABS    (ABS,CODE)

@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "sfr_macro_ms51_16k.h": "c",
+        "delay.h": "c",
+        "my_delay.h": "c",
+        "macro.h": "c",
+        "function_define.h": "c",
+        "ms51.h": "c",
+        "my_uart.h": "c",
+        "i2c.h": "c"
+    }
+}
