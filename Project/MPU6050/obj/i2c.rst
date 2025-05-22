@@ -501,10 +501,10 @@
                                     501 ; internal ram data
                                     502 ;--------------------------------------------------------
                                     503 	.area DSEG    (DATA)
-      00000F                        504 _I2C_Address_PARM_2:
-      00000F                        505 	.ds 1
-      000010                        506 _I2C_Write_nByte_PARM_2:
-      000010                        507 	.ds 1
+      000008                        504 _I2C_Address_PARM_2:
+      000008                        505 	.ds 1
+      000009                        506 _I2C_Write_nByte_PARM_2:
+      000009                        507 	.ds 1
                                     508 ;--------------------------------------------------------
                                     509 ; overlayable items in internal ram
                                     510 ;--------------------------------------------------------
@@ -573,7 +573,7 @@
                                     573 ;	-----------------------------------------
                                     574 ;	 function I2C_Init
                                     575 ;	-----------------------------------------
-      00017D                        576 _I2C_Init:
+      0004C4                        576 _I2C_Init:
                            000007   577 	ar7 = 0x07
                            000006   578 	ar6 = 0x06
                            000005   579 	ar5 = 0x05
@@ -583,26 +583,26 @@
                            000001   583 	ar1 = 0x01
                            000000   584 	ar0 = 0x00
                                     585 ;	lib/src/i2c.c:9: I2CLK = 39;
-      00017D 75 BE 27         [24]  586 	mov	_I2CLK,#0x27
+      0004C4 75 BE 27         [24]  586 	mov	_I2CLK,#0x27
                                     587 ;	lib/src/i2c.c:12: P1M1 &= ~(1 << 3);
-      000180 53 B3 F7         [24]  588 	anl	_P1M1,#0xf7
+      0004C7 53 B3 F7         [24]  588 	anl	_P1M1,#0xf7
                                     589 ;	lib/src/i2c.c:13: P1M2 &= ~(1 << 3);
-      000183 53 B4 F7         [24]  590 	anl	_P1M2,#0xf7
+      0004CA 53 B4 F7         [24]  590 	anl	_P1M2,#0xf7
                                     591 ;	lib/src/i2c.c:16: P1M1 &= ~(1 << 4);
-      000186 53 B3 EF         [24]  592 	anl	_P1M1,#0xef
+      0004CD 53 B3 EF         [24]  592 	anl	_P1M1,#0xef
                                     593 ;	lib/src/i2c.c:17: P1M2 &= ~(1 << 4);
-      000189 53 B4 EF         [24]  594 	anl	_P1M2,#0xef
+      0004D0 53 B4 EF         [24]  594 	anl	_P1M2,#0xef
                                     595 ;	lib/src/i2c.c:19: P13=1;
                                     596 ;	assignBit
-      00018C D2 93            [12]  597 	setb	_P13
+      0004D3 D2 93            [12]  597 	setb	_P13
                                     598 ;	lib/src/i2c.c:20: P14=1;
                                     599 ;	assignBit
-      00018E D2 94            [12]  600 	setb	_P14
+      0004D5 D2 94            [12]  600 	setb	_P14
                                     601 ;	lib/src/i2c.c:22: I2CEN=1;
                                     602 ;	assignBit
-      000190 D2 C6            [12]  603 	setb	_I2CEN
+      0004D7 D2 C6            [12]  603 	setb	_I2CEN
                                     604 ;	lib/src/i2c.c:23: }
-      000192 22               [24]  605 	ret
+      0004D9 22               [24]  605 	ret
                                     606 ;------------------------------------------------------------
                                     607 ;Allocation info for local variables in function 'send_stop'
                                     608 ;------------------------------------------------------------
@@ -613,52 +613,52 @@
                                     613 ;	-----------------------------------------
                                     614 ;	 function send_stop
                                     615 ;	-----------------------------------------
-      000193                        616 _send_stop:
+      0004DA                        616 _send_stop:
                                     617 ;	lib/src/i2c.c:29: STA = 0;
                                     618 ;	assignBit
-      000193 C2 C5            [12]  619 	clr	_STA
+      0004DA C2 C5            [12]  619 	clr	_STA
                                     620 ;	lib/src/i2c.c:30: STO = 1;
                                     621 ;	assignBit
-      000195 D2 C4            [12]  622 	setb	_STO
+      0004DC D2 C4            [12]  622 	setb	_STO
                                     623 ;	lib/src/i2c.c:31: SI = 0;
                                     624 ;	assignBit
-      000197 C2 C3            [12]  625 	clr	_SI
+      0004DE C2 C3            [12]  625 	clr	_SI
                                     626 ;	lib/src/i2c.c:33: u8TimeOut = 0;
-      000199 7F 00            [12]  627 	mov	r7,#0x00
+      0004E0 7F 00            [12]  627 	mov	r7,#0x00
                                     628 ;	lib/src/i2c.c:34: while (1) {
-      00019B 7D 01            [12]  629 	mov	r5,#0x01
-      00019D 7E 00            [12]  630 	mov	r6,#0x00
-      00019F                        631 00106$:
+      0004E2 7D 01            [12]  629 	mov	r5,#0x01
+      0004E4 7E 00            [12]  630 	mov	r6,#0x00
+      0004E6                        631 00106$:
                                     632 ;	lib/src/i2c.c:35: if (I2STAT == 0xF8) {
-      00019F 74 F8            [12]  633 	mov	a,#0xf8
-      0001A1 B5 BD 02         [24]  634 	cjne	a,_I2STAT,00122$
-      0001A4 80 0F            [24]  635 	sjmp	00107$
-      0001A6                        636 00122$:
+      0004E6 74 F8            [12]  633 	mov	a,#0xf8
+      0004E8 B5 BD 02         [24]  634 	cjne	a,_I2STAT,00122$
+      0004EB 80 0F            [24]  635 	sjmp	00107$
+      0004ED                        636 00122$:
                                     637 ;	lib/src/i2c.c:38: if (!t) {
-      0001A6 ED               [12]  638 	mov	a,r5
-      0001A7 4E               [12]  639 	orl	a,r6
-      0001A8 70 04            [24]  640 	jnz	00104$
+      0004ED ED               [12]  638 	mov	a,r5
+      0004EE 4E               [12]  639 	orl	a,r6
+      0004EF 70 04            [24]  640 	jnz	00104$
                                     641 ;	lib/src/i2c.c:39: u8TimeOut = 1;
-      0001AA 7F 01            [12]  642 	mov	r7,#0x01
+      0004F1 7F 01            [12]  642 	mov	r7,#0x01
                                     643 ;	lib/src/i2c.c:40: break;
-      0001AC 80 07            [24]  644 	sjmp	00107$
-      0001AE                        645 00104$:
+      0004F3 80 07            [24]  644 	sjmp	00107$
+      0004F5                        645 00104$:
                                     646 ;	lib/src/i2c.c:42: ++t;
-      0001AE 0D               [12]  647 	inc	r5
-      0001AF BD 00 ED         [24]  648 	cjne	r5,#0x00,00106$
-      0001B2 0E               [12]  649 	inc	r6
-      0001B3 80 EA            [24]  650 	sjmp	00106$
-      0001B5                        651 00107$:
+      0004F5 0D               [12]  647 	inc	r5
+      0004F6 BD 00 ED         [24]  648 	cjne	r5,#0x00,00106$
+      0004F9 0E               [12]  649 	inc	r6
+      0004FA 80 EA            [24]  650 	sjmp	00106$
+      0004FC                        651 00107$:
                                     652 ;	lib/src/i2c.c:44: return (!u8TimeOut);
-      0001B5 EF               [12]  653 	mov	a,r7
-      0001B6 B4 01 00         [24]  654 	cjne	a,#0x01,00125$
-      0001B9                        655 00125$:
-      0001B9 92 00            [24]  656 	mov  _send_stop_sloc0_1_0,c
-      0001BB E4               [12]  657 	clr	a
-      0001BC 33               [12]  658 	rlc	a
-      0001BD F5 82            [12]  659 	mov	dpl,a
+      0004FC EF               [12]  653 	mov	a,r7
+      0004FD B4 01 00         [24]  654 	cjne	a,#0x01,00125$
+      000500                        655 00125$:
+      000500 92 00            [24]  656 	mov  _send_stop_sloc0_1_0,c
+      000502 E4               [12]  657 	clr	a
+      000503 33               [12]  658 	rlc	a
+      000504 F5 82            [12]  659 	mov	dpl,a
                                     660 ;	lib/src/i2c.c:45: }
-      0001BF 22               [24]  661 	ret
+      000506 22               [24]  661 	ret
                                     662 ;------------------------------------------------------------
                                     663 ;Allocation info for local variables in function 'I2C_start'
                                     664 ;------------------------------------------------------------
@@ -666,39 +666,39 @@
                                     666 ;	-----------------------------------------
                                     667 ;	 function I2C_start
                                     668 ;	-----------------------------------------
-      0001C0                        669 _I2C_start:
+      000507                        669 _I2C_start:
                                     670 ;	lib/src/i2c.c:49: if (I2STAT != 0xF8) {
-      0001C0 74 F8            [12]  671 	mov	a,#0xf8
-      0001C2 B5 BD 02         [24]  672 	cjne	a,_I2STAT,00126$
-      0001C5 80 04            [24]  673 	sjmp	00102$
-      0001C7                        674 00126$:
+      000507 74 F8            [12]  671 	mov	a,#0xf8
+      000509 B5 BD 02         [24]  672 	cjne	a,_I2STAT,00126$
+      00050C 80 04            [24]  673 	sjmp	00102$
+      00050E                        674 00126$:
                                     675 ;	lib/src/i2c.c:50: return 0;
-      0001C7 75 82 00         [24]  676 	mov	dpl,#0x00
-      0001CA 22               [24]  677 	ret
-      0001CB                        678 00102$:
+      00050E 75 82 00         [24]  676 	mov	dpl,#0x00
+      000511 22               [24]  677 	ret
+      000512                        678 00102$:
                                     679 ;	lib/src/i2c.c:53: STO = 0;
                                     680 ;	assignBit
-      0001CB C2 C4            [12]  681 	clr	_STO
+      000512 C2 C4            [12]  681 	clr	_STO
                                     682 ;	lib/src/i2c.c:54: STA = 1;
                                     683 ;	assignBit
-      0001CD D2 C5            [12]  684 	setb	_STA
+      000514 D2 C5            [12]  684 	setb	_STA
                                     685 ;	lib/src/i2c.c:55: SI = 0;
                                     686 ;	assignBit
-      0001CF C2 C3            [12]  687 	clr	_SI
+      000516 C2 C3            [12]  687 	clr	_SI
                                     688 ;	lib/src/i2c.c:56: while (!SI);
-      0001D1                        689 00103$:
-      0001D1 30 C3 FD         [24]  690 	jnb	_SI,00103$
+      000518                        689 00103$:
+      000518 30 C3 FD         [24]  690 	jnb	_SI,00103$
                                     691 ;	lib/src/i2c.c:57: if (I2STAT != 0x08) {
-      0001D4 74 08            [12]  692 	mov	a,#0x08
-      0001D6 B5 BD 01         [24]  693 	cjne	a,_I2STAT,00128$
-      0001D9 22               [24]  694 	ret
-      0001DA                        695 00128$:
+      00051B 74 08            [12]  692 	mov	a,#0x08
+      00051D B5 BD 01         [24]  693 	cjne	a,_I2STAT,00128$
+      000520 22               [24]  694 	ret
+      000521                        695 00128$:
                                     696 ;	lib/src/i2c.c:59: send_stop();
-      0001DA 12 01 93         [24]  697 	lcall	_send_stop
+      000521 12 04 DA         [24]  697 	lcall	_send_stop
                                     698 ;	lib/src/i2c.c:60: return 0;
-      0001DD 75 82 00         [24]  699 	mov	dpl,#0x00
+      000524 75 82 00         [24]  699 	mov	dpl,#0x00
                                     700 ;	lib/src/i2c.c:62: }
-      0001E0 22               [24]  701 	ret
+      000527 22               [24]  701 	ret
                                     702 ;------------------------------------------------------------
                                     703 ;Allocation info for local variables in function 'I2C_RepeatedStart'
                                     704 ;------------------------------------------------------------
@@ -706,117 +706,117 @@
                                     706 ;	-----------------------------------------
                                     707 ;	 function I2C_RepeatedStart
                                     708 ;	-----------------------------------------
-      0001E1                        709 _I2C_RepeatedStart:
+      000528                        709 _I2C_RepeatedStart:
                                     710 ;	lib/src/i2c.c:65: STO = 0;
                                     711 ;	assignBit
-      0001E1 C2 C4            [12]  712 	clr	_STO
+      000528 C2 C4            [12]  712 	clr	_STO
                                     713 ;	lib/src/i2c.c:66: STA = 1;
                                     714 ;	assignBit
-      0001E3 D2 C5            [12]  715 	setb	_STA
+      00052A D2 C5            [12]  715 	setb	_STA
                                     716 ;	lib/src/i2c.c:67: SI = 0;
                                     717 ;	assignBit
-      0001E5 C2 C3            [12]  718 	clr	_SI
+      00052C C2 C3            [12]  718 	clr	_SI
                                     719 ;	lib/src/i2c.c:68: while (!SI);
-      0001E7                        720 00101$:
-      0001E7 30 C3 FD         [24]  721 	jnb	_SI,00101$
+      00052E                        720 00101$:
+      00052E 30 C3 FD         [24]  721 	jnb	_SI,00101$
                                     722 ;	lib/src/i2c.c:70: if (I2STAT != 0x10) { 
-      0001EA 74 10            [12]  723 	mov	a,#0x10
-      0001EC B5 BD 01         [24]  724 	cjne	a,_I2STAT,00121$
-      0001EF 22               [24]  725 	ret
-      0001F0                        726 00121$:
+      000531 74 10            [12]  723 	mov	a,#0x10
+      000533 B5 BD 01         [24]  724 	cjne	a,_I2STAT,00121$
+      000536 22               [24]  725 	ret
+      000537                        726 00121$:
                                     727 ;	lib/src/i2c.c:72: send_stop();
-      0001F0 12 01 93         [24]  728 	lcall	_send_stop
+      000537 12 04 DA         [24]  728 	lcall	_send_stop
                                     729 ;	lib/src/i2c.c:73: return 0;
-      0001F3 75 82 00         [24]  730 	mov	dpl,#0x00
+      00053A 75 82 00         [24]  730 	mov	dpl,#0x00
                                     731 ;	lib/src/i2c.c:75: }
-      0001F6 22               [24]  732 	ret
+      00053D 22               [24]  732 	ret
                                     733 ;------------------------------------------------------------
                                     734 ;Allocation info for local variables in function 'I2C_Address'
                                     735 ;------------------------------------------------------------
                                     736 ;WriteRead                 Allocated with name '_I2C_Address_PARM_2'
                                     737 ;Address                   Allocated to registers r7 
                                     738 ;------------------------------------------------------------
-                                    739 ;	lib/src/i2c.c:76: uint8_t I2C_Address(uint8_t Address, uint8_t WriteRead){ /*1:Read,0:Write*/
+                                    739 ;	lib/src/i2c.c:77: uint8_t I2C_Address(uint8_t Address, uint8_t WriteRead){ 
                                     740 ;	-----------------------------------------
                                     741 ;	 function I2C_Address
                                     742 ;	-----------------------------------------
-      0001F7                        743 _I2C_Address:
-      0001F7 AF 82            [24]  744 	mov	r7,dpl
-                                    745 ;	lib/src/i2c.c:79: STA = 0;
+      00053E                        743 _I2C_Address:
+      00053E AF 82            [24]  744 	mov	r7,dpl
+                                    745 ;	lib/src/i2c.c:80: STA = 0;
                                     746 ;	assignBit
-      0001F9 C2 C5            [12]  747 	clr	_STA
-                                    748 ;	lib/src/i2c.c:80: STO = 0;
+      000540 C2 C5            [12]  747 	clr	_STA
+                                    748 ;	lib/src/i2c.c:81: STO = 0;
                                     749 ;	assignBit
-      0001FB C2 C4            [12]  750 	clr	_STO
-                                    751 ;	lib/src/i2c.c:81: I2DAT = Address;
-      0001FD 8F BC            [24]  752 	mov	_I2DAT,r7
-                                    753 ;	lib/src/i2c.c:82: SI = 0;
+      000542 C2 C4            [12]  750 	clr	_STO
+                                    751 ;	lib/src/i2c.c:82: I2DAT = Address;
+      000544 8F BC            [24]  752 	mov	_I2DAT,r7
+                                    753 ;	lib/src/i2c.c:83: SI = 0;
                                     754 ;	assignBit
-      0001FF C2 C3            [12]  755 	clr	_SI
-                                    756 ;	lib/src/i2c.c:83: while (!SI);
-      000201                        757 00101$:
-      000201 30 C3 FD         [24]  758 	jnb	_SI,00101$
-                                    759 ;	lib/src/i2c.c:84: if(WriteRead)	/*Read*/
-      000204 E5 0F            [12]  760 	mov	a,_I2C_Address_PARM_2
-      000206 60 12            [24]  761 	jz	00109$
-                                    762 ;	lib/src/i2c.c:87: if (I2STAT != 0x40) {
-      000208 74 40            [12]  763 	mov	a,#0x40
-      00020A B5 BD 02         [24]  764 	cjne	a,_I2STAT,00135$
-      00020D 80 07            [24]  765 	sjmp	00105$
-      00020F                        766 00135$:
-                                    767 ;	lib/src/i2c.c:89: send_stop();
-      00020F 12 01 93         [24]  768 	lcall	_send_stop
-                                    769 ;	lib/src/i2c.c:90: return 0;
-      000212 75 82 00         [24]  770 	mov	dpl,#0x00
-      000215 22               [24]  771 	ret
-      000216                        772 00105$:
-                                    773 ;	lib/src/i2c.c:92: return 1;
-      000216 75 82 01         [24]  774 	mov	dpl,#0x01
-      000219 22               [24]  775 	ret
-      00021A                        776 00109$:
-                                    777 ;	lib/src/i2c.c:98: if (I2STAT != 0x18) {
-      00021A 74 18            [12]  778 	mov	a,#0x18
-      00021C B5 BD 02         [24]  779 	cjne	a,_I2STAT,00136$
-      00021F 80 07            [24]  780 	sjmp	00107$
-      000221                        781 00136$:
-                                    782 ;	lib/src/i2c.c:100: send_stop();
-      000221 12 01 93         [24]  783 	lcall	_send_stop
-                                    784 ;	lib/src/i2c.c:101: return 0;
-      000224 75 82 00         [24]  785 	mov	dpl,#0x00
-      000227 22               [24]  786 	ret
-      000228                        787 00107$:
-                                    788 ;	lib/src/i2c.c:103: return 1;
-      000228 75 82 01         [24]  789 	mov	dpl,#0x01
-                                    790 ;	lib/src/i2c.c:105: }
-      00022B 22               [24]  791 	ret
+      000546 C2 C3            [12]  755 	clr	_SI
+                                    756 ;	lib/src/i2c.c:84: while (!SI);
+      000548                        757 00101$:
+      000548 30 C3 FD         [24]  758 	jnb	_SI,00101$
+                                    759 ;	lib/src/i2c.c:85: if(WriteRead)	/*Read*/
+      00054B E5 08            [12]  760 	mov	a,_I2C_Address_PARM_2
+      00054D 60 12            [24]  761 	jz	00109$
+                                    762 ;	lib/src/i2c.c:88: if (I2STAT != 0x40) {
+      00054F 74 40            [12]  763 	mov	a,#0x40
+      000551 B5 BD 02         [24]  764 	cjne	a,_I2STAT,00135$
+      000554 80 07            [24]  765 	sjmp	00105$
+      000556                        766 00135$:
+                                    767 ;	lib/src/i2c.c:90: send_stop();
+      000556 12 04 DA         [24]  768 	lcall	_send_stop
+                                    769 ;	lib/src/i2c.c:91: return 0;
+      000559 75 82 00         [24]  770 	mov	dpl,#0x00
+      00055C 22               [24]  771 	ret
+      00055D                        772 00105$:
+                                    773 ;	lib/src/i2c.c:93: return 1;
+      00055D 75 82 01         [24]  774 	mov	dpl,#0x01
+      000560 22               [24]  775 	ret
+      000561                        776 00109$:
+                                    777 ;	lib/src/i2c.c:99: if (I2STAT != 0x18) {
+      000561 74 18            [12]  778 	mov	a,#0x18
+      000563 B5 BD 02         [24]  779 	cjne	a,_I2STAT,00136$
+      000566 80 07            [24]  780 	sjmp	00107$
+      000568                        781 00136$:
+                                    782 ;	lib/src/i2c.c:101: send_stop();
+      000568 12 04 DA         [24]  783 	lcall	_send_stop
+                                    784 ;	lib/src/i2c.c:102: return 0;
+      00056B 75 82 00         [24]  785 	mov	dpl,#0x00
+      00056E 22               [24]  786 	ret
+      00056F                        787 00107$:
+                                    788 ;	lib/src/i2c.c:104: return 1;
+      00056F 75 82 01         [24]  789 	mov	dpl,#0x01
+                                    790 ;	lib/src/i2c.c:106: }
+      000572 22               [24]  791 	ret
                                     792 ;------------------------------------------------------------
                                     793 ;Allocation info for local variables in function 'I2C_Write'
                                     794 ;------------------------------------------------------------
                                     795 ;u8Data                    Allocated to registers 
                                     796 ;------------------------------------------------------------
-                                    797 ;	lib/src/i2c.c:106: uint8_t I2C_Write(uint8_t u8Data)
+                                    797 ;	lib/src/i2c.c:107: uint8_t I2C_Write(uint8_t u8Data)
                                     798 ;	-----------------------------------------
                                     799 ;	 function I2C_Write
                                     800 ;	-----------------------------------------
-      00022C                        801 _I2C_Write:
-      00022C 85 82 BC         [24]  802 	mov	_I2DAT,dpl
-                                    803 ;	lib/src/i2c.c:110: SI = 0;
+      000573                        801 _I2C_Write:
+      000573 85 82 BC         [24]  802 	mov	_I2DAT,dpl
+                                    803 ;	lib/src/i2c.c:111: SI = 0;
                                     804 ;	assignBit
-      00022F C2 C3            [12]  805 	clr	_SI
-                                    806 ;	lib/src/i2c.c:111: while (!SI);
-      000231                        807 00101$:
-      000231 30 C3 FD         [24]  808 	jnb	_SI,00101$
-                                    809 ;	lib/src/i2c.c:113: if (I2STAT != 0x28) {
-      000234 74 28            [12]  810 	mov	a,#0x28
-      000236 B5 BD 01         [24]  811 	cjne	a,_I2STAT,00121$
-      000239 22               [24]  812 	ret
-      00023A                        813 00121$:
-                                    814 ;	lib/src/i2c.c:115: send_stop();
-      00023A 12 01 93         [24]  815 	lcall	_send_stop
-                                    816 ;	lib/src/i2c.c:116: return 0;
-      00023D 75 82 00         [24]  817 	mov	dpl,#0x00
-                                    818 ;	lib/src/i2c.c:118: }
-      000240 22               [24]  819 	ret
+      000576 C2 C3            [12]  805 	clr	_SI
+                                    806 ;	lib/src/i2c.c:112: while (!SI);
+      000578                        807 00101$:
+      000578 30 C3 FD         [24]  808 	jnb	_SI,00101$
+                                    809 ;	lib/src/i2c.c:114: if (I2STAT != 0x28) {
+      00057B 74 28            [12]  810 	mov	a,#0x28
+      00057D B5 BD 01         [24]  811 	cjne	a,_I2STAT,00121$
+      000580 22               [24]  812 	ret
+      000581                        813 00121$:
+                                    814 ;	lib/src/i2c.c:116: send_stop();
+      000581 12 04 DA         [24]  815 	lcall	_send_stop
+                                    816 ;	lib/src/i2c.c:117: return 0;
+      000584 75 82 00         [24]  817 	mov	dpl,#0x00
+                                    818 ;	lib/src/i2c.c:119: }
+      000587 22               [24]  819 	ret
                                     820 ;------------------------------------------------------------
                                     821 ;Allocation info for local variables in function 'I2C_Write_nByte'
                                     822 ;------------------------------------------------------------
@@ -824,122 +824,122 @@
                                     824 ;pData                     Allocated to registers r5 r6 r7 
                                     825 ;i                         Allocated to registers r4 
                                     826 ;------------------------------------------------------------
-                                    827 ;	lib/src/i2c.c:119: uint8_t I2C_Write_nByte(uint8_t *pData, uint8_t length)
+                                    827 ;	lib/src/i2c.c:120: uint8_t I2C_Write_nByte(uint8_t *pData, uint8_t length)
                                     828 ;	-----------------------------------------
                                     829 ;	 function I2C_Write_nByte
                                     830 ;	-----------------------------------------
-      000241                        831 _I2C_Write_nByte:
-      000241 AD 82            [24]  832 	mov	r5,dpl
-      000243 AE 83            [24]  833 	mov	r6,dph
-      000245 AF F0            [24]  834 	mov	r7,b
-                                    835 ;	lib/src/i2c.c:123: for (i = 0; i < length; ++i) {
-      000247 7C 00            [12]  836 	mov	r4,#0x00
-      000249                        837 00108$:
-      000249 C3               [12]  838 	clr	c
-      00024A EC               [12]  839 	mov	a,r4
-      00024B 95 10            [12]  840 	subb	a,_I2C_Write_nByte_PARM_2
-      00024D 50 29            [24]  841 	jnc	00110$
-                                    842 ;	lib/src/i2c.c:124: I2DAT = pData[i];
-      00024F EC               [12]  843 	mov	a,r4
-      000250 2D               [12]  844 	add	a,r5
-      000251 F9               [12]  845 	mov	r1,a
-      000252 E4               [12]  846 	clr	a
-      000253 3E               [12]  847 	addc	a,r6
-      000254 FA               [12]  848 	mov	r2,a
-      000255 8F 03            [24]  849 	mov	ar3,r7
-      000257 89 82            [24]  850 	mov	dpl,r1
-      000259 8A 83            [24]  851 	mov	dph,r2
-      00025B 8B F0            [24]  852 	mov	b,r3
-      00025D 12 04 A5         [24]  853 	lcall	__gptrget
-      000260 F5 BC            [12]  854 	mov	_I2DAT,a
-                                    855 ;	lib/src/i2c.c:125: SI = 0;
+      000588                        831 _I2C_Write_nByte:
+      000588 AD 82            [24]  832 	mov	r5,dpl
+      00058A AE 83            [24]  833 	mov	r6,dph
+      00058C AF F0            [24]  834 	mov	r7,b
+                                    835 ;	lib/src/i2c.c:124: for (i = 0; i < length; ++i) {
+      00058E 7C 00            [12]  836 	mov	r4,#0x00
+      000590                        837 00108$:
+      000590 C3               [12]  838 	clr	c
+      000591 EC               [12]  839 	mov	a,r4
+      000592 95 09            [12]  840 	subb	a,_I2C_Write_nByte_PARM_2
+      000594 50 29            [24]  841 	jnc	00110$
+                                    842 ;	lib/src/i2c.c:125: I2DAT = pData[i];
+      000596 EC               [12]  843 	mov	a,r4
+      000597 2D               [12]  844 	add	a,r5
+      000598 F9               [12]  845 	mov	r1,a
+      000599 E4               [12]  846 	clr	a
+      00059A 3E               [12]  847 	addc	a,r6
+      00059B FA               [12]  848 	mov	r2,a
+      00059C 8F 03            [24]  849 	mov	ar3,r7
+      00059E 89 82            [24]  850 	mov	dpl,r1
+      0005A0 8A 83            [24]  851 	mov	dph,r2
+      0005A2 8B F0            [24]  852 	mov	b,r3
+      0005A4 12 14 2E         [24]  853 	lcall	__gptrget
+      0005A7 F5 BC            [12]  854 	mov	_I2DAT,a
+                                    855 ;	lib/src/i2c.c:126: SI = 0;
                                     856 ;	assignBit
-      000262 C2 C3            [12]  857 	clr	_SI
-                                    858 ;	lib/src/i2c.c:126: while (!SI);
-      000264                        859 00101$:
-      000264 30 C3 FD         [24]  860 	jnb	_SI,00101$
-                                    861 ;	lib/src/i2c.c:127: if (I2STAT != 0x28) {
-      000267 74 28            [12]  862 	mov	a,#0x28
-      000269 B5 BD 02         [24]  863 	cjne	a,_I2STAT,00134$
-      00026C 80 07            [24]  864 	sjmp	00109$
-      00026E                        865 00134$:
-                                    866 ;	lib/src/i2c.c:129: send_stop();
-      00026E 12 01 93         [24]  867 	lcall	_send_stop
-                                    868 ;	lib/src/i2c.c:130: return 0;
-      000271 75 82 00         [24]  869 	mov	dpl,#0x00
-      000274 22               [24]  870 	ret
-      000275                        871 00109$:
-                                    872 ;	lib/src/i2c.c:123: for (i = 0; i < length; ++i) {
-      000275 0C               [12]  873 	inc	r4
-      000276 80 D1            [24]  874 	sjmp	00108$
-      000278                        875 00110$:
-                                    876 ;	lib/src/i2c.c:133: }
-      000278 22               [24]  877 	ret
+      0005A9 C2 C3            [12]  857 	clr	_SI
+                                    858 ;	lib/src/i2c.c:127: while (!SI);
+      0005AB                        859 00101$:
+      0005AB 30 C3 FD         [24]  860 	jnb	_SI,00101$
+                                    861 ;	lib/src/i2c.c:128: if (I2STAT != 0x28) {
+      0005AE 74 28            [12]  862 	mov	a,#0x28
+      0005B0 B5 BD 02         [24]  863 	cjne	a,_I2STAT,00134$
+      0005B3 80 07            [24]  864 	sjmp	00109$
+      0005B5                        865 00134$:
+                                    866 ;	lib/src/i2c.c:130: send_stop();
+      0005B5 12 04 DA         [24]  867 	lcall	_send_stop
+                                    868 ;	lib/src/i2c.c:131: return 0;
+      0005B8 75 82 00         [24]  869 	mov	dpl,#0x00
+      0005BB 22               [24]  870 	ret
+      0005BC                        871 00109$:
+                                    872 ;	lib/src/i2c.c:124: for (i = 0; i < length; ++i) {
+      0005BC 0C               [12]  873 	inc	r4
+      0005BD 80 D1            [24]  874 	sjmp	00108$
+      0005BF                        875 00110$:
+                                    876 ;	lib/src/i2c.c:134: }
+      0005BF 22               [24]  877 	ret
                                     878 ;------------------------------------------------------------
                                     879 ;Allocation info for local variables in function 'I2C_Read'
                                     880 ;------------------------------------------------------------
                                     881 ;AckNack                   Allocated to registers r7 
                                     882 ;u8Data                    Allocated to registers 
                                     883 ;------------------------------------------------------------
-                                    884 ;	lib/src/i2c.c:134: uint8_t I2C_Read(uint8_t AckNack) /*1:Ack, 0: Nack*/
+                                    884 ;	lib/src/i2c.c:136: uint8_t I2C_Read(uint8_t AckNack) 
                                     885 ;	-----------------------------------------
                                     886 ;	 function I2C_Read
                                     887 ;	-----------------------------------------
-      000279                        888 _I2C_Read:
-                                    889 ;	lib/src/i2c.c:137: if(AckNack)
-      000279 E5 82            [12]  890 	mov	a,dpl
-      00027B FF               [12]  891 	mov	r7,a
-      00027C 60 19            [24]  892 	jz	00112$
-                                    893 ;	lib/src/i2c.c:139: AA = 1;
+      0005C0                        888 _I2C_Read:
+                                    889 ;	lib/src/i2c.c:139: if(AckNack)
+      0005C0 E5 82            [12]  890 	mov	a,dpl
+      0005C2 FF               [12]  891 	mov	r7,a
+      0005C3 60 19            [24]  892 	jz	00112$
+                                    893 ;	lib/src/i2c.c:141: AA = 1;
                                     894 ;	assignBit
-      00027E D2 C2            [12]  895 	setb	_AA
-                                    896 ;	lib/src/i2c.c:140: SI = 0;
+      0005C5 D2 C2            [12]  895 	setb	_AA
+                                    896 ;	lib/src/i2c.c:142: SI = 0;
                                     897 ;	assignBit
-      000280 C2 C3            [12]  898 	clr	_SI
-                                    899 ;	lib/src/i2c.c:141: while (!SI);
-      000282                        900 00101$:
-      000282 30 C3 FD         [24]  901 	jnb	_SI,00101$
-                                    902 ;	lib/src/i2c.c:142: if (I2STAT != 0x50) { /*Master Receive Data ACK*/
-      000285 74 50            [12]  903 	mov	a,#0x50
-      000287 B5 BD 02         [24]  904 	cjne	a,_I2STAT,00153$
-      00028A 80 07            [24]  905 	sjmp	00105$
-      00028C                        906 00153$:
-                                    907 ;	lib/src/i2c.c:144: send_stop();
-      00028C 12 01 93         [24]  908 	lcall	_send_stop
-                                    909 ;	lib/src/i2c.c:145: return 0;
-      00028F 75 82 00         [24]  910 	mov	dpl,#0x00
-      000292 22               [24]  911 	ret
-      000293                        912 00105$:
-                                    913 ;	lib/src/i2c.c:147: u8Data = I2DAT;
-      000293 85 BC 82         [24]  914 	mov	dpl,_I2DAT
-                                    915 ;	lib/src/i2c.c:148: return u8Data;
-      000296 22               [24]  916 	ret
-      000297                        917 00112$:
-                                    918 ;	lib/src/i2c.c:152: AA = 0;
+      0005C7 C2 C3            [12]  898 	clr	_SI
+                                    899 ;	lib/src/i2c.c:143: while (!SI);
+      0005C9                        900 00101$:
+      0005C9 30 C3 FD         [24]  901 	jnb	_SI,00101$
+                                    902 ;	lib/src/i2c.c:144: if (I2STAT != 0x50) { /*Master Receive Data ACK*/
+      0005CC 74 50            [12]  903 	mov	a,#0x50
+      0005CE B5 BD 02         [24]  904 	cjne	a,_I2STAT,00153$
+      0005D1 80 07            [24]  905 	sjmp	00105$
+      0005D3                        906 00153$:
+                                    907 ;	lib/src/i2c.c:146: send_stop();
+      0005D3 12 04 DA         [24]  908 	lcall	_send_stop
+                                    909 ;	lib/src/i2c.c:147: return 0;
+      0005D6 75 82 00         [24]  910 	mov	dpl,#0x00
+      0005D9 22               [24]  911 	ret
+      0005DA                        912 00105$:
+                                    913 ;	lib/src/i2c.c:149: u8Data = I2DAT;
+      0005DA 85 BC 82         [24]  914 	mov	dpl,_I2DAT
+                                    915 ;	lib/src/i2c.c:150: return u8Data;
+      0005DD 22               [24]  916 	ret
+      0005DE                        917 00112$:
+                                    918 ;	lib/src/i2c.c:154: AA = 0;
                                     919 ;	assignBit
-      000297 C2 C2            [12]  920 	clr	_AA
-                                    921 ;	lib/src/i2c.c:153: SI = 0;
+      0005DE C2 C2            [12]  920 	clr	_AA
+                                    921 ;	lib/src/i2c.c:155: SI = 0;
                                     922 ;	assignBit
-      000299 C2 C3            [12]  923 	clr	_SI
-                                    924 ;	lib/src/i2c.c:154: while (!SI);
-      00029B                        925 00106$:
-      00029B 30 C3 FD         [24]  926 	jnb	_SI,00106$
-                                    927 ;	lib/src/i2c.c:155: if (I2STAT != 0x58) { /*Master Receive Data NACK*/
-      00029E 74 58            [12]  928 	mov	a,#0x58
-      0002A0 B5 BD 02         [24]  929 	cjne	a,_I2STAT,00155$
-      0002A3 80 07            [24]  930 	sjmp	00110$
-      0002A5                        931 00155$:
-                                    932 ;	lib/src/i2c.c:157: send_stop();
-      0002A5 12 01 93         [24]  933 	lcall	_send_stop
-                                    934 ;	lib/src/i2c.c:158: return 0;
-      0002A8 75 82 00         [24]  935 	mov	dpl,#0x00
-      0002AB 22               [24]  936 	ret
-      0002AC                        937 00110$:
-                                    938 ;	lib/src/i2c.c:160: u8Data = I2DAT;
-      0002AC 85 BC 82         [24]  939 	mov	dpl,_I2DAT
-                                    940 ;	lib/src/i2c.c:161: return u8Data;
-                                    941 ;	lib/src/i2c.c:163: }
-      0002AF 22               [24]  942 	ret
+      0005E0 C2 C3            [12]  923 	clr	_SI
+                                    924 ;	lib/src/i2c.c:156: while (!SI);
+      0005E2                        925 00106$:
+      0005E2 30 C3 FD         [24]  926 	jnb	_SI,00106$
+                                    927 ;	lib/src/i2c.c:157: if (I2STAT != 0x58) { /*Master Receive Data NACK*/
+      0005E5 74 58            [12]  928 	mov	a,#0x58
+      0005E7 B5 BD 02         [24]  929 	cjne	a,_I2STAT,00155$
+      0005EA 80 07            [24]  930 	sjmp	00110$
+      0005EC                        931 00155$:
+                                    932 ;	lib/src/i2c.c:159: send_stop();
+      0005EC 12 04 DA         [24]  933 	lcall	_send_stop
+                                    934 ;	lib/src/i2c.c:160: return 0;
+      0005EF 75 82 00         [24]  935 	mov	dpl,#0x00
+      0005F2 22               [24]  936 	ret
+      0005F3                        937 00110$:
+                                    938 ;	lib/src/i2c.c:162: u8Data = I2DAT;
+      0005F3 85 BC 82         [24]  939 	mov	dpl,_I2DAT
+                                    940 ;	lib/src/i2c.c:163: return u8Data;
+                                    941 ;	lib/src/i2c.c:165: }
+      0005F6 22               [24]  942 	ret
                                     943 	.area CSEG    (CODE)
                                     944 	.area CONST   (CODE)
                                     945 	.area XINIT   (CODE)

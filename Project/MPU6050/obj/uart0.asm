@@ -240,6 +240,7 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
+	.globl _dem
 	.globl _UART0_Init
 	.globl _UART0_SendData
 	.globl _UART0_GetData
@@ -501,6 +502,8 @@ _MOSI	=	0x0080
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
+_dem::
+	.ds 1
 _UART0_NUMBER_digit_65536_35:
 	.ds 5
 ;--------------------------------------------------------
@@ -555,6 +558,8 @@ _UART0_NUMBER_digit_65536_35:
 	.area GSINIT  (CODE)
 	.area GSFINAL (CODE)
 	.area GSINIT  (CODE)
+;	lib/src/uart0.c:4: extern uint8_t dem=0;
+	mov	_dem,#0x00
 ;--------------------------------------------------------
 ; Home
 ;--------------------------------------------------------
@@ -567,7 +572,7 @@ _UART0_NUMBER_digit_65536_35:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'UART0_Init'
 ;------------------------------------------------------------
-;	lib/src/uart0.c:5: void UART0_Init(void)
+;	lib/src/uart0.c:6: void UART0_Init(void)
 ;	-----------------------------------------
 ;	 function UART0_Init
 ;	-----------------------------------------
@@ -580,143 +585,145 @@ _UART0_Init:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	lib/src/uart0.c:8: T3CON |= (1 << 5);
+;	lib/src/uart0.c:9: T3CON |= (1 << 5);
 	orl	_T3CON,#0x20
-;	lib/src/uart0.c:10: T3CON &= 0xF8;
+;	lib/src/uart0.c:11: T3CON &= 0xF8;
 	anl	_T3CON,#0xf8
-;	lib/src/uart0.c:13: EIE1 &= ~(1 << 1);
+;	lib/src/uart0.c:14: EIE1 &= ~(1 << 1);
 	anl	_EIE1,#0xfd
-;	lib/src/uart0.c:15: RH3 = 0xff;
+;	lib/src/uart0.c:16: RH3 = 0xff;
 	mov	_RH3,#0xff
-;	lib/src/uart0.c:16: RL3 = 0xe6;
+;	lib/src/uart0.c:17: RL3 = 0xe6;
 	mov	_RL3,#0xe6
-;	lib/src/uart0.c:18: T3CON |= (1 << 3);
+;	lib/src/uart0.c:19: T3CON |= (1 << 3);
 	orl	_T3CON,#0x08
-;	lib/src/uart0.c:20: PCON &= ~(1 << 7);
+;	lib/src/uart0.c:21: PCON &= ~(1 << 7);
 	anl	_PCON,#0x7f
-;	lib/src/uart0.c:22: P06 = 1;
+;	lib/src/uart0.c:23: P06 = 1;
 ;	assignBit
 	setb	_P06
-;	lib/src/uart0.c:23: P0M1 &= ~(1 << 6);
+;	lib/src/uart0.c:24: P0M1 &= ~(1 << 6);
 	anl	_P0M1,#0xbf
-;	lib/src/uart0.c:24: P0M2 |= (1 << 6);
+;	lib/src/uart0.c:25: P0M2 |= (1 << 6);
 	orl	_P0M2,#0x40
-;	lib/src/uart0.c:25: P07 = 1;
+;	lib/src/uart0.c:26: P07 = 1;
 ;	assignBit
 	setb	_P07
-;	lib/src/uart0.c:26: P0M1 &= ~(1 << 7);
+;	lib/src/uart0.c:27: P0M1 &= ~(1 << 7);
 	anl	_P0M1,#0x7f
-;	lib/src/uart0.c:27: P0M2 &= ~(1 << 7);
+;	lib/src/uart0.c:28: P0M2 &= ~(1 << 7);
 	anl	_P0M2,#0x7f
-;	lib/src/uart0.c:29: PCON &= ~(1 << 6);
+;	lib/src/uart0.c:30: PCON &= ~(1 << 6);
 	anl	_PCON,#0xbf
-;	lib/src/uart0.c:30: SM0 = 0;
+;	lib/src/uart0.c:31: SM0 = 0;
 ;	assignBit
 	clr	_SM0
-;	lib/src/uart0.c:31: SM1 = 1;
+;	lib/src/uart0.c:32: SM1 = 1;
 ;	assignBit
 	setb	_SM1
-;	lib/src/uart0.c:33: REN = 1;
+;	lib/src/uart0.c:34: REN = 1;
 ;	assignBit
 	setb	_REN
-;	lib/src/uart0.c:34: }
+;	lib/src/uart0.c:35: dem = 123;
+	mov	_dem,#0x7b
+;	lib/src/uart0.c:36: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'UART0_SendData'
 ;------------------------------------------------------------
 ;u8Data                    Allocated to registers 
 ;------------------------------------------------------------
-;	lib/src/uart0.c:36: void UART0_SendData(uint8_t u8Data)
+;	lib/src/uart0.c:38: void UART0_SendData(uint8_t u8Data)
 ;	-----------------------------------------
 ;	 function UART0_SendData
 ;	-----------------------------------------
 _UART0_SendData:
 	mov	_SBUF,dpl
-;	lib/src/uart0.c:38: SBUF = u8Data;
-;	lib/src/uart0.c:39: }
+;	lib/src/uart0.c:40: SBUF = u8Data;
+;	lib/src/uart0.c:41: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'UART0_GetData'
 ;------------------------------------------------------------
-;	lib/src/uart0.c:41: uint8_t UART0_GetData(void)
+;	lib/src/uart0.c:43: uint8_t UART0_GetData(void)
 ;	-----------------------------------------
 ;	 function UART0_GetData
 ;	-----------------------------------------
 _UART0_GetData:
-;	lib/src/uart0.c:43: return SBUF;
+;	lib/src/uart0.c:45: return SBUF;
 	mov	dpl,_SBUF
-;	lib/src/uart0.c:44: }
+;	lib/src/uart0.c:46: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'UART0_EnableInterrupt'
 ;------------------------------------------------------------
-;	lib/src/uart0.c:46: void UART0_EnableInterrupt(void)
+;	lib/src/uart0.c:48: void UART0_EnableInterrupt(void)
 ;	-----------------------------------------
 ;	 function UART0_EnableInterrupt
 ;	-----------------------------------------
 _UART0_EnableInterrupt:
-;	lib/src/uart0.c:48: ES = 1;
+;	lib/src/uart0.c:50: ES = 1;
 ;	assignBit
 	setb	_ES
-;	lib/src/uart0.c:49: }
+;	lib/src/uart0.c:51: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'UART0_DisableInterrupt'
 ;------------------------------------------------------------
-;	lib/src/uart0.c:51: void UART0_DisableInterrupt(void)
+;	lib/src/uart0.c:53: void UART0_DisableInterrupt(void)
 ;	-----------------------------------------
 ;	 function UART0_DisableInterrupt
 ;	-----------------------------------------
 _UART0_DisableInterrupt:
-;	lib/src/uart0.c:53: ES = 0;
+;	lib/src/uart0.c:55: ES = 0;
 ;	assignBit
 	clr	_ES
-;	lib/src/uart0.c:54: }
+;	lib/src/uart0.c:56: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'UART0_ClearFlag'
 ;------------------------------------------------------------
 ;u8Flag                    Allocated to registers r7 
 ;------------------------------------------------------------
-;	lib/src/uart0.c:56: void UART0_ClearFlag(uint8_t u8Flag)
+;	lib/src/uart0.c:58: void UART0_ClearFlag(uint8_t u8Flag)
 ;	-----------------------------------------
 ;	 function UART0_ClearFlag
 ;	-----------------------------------------
 _UART0_ClearFlag:
-;	lib/src/uart0.c:58: SCON &= ~(u8Flag);
+;	lib/src/uart0.c:60: SCON &= ~(u8Flag);
 	mov	a,dpl
 	cpl	a
 	anl	_SCON,a
-;	lib/src/uart0.c:59: }
+;	lib/src/uart0.c:61: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'UART0_GetFlag'
 ;------------------------------------------------------------
 ;u8Flag                    Allocated to registers r7 
 ;------------------------------------------------------------
-;	lib/src/uart0.c:61: uint8_t UART0_GetFlag(uint8_t u8Flag)
+;	lib/src/uart0.c:63: uint8_t UART0_GetFlag(uint8_t u8Flag)
 ;	-----------------------------------------
 ;	 function UART0_GetFlag
 ;	-----------------------------------------
 _UART0_GetFlag:
-;	lib/src/uart0.c:63: if (SCON & (u8Flag)) {
+;	lib/src/uart0.c:65: if (SCON & (u8Flag)) {
 	mov	a,dpl
 	anl	a,_SCON
 	jz	00102$
-;	lib/src/uart0.c:64: return 1;
+;	lib/src/uart0.c:66: return 1;
 	mov	dpl,#0x01
 	ret
 00102$:
-;	lib/src/uart0.c:66: return 0;
+;	lib/src/uart0.c:68: return 0;
 	mov	dpl,#0x00
-;	lib/src/uart0.c:68: }
+;	lib/src/uart0.c:70: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'UART0_STRING'
 ;------------------------------------------------------------
 ;cy                        Allocated to registers 
 ;------------------------------------------------------------
-;	lib/src/uart0.c:69: void UART0_STRING(const char *cy)
+;	lib/src/uart0.c:71: void UART0_STRING(const char *cy)
 ;	-----------------------------------------
 ;	 function UART0_STRING
 ;	-----------------------------------------
@@ -724,7 +731,7 @@ _UART0_STRING:
 	mov	r5,dpl
 	mov	r6,dph
 	mov	r7,b
-;	lib/src/uart0.c:71: while(*cy)
+;	lib/src/uart0.c:73: while(*cy)
 00104$:
 	mov	dpl,r5
 	mov	dph,r6
@@ -732,9 +739,9 @@ _UART0_STRING:
 	lcall	__gptrget
 	mov	r4,a
 	jz	00107$
-;	lib/src/uart0.c:73: SBUF = (*cy);
+;	lib/src/uart0.c:75: SBUF = (*cy);
 	mov	_SBUF,r4
-;	lib/src/uart0.c:74: while (UART0_GetFlag(UART0_TX_FLAG) == 0) {}
+;	lib/src/uart0.c:76: while (UART0_GetFlag(UART0_TX_FLAG) == 0) {}
 00101$:
 	mov	dpl,#0x02
 	push	ar7
@@ -746,7 +753,7 @@ _UART0_STRING:
 	pop	ar6
 	pop	ar7
 	jz	00101$
-;	lib/src/uart0.c:75: UART0_ClearFlag(UART0_TX_FLAG);
+;	lib/src/uart0.c:77: UART0_ClearFlag(UART0_TX_FLAG);
 	mov	dpl,#0x02
 	push	ar7
 	push	ar6
@@ -755,33 +762,33 @@ _UART0_STRING:
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	lib/src/uart0.c:76: cy++;
+;	lib/src/uart0.c:78: cy++;
 	inc	r5
 	cjne	r5,#0x00,00104$
 	inc	r6
 	sjmp	00104$
 00107$:
-;	lib/src/uart0.c:78: }
+;	lib/src/uart0.c:80: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'UART0_NLINE'
 ;------------------------------------------------------------
-;	lib/src/uart0.c:80: void UART0_NLINE(void)
+;	lib/src/uart0.c:82: void UART0_NLINE(void)
 ;	-----------------------------------------
 ;	 function UART0_NLINE
 ;	-----------------------------------------
 _UART0_NLINE:
-;	lib/src/uart0.c:82: SBUF = 0x0a;
+;	lib/src/uart0.c:84: SBUF = 0x0a;
 	mov	_SBUF,#0x0a
-;	lib/src/uart0.c:83: while (UART0_GetFlag(UART0_TX_FLAG) == 0) {}
+;	lib/src/uart0.c:85: while (UART0_GetFlag(UART0_TX_FLAG) == 0) {}
 00101$:
 	mov	dpl,#0x02
 	lcall	_UART0_GetFlag
 	mov	a,dpl
 	jz	00101$
-;	lib/src/uart0.c:84: UART0_ClearFlag(UART0_TX_FLAG);
+;	lib/src/uart0.c:86: UART0_ClearFlag(UART0_TX_FLAG);
 	mov	dpl,#0x02
-;	lib/src/uart0.c:85: }
+;	lib/src/uart0.c:87: }
 	ljmp	_UART0_ClearFlag
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'UART0_NUMBER'
@@ -790,36 +797,36 @@ _UART0_NLINE:
 ;count                     Allocated to registers r5 
 ;digit                     Allocated with name '_UART0_NUMBER_digit_65536_35'
 ;------------------------------------------------------------
-;	lib/src/uart0.c:87: void UART0_NUMBER(int number)
+;	lib/src/uart0.c:89: void UART0_NUMBER(int number)
 ;	-----------------------------------------
 ;	 function UART0_NUMBER
 ;	-----------------------------------------
 _UART0_NUMBER:
 	mov	r6,dpl
 	mov	r7,dph
-;	lib/src/uart0.c:89: char count = 0;
+;	lib/src/uart0.c:91: char count = 0;
 	mov	r5,#0x00
-;	lib/src/uart0.c:90: char digit[5] = "";
+;	lib/src/uart0.c:92: char digit[5] = "";
 	mov	_UART0_NUMBER_digit_65536_35,r5
 	mov	(_UART0_NUMBER_digit_65536_35 + 0x0001),r5
 	mov	(_UART0_NUMBER_digit_65536_35 + 0x0002),r5
 	mov	(_UART0_NUMBER_digit_65536_35 + 0x0003),r5
 	mov	(_UART0_NUMBER_digit_65536_35 + 0x0004),r5
-;	lib/src/uart0.c:91: if (number == 0)
+;	lib/src/uart0.c:93: if (number == 0)
 	mov	a,r6
 	orl	a,r7
-;	lib/src/uart0.c:93: digit[0] = 0;
+;	lib/src/uart0.c:95: digit[0] = 0;
 	jnz	00116$
 	mov	_UART0_NUMBER_digit_65536_35,a
-;	lib/src/uart0.c:94: count = 1;
+;	lib/src/uart0.c:96: count = 1;
 	mov	r5,#0x01
-;	lib/src/uart0.c:96: while(number != 0)
+;	lib/src/uart0.c:98: while(number != 0)
 00116$:
 00103$:
 	mov	a,r6
 	orl	a,r7
 	jz	00120$
-;	lib/src/uart0.c:98: digit[count] = number%10;   //lay chu so ngoai cung xxxx8;
+;	lib/src/uart0.c:100: digit[count] = number%10;   //lay chu so ngoai cung xxxx8;
 	mov	a,r5
 	add	a,#_UART0_NUMBER_digit_65536_35
 	mov	r1,a
@@ -838,9 +845,9 @@ _UART0_NUMBER:
 	pop	ar6
 	pop	ar7
 	mov	@r1,ar3
-;	lib/src/uart0.c:99: ++count;
+;	lib/src/uart0.c:101: ++count;
 	inc	r5
-;	lib/src/uart0.c:100: number = number/10;         //chia so number cho 10 de bo so ngoai cung xxxx
+;	lib/src/uart0.c:102: number = number/10;         //chia so number cho 10 de bo so ngoai cung xxxx
 	mov	__divsint_PARM_2,#0x0a
 	mov	(__divsint_PARM_2 + 1),#0x00
 	mov	dpl,r6
@@ -850,14 +857,14 @@ _UART0_NUMBER:
 	mov	r6,dpl
 	mov	r7,dph
 	pop	ar5
-;	lib/src/uart0.c:102: while (count!=0)
+;	lib/src/uart0.c:104: while (count!=0)
 	sjmp	00103$
 00120$:
 	mov	ar7,r5
 00109$:
 	mov	a,r7
 	jz	00112$
-;	lib/src/uart0.c:104: SBUF = (digit[count - 1] + 0x30); // 0x30 = 48 ;
+;	lib/src/uart0.c:106: SBUF = (digit[count - 1] + 0x30); // 0x30 = 48 ;
 	mov	ar6,r7
 	mov	a,r6
 	dec	a
@@ -867,7 +874,7 @@ _UART0_NUMBER:
 	mov	a,#0x30
 	add	a,r6
 	mov	_SBUF,a
-;	lib/src/uart0.c:105: while (UART0_GetFlag(UART0_TX_FLAG) == 0) {}
+;	lib/src/uart0.c:107: while (UART0_GetFlag(UART0_TX_FLAG) == 0) {}
 00106$:
 	mov	dpl,#0x02
 	push	ar7
@@ -875,16 +882,16 @@ _UART0_NUMBER:
 	mov	a,dpl
 	pop	ar7
 	jz	00106$
-;	lib/src/uart0.c:106: UART0_ClearFlag(UART0_TX_FLAG);
+;	lib/src/uart0.c:108: UART0_ClearFlag(UART0_TX_FLAG);
 	mov	dpl,#0x02
 	push	ar7
 	lcall	_UART0_ClearFlag
 	pop	ar7
-;	lib/src/uart0.c:107: --count;
+;	lib/src/uart0.c:109: --count;
 	dec	r7
 	sjmp	00109$
 00112$:
-;	lib/src/uart0.c:109: }
+;	lib/src/uart0.c:111: }
 	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

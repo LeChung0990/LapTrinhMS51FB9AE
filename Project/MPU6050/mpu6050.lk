@@ -1,12 +1,15 @@
 -muwx
 -i mpu6050.ihx
 -M
+-Y
+-I 0x0100
+-X 0x0400
+-C 0x4000
 -b HOME = 0x0000
--b XSEG = 0x0001
--b PSEG = 0x0001
 -b ISEG = 0x0000
 -b BSEG = 0x0000
--k C:\Program Files\SDCC\bin\..\lib\small
+-k /usr/bin/../share/sdcc/lib/small
+-k /usr/share/sdcc/lib/small
 -l mcs51
 -l libsdcc
 -l libint

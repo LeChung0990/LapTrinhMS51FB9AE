@@ -183,20 +183,83 @@ void delay_1ms(void)
 }
 ```
 ## 3. ADC
+
+> **Sơ đồ chân:**
+<img src = "image/pinout.png">
+
 Ham khoi tao ADC 12-bit
 ```c
 void ADC_Init(void)
 {
-	ADCCON1 |= (1 << 0);
-	/* Clock  = Fsys/8 */
+	// ADCCON1 |= (1 << 0);
+	set_ADCCON1_ADCEN;
+	/* Clock */
 	ADCCON1 &= ~(0x30);
 	ADCCON1 |= 0x30;
-	/* Channel 4, Chan so 1 cua IC */ 
-	P0M1 |= (1 << 5);
-	P0M2 &= ~(1 << 5);
-	AINDIDS |= (1 << 4);
+	/* Channel 5 pin 20, channel 6 pin 19  */
+	P04_INPUT_MODE;
+	P03_INPUT_MODE;
+	AINDIDS |= (1 << 5) | (1<<6);
+	EADC = 1;
 }
 ```
+Ham chuc nang cho khoi ADC
+
+```c
+void ADC_SelectChannel(uint8_t u8Channel)
+{
+	ADCCON0 &= ~(0x0F);
+	ADCCON0 |= (u8Channel & 0x07);
+}
+
+void ADC_StartConv(void)
+{
+	ADCS = 1;
+}
+
+uint8_t ADC_IsBusy(void)
+{
+	return ADCS;
+}
+
+uint16_t ADC_GetData(void)
+{
+	return (ADCRH * 16 + (ADCRL & 0x0F));
+}
+
+void ADC_ClearFlag(void)
+{
+	ADCF = 0;
+}
+
+void ADC_Enable(void)
+{
+	ADCCON1 |= (1 << 0);
+}
+
+void ADC_Disable(void)
+{
+	ADCCON1 &= ~(1 << 0);
+}
+
+```
+Su dung cac ham trong main:
+
+```c
+void main(){
+	ADC_Init(); /* Channel 4, Chan so 1 cua IC */
+	ADC_SelectChannel(4);
+	while(1){
+		ADC_StartConv();
+		while (ADC_IsBusy()){}
+		u16AdcValue = ADC_GetData();
+		ADC_ClearFlag();
+		// UART0_number(u16AdcValue);
+	}
+}
+```
+
+
 
 
 ## 4. I2C

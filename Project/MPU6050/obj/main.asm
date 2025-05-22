@@ -11,6 +11,9 @@
 	.globl _main
 	.globl _ReadData
 	.globl _InitMPU6050
+	.globl _fabsf
+	.globl _sqrtf
+	.globl _atanf
 	.globl _UART0_NUMBER
 	.globl _UART0_NLINE
 	.globl _UART0_STRING
@@ -257,6 +260,17 @@
 	.globl _P0
 	.globl _checkAddress
 	.globl _u8Data
+	.globl _AccZMSB
+	.globl _AccZLSB
+	.globl _AccYMSB
+	.globl _AccYLSB
+	.globl _AccXMSB
+	.globl _AccXLSB
+	.globl _AnglePitch
+	.globl _AngleRoll
+	.globl _AccZ
+	.globl _AccY
+	.globl _AccX
 	.globl _Res
 	.globl _High
 	.globl _Low
@@ -517,6 +531,28 @@ _High::
 	.ds 1
 _Res::
 	.ds 2
+_AccX::
+	.ds 4
+_AccY::
+	.ds 4
+_AccZ::
+	.ds 4
+_AngleRoll::
+	.ds 4
+_AnglePitch::
+	.ds 4
+_AccXLSB::
+	.ds 2
+_AccXMSB::
+	.ds 2
+_AccYLSB::
+	.ds 2
+_AccYMSB::
+	.ds 2
+_AccZLSB::
+	.ds 2
+_AccZMSB::
+	.ds 2
 _u8Data::
 	.ds 2
 _checkAddress::
@@ -606,7 +642,7 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'InitMPU6050'
 ;------------------------------------------------------------
-;	main.c:15: void InitMPU6050(void)
+;	main.c:21: void InitMPU6050(void)
 ;	-----------------------------------------
 ;	 function InitMPU6050
 ;	-----------------------------------------
@@ -619,34 +655,17 @@ _InitMPU6050:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:17: I2C_start();
+;	main.c:23: I2C_start();    
 	lcall	_I2C_start
-;	main.c:18: I2C_Address((uint8_t)0x68 << 1 , 0);
+;	main.c:24: I2C_Address((uint8_t)0x68 << 1 , 0);
 	mov	_I2C_Address_PARM_2,#0x00
 	mov	dpl,#0xd0
 	lcall	_I2C_Address
-;	main.c:19: I2C_Write(0x6B);
+;	main.c:26: I2C_Write(0x6B);
 	mov	dpl,#0x6b
 	lcall	_I2C_Write
-;	main.c:20: I2C_Write(0x00);
+;	main.c:27: I2C_Write(0x00);
 	mov	dpl,#0x00
-	lcall	_I2C_Write
-;	main.c:21: send_stop();
-	lcall	_send_stop
-;	main.c:22: Delay_Ms(10);
-	mov	dptr,#0x000a
-	lcall	_Delay_Ms
-;	main.c:24: I2C_start();
-	lcall	_I2C_start
-;	main.c:25: I2C_Address((uint8_t)0x68 << 1, 0);
-	mov	_I2C_Address_PARM_2,#0x00
-	mov	dpl,#0xd0
-	lcall	_I2C_Address
-;	main.c:26: I2C_Write(0x1A);
-	mov	dpl,#0x1a
-	lcall	_I2C_Write
-;	main.c:27: I2C_Write(0x05);
-	mov	dpl,#0x05
 	lcall	_I2C_Write
 ;	main.c:28: send_stop();
 	lcall	_send_stop
@@ -655,147 +674,570 @@ _InitMPU6050:
 	lcall	_Delay_Ms
 ;	main.c:31: I2C_start();
 	lcall	_I2C_start
-;	main.c:32: I2C_Address((uint8_t)0x68 << 1, 0);  //D0
+;	main.c:32: I2C_Address((uint8_t)0x68 << 1, 0);
 	mov	_I2C_Address_PARM_2,#0x00
 	mov	dpl,#0xd0
 	lcall	_I2C_Address
-;	main.c:33: I2C_Write(0x1C);
+;	main.c:35: I2C_Write(0x1A);
+	mov	dpl,#0x1a
+	lcall	_I2C_Write
+;	main.c:36: I2C_Write(0x05);
+	mov	dpl,#0x05
+	lcall	_I2C_Write
+;	main.c:37: send_stop();
+	lcall	_send_stop
+;	main.c:38: Delay_Ms(10);
+	mov	dptr,#0x000a
+	lcall	_Delay_Ms
+;	main.c:40: I2C_start();
+	lcall	_I2C_start
+;	main.c:41: I2C_Address((uint8_t)0x68 << 1, 0);  //D0
+	mov	_I2C_Address_PARM_2,#0x00
+	mov	dpl,#0xd0
+	lcall	_I2C_Address
+;	main.c:44: I2C_Write(0x1B);
+	mov	dpl,#0x1b
+	lcall	_I2C_Write
+;	main.c:45: I2C_Write(0x00);
+	mov	dpl,#0x00
+	lcall	_I2C_Write
+;	main.c:46: send_stop();
+	lcall	_send_stop
+;	main.c:47: Delay_Ms(10);
+	mov	dptr,#0x000a
+	lcall	_Delay_Ms
+;	main.c:49: I2C_start();
+	lcall	_I2C_start
+;	main.c:50: I2C_Address((uint8_t)0x68 << 1, 0);  //D0
+	mov	_I2C_Address_PARM_2,#0x00
+	mov	dpl,#0xd0
+	lcall	_I2C_Address
+;	main.c:53: I2C_Write(0x1C);
 	mov	dpl,#0x1c
 	lcall	_I2C_Write
-;	main.c:34: I2C_Write(0x10);
+;	main.c:54: I2C_Write(0x10);
 	mov	dpl,#0x10
 	lcall	_I2C_Write
-;	main.c:35: send_stop();
+;	main.c:55: send_stop();
 	lcall	_send_stop
-;	main.c:36: Delay_Ms(10);
+;	main.c:56: Delay_Ms(10);
 	mov	dptr,#0x000a
-;	main.c:37: }
+;	main.c:57: }
 	ljmp	_Delay_Ms
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ReadData'
 ;------------------------------------------------------------
-;	main.c:39: void ReadData(void)
+;	main.c:59: void ReadData(void)
 ;	-----------------------------------------
 ;	 function ReadData
 ;	-----------------------------------------
 _ReadData:
-;	main.c:41: I2C_start();
+;	main.c:62: I2C_start();
 	lcall	_I2C_start
-;	main.c:42: I2C_Address((uint8_t)0x68 << 1, 0);
+;	main.c:63: I2C_Address((uint8_t)0xD0, 0);
 	mov	_I2C_Address_PARM_2,#0x00
 	mov	dpl,#0xd0
 	lcall	_I2C_Address
-;	main.c:43: I2C_Write(0x3B);
+;	main.c:65: I2C_Write(0x3B);
 	mov	dpl,#0x3b
 	lcall	_I2C_Write
-;	main.c:45: I2C_RepeatedStart();
+;	main.c:67: I2C_RepeatedStart();
 	lcall	_I2C_RepeatedStart
-;	main.c:46: I2C_Address((uint8_t)0x68 << 1, 1);
+;	main.c:68: I2C_Address((uint8_t)0xD1, 1);
 	mov	_I2C_Address_PARM_2,#0x01
-	mov	dpl,#0xd0
+	mov	dpl,#0xd1
 	lcall	_I2C_Address
-;	main.c:47: High = I2C_Read(1);
+;	main.c:69: AccXLSB = I2C_Read(1);
 	mov	dpl,#0x01
 	lcall	_I2C_Read
-	mov	_High,dpl
-;	main.c:48: Low = I2C_Read(0);
+	mov	r7,dpl
+	mov	_AccXLSB,r7
+	mov	(_AccXLSB + 1),#0x00
+;	main.c:70: AccXMSB = I2C_Read(1);
+	mov	dpl,#0x01
+	lcall	_I2C_Read
+	mov	r7,dpl
+	mov	_AccXMSB,r7
+	mov	(_AccXMSB + 1),#0x00
+;	main.c:72: AccYLSB = I2C_Read(1);
+	mov	dpl,#0x01
+	lcall	_I2C_Read
+	mov	r7,dpl
+	mov	_AccYLSB,r7
+	mov	(_AccYLSB + 1),#0x00
+;	main.c:73: AccYMSB = I2C_Read(1);
+	mov	dpl,#0x01
+	lcall	_I2C_Read
+	mov	r7,dpl
+	mov	_AccYMSB,r7
+	mov	(_AccYMSB + 1),#0x00
+;	main.c:75: AccZLSB = I2C_Read(1);
+	mov	dpl,#0x01
+	lcall	_I2C_Read
+	mov	r7,dpl
+	mov	_AccZLSB,r7
+	mov	(_AccZLSB + 1),#0x00
+;	main.c:76: AccZMSB = I2C_Read(0);
 	mov	dpl,#0x00
 	lcall	_I2C_Read
-	mov	_Low,dpl
-;	main.c:49: Res = (High << 8) | Low;
-	mov	r7,_High
+	mov	r7,dpl
+	mov	_AccZMSB,r7
+	mov	(_AccZMSB + 1),#0x00
+;	main.c:77: send_stop();
+	lcall	_send_stop
+;	main.c:79: AccXLSB = (AccXLSB << 8) | AccXMSB;
+	mov	r7,_AccXLSB
 	mov	r6,#0x00
-	mov	r4,_Low
-	mov	r5,#0x00
-	mov	a,r4
-	orl	ar6,a
-	mov	a,r5
-	orl	ar7,a
-	mov	_Res,r6
-	mov	(_Res + 1),r7
-;	main.c:50: }
+	mov	a,_AccXMSB
+	orl	a,r6
+	mov	_AccXLSB,a
+	mov	a,(_AccXMSB + 1)
+	orl	a,r7
+	mov	(_AccXLSB + 1),a
+;	main.c:80: AccYLSB = (AccYLSB << 8) | AccYMSB;
+	mov	r7,_AccYLSB
+	mov	a,_AccYMSB
+	orl	a,r6
+	mov	_AccYLSB,a
+	mov	a,(_AccYMSB + 1)
+	orl	a,r7
+	mov	(_AccYLSB + 1),a
+;	main.c:81: AccZLSB = (AccZLSB << 8) | AccZMSB;
+	mov	r7,_AccZLSB
+	mov	a,_AccZMSB
+	orl	a,r6
+	mov	_AccZLSB,a
+	mov	a,(_AccZMSB + 1)
+	orl	a,r7
+	mov	(_AccZLSB + 1),a
+;	main.c:83: AccX = (float)AccXLSB / 4096.0 - 0.01;
+	mov	dpl,_AccXLSB
+	mov	dph,(_AccXLSB + 1)
+	lcall	___sint2fs
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
+	clr	a
+	push	acc
+	push	acc
+	mov	a,#0x80
+	push	acc
+	mov	a,#0x45
+	push	acc
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
+	lcall	___fsdiv
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	a,#0x0a
+	push	acc
+	mov	a,#0xd7
+	push	acc
+	mov	a,#0x23
+	push	acc
+	mov	a,#0x3c
+	push	acc
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
+	lcall	___fssub
+	mov	_AccX,dpl
+	mov	(_AccX + 1),dph
+	mov	(_AccX + 2),b
+	mov	(_AccX + 3),a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+;	main.c:84: AccY = (float)AccYLSB / 4096.0 ;
+	mov	dpl,_AccYLSB
+	mov	dph,(_AccYLSB + 1)
+	lcall	___sint2fs
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
+	clr	a
+	push	acc
+	push	acc
+	mov	a,#0x80
+	push	acc
+	mov	a,#0x45
+	push	acc
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
+	lcall	___fsdiv
+	mov	_AccY,dpl
+	mov	(_AccY + 1),dph
+	mov	(_AccY + 2),b
+	mov	(_AccY + 3),a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+;	main.c:85: AccZ = (float)AccZLSB / 4096.0 + 0.01;
+	mov	dpl,_AccZLSB
+	mov	dph,(_AccZLSB + 1)
+	lcall	___sint2fs
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
+	clr	a
+	push	acc
+	push	acc
+	mov	a,#0x80
+	push	acc
+	mov	a,#0x45
+	push	acc
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
+	lcall	___fsdiv
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	a,#0x0a
+	push	acc
+	mov	a,#0xd7
+	push	acc
+	mov	a,#0x23
+	push	acc
+	mov	a,#0x3c
+	push	acc
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
+	lcall	___fsadd
+	mov	_AccZ,dpl
+	mov	(_AccZ + 1),dph
+	mov	(_AccZ + 2),b
+	mov	(_AccZ + 3),a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+;	main.c:90: AngleRoll = atanf(AccY/sqrtf(AccX*AccX + AccZ*AccZ))*1/(3.142/180);
+	push	_AccX
+	push	(_AccX + 1)
+	push	(_AccX + 2)
+	push	(_AccX + 3)
+	mov	dpl,_AccX
+	mov	dph,(_AccX + 1)
+	mov	b,(_AccX + 2)
+	mov	a,(_AccX + 3)
+	lcall	___fsmul
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	push	ar7
+	push	ar6
+	push	ar5
+	push	ar4
+	push	_AccZ
+	push	(_AccZ + 1)
+	push	(_AccZ + 2)
+	push	(_AccZ + 3)
+	mov	dpl,_AccZ
+	mov	dph,(_AccZ + 1)
+	mov	b,(_AccZ + 2)
+	mov	a,(_AccZ + 3)
+	lcall	___fsmul
+	mov	r0,dpl
+	mov	r1,dph
+	mov	r2,b
+	mov	r3,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	pop	ar4
+	pop	ar5
+	pop	ar6
+	pop	ar7
+	push	ar0
+	push	ar1
+	push	ar2
+	push	ar3
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
+	lcall	___fsadd
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
+	lcall	_sqrtf
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
+	push	ar4
+	push	ar5
+	push	ar6
+	push	ar7
+	mov	dpl,_AccY
+	mov	dph,(_AccY + 1)
+	mov	b,(_AccY + 2)
+	mov	a,(_AccY + 3)
+	lcall	___fsdiv
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
+	lcall	_atanf
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
+	mov	a,#0xf4
+	push	acc
+	mov	a,#0xfe
+	push	acc
+	mov	a,#0x8e
+	push	acc
+	mov	a,#0x3c
+	push	acc
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
+	lcall	___fsdiv
+	mov	_AngleRoll,dpl
+	mov	(_AngleRoll + 1),dph
+	mov	(_AngleRoll + 2),b
+	mov	(_AngleRoll + 3),a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+;	main.c:91: AnglePitch = atanf(AccX/sqrtf(AccY*AccY + AccZ*AccZ))*1/(3.142/180);
+	push	_AccY
+	push	(_AccY + 1)
+	push	(_AccY + 2)
+	push	(_AccY + 3)
+	mov	dpl,_AccY
+	mov	dph,(_AccY + 1)
+	mov	b,(_AccY + 2)
+	mov	a,(_AccY + 3)
+	lcall	___fsmul
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	push	ar7
+	push	ar6
+	push	ar5
+	push	ar4
+	push	_AccZ
+	push	(_AccZ + 1)
+	push	(_AccZ + 2)
+	push	(_AccZ + 3)
+	mov	dpl,_AccZ
+	mov	dph,(_AccZ + 1)
+	mov	b,(_AccZ + 2)
+	mov	a,(_AccZ + 3)
+	lcall	___fsmul
+	mov	r0,dpl
+	mov	r1,dph
+	mov	r2,b
+	mov	r3,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	pop	ar4
+	pop	ar5
+	pop	ar6
+	pop	ar7
+	push	ar0
+	push	ar1
+	push	ar2
+	push	ar3
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
+	lcall	___fsadd
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
+	lcall	_sqrtf
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
+	push	ar4
+	push	ar5
+	push	ar6
+	push	ar7
+	mov	dpl,_AccX
+	mov	dph,(_AccX + 1)
+	mov	b,(_AccX + 2)
+	mov	a,(_AccX + 3)
+	lcall	___fsdiv
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
+	lcall	_atanf
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
+	mov	r7,a
+	mov	a,#0xf4
+	push	acc
+	mov	a,#0xfe
+	push	acc
+	mov	a,#0x8e
+	push	acc
+	mov	a,#0x3c
+	push	acc
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
+	lcall	___fsdiv
+	mov	_AnglePitch,dpl
+	mov	(_AnglePitch + 1),dph
+	mov	(_AnglePitch + 2),b
+	mov	(_AnglePitch + 3),a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+;	main.c:95: AngleRoll = fabsf(AngleRoll);
+	mov	dpl,_AngleRoll
+	mov	dph,(_AngleRoll + 1)
+	mov	b,(_AngleRoll + 2)
+	mov	a,(_AngleRoll + 3)
+	lcall	_fabsf
+	mov	_AngleRoll,dpl
+	mov	(_AngleRoll + 1),dph
+	mov	(_AngleRoll + 2),b
+	mov	(_AngleRoll + 3),a
+;	main.c:96: AnglePitch = fabsf(AnglePitch);
+	mov	dpl,_AnglePitch
+	mov	dph,(_AnglePitch + 1)
+	mov	b,(_AnglePitch + 2)
+	mov	a,(_AnglePitch + 3)
+	lcall	_fabsf
+	mov	_AnglePitch,dpl
+	mov	(_AnglePitch + 1),dph
+	mov	(_AnglePitch + 2),b
+	mov	(_AnglePitch + 3),a
+;	main.c:97: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;	main.c:52: void main(void)
+;	main.c:99: void main(void)
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	main.c:55: P15_PUSHPULL_MODE;
+;	main.c:102: LED_PORT;
 	anl	_P1M1,#0xdf
 	orl	_P1M2,#0x20
-;	main.c:56: P15 = 0;
+;	main.c:103: LED = 0;
 ;	assignBit
 	clr	_P15
-;	main.c:57: I2C_Init();
+;	main.c:104: I2C_Init();
 	lcall	_I2C_Init
-;	main.c:58: UART0_Init();
+;	main.c:105: UART0_Init();
 	lcall	_UART0_Init
-;	main.c:59: InitMPU6050();
+;	main.c:106: InitMPU6050();
 	lcall	_InitMPU6050
-;	main.c:62: UART0_STRING("Start:");
+;	main.c:108: UART0_STRING("Start:");
 	mov	dptr,#___str_0
 	mov	b,#0x80
 	lcall	_UART0_STRING
-;	main.c:70: while (1) {
+;	main.c:109: while (1) {
 00102$:
-;	main.c:72: I2C_start();
-	lcall	_I2C_start
-;	main.c:73: I2C_Address((uint8_t)0xD0, 0);
-	mov	_I2C_Address_PARM_2,#0x00
-	mov	dpl,#0xd0
-	lcall	_I2C_Address
-;	main.c:74: I2C_Write(0x3B);
-	mov	dpl,#0x3b
-	lcall	_I2C_Write
-;	main.c:77: I2C_RepeatedStart();
-	lcall	_I2C_RepeatedStart
-;	main.c:78: I2C_Address((uint8_t)0xD1, 1);
-	mov	_I2C_Address_PARM_2,#0x01
-	mov	dpl,#0xd1
-	lcall	_I2C_Address
-;	main.c:79: High = I2C_Read(1);
-	mov	dpl,#0x01
-	lcall	_I2C_Read
-	mov	_High,dpl
-;	main.c:80: Low = I2C_Read(0);
-	mov	dpl,#0x00
-	lcall	_I2C_Read
-	mov	_Low,dpl
-;	main.c:81: Res = (High << 8) | Low;
-	mov	r7,_High
-	mov	r6,#0x00
-	mov	r4,_Low
-	mov	r5,#0x00
-	mov	a,r4
-	orl	ar6,a
-	mov	a,r5
-	orl	ar7,a
-	mov	_Res,r6
-	mov	(_Res + 1),r7
-;	main.c:82: send_stop();
-	lcall	_send_stop
-;	main.c:84: P15 = 1;
-;	assignBit
-	setb	_P15
-;	main.c:85: Delay_Ms(1000);
-	mov	dptr,#0x03e8
+;	main.c:110: ReadData();
+	lcall	_ReadData
+;	main.c:112: Delay_Ms(10);
+	mov	dptr,#0x000a
 	lcall	_Delay_Ms
-;	main.c:86: UART0_NLINE();
-	lcall	_UART0_NLINE
-;	main.c:87: UART0_NUMBER(Res);
-	mov	dpl,_Res
-	mov	dph,(_Res + 1)
+;	main.c:114: UART0_NUMBER(AngleRoll);
+	mov	dpl,_AngleRoll
+	mov	dph,(_AngleRoll + 1)
+	mov	b,(_AngleRoll + 2)
+	mov	a,(_AngleRoll + 3)
+	lcall	___fs2sint
 	lcall	_UART0_NUMBER
-;	main.c:89: }
+;	main.c:115: UART0_STRING("-");
+	mov	dptr,#___str_1
+	mov	b,#0x80
+	lcall	_UART0_STRING
+;	main.c:116: UART0_NUMBER(AnglePitch);
+	mov	dpl,_AnglePitch
+	mov	dph,(_AnglePitch + 1)
+	mov	b,(_AnglePitch + 2)
+	mov	a,(_AnglePitch + 3)
+	lcall	___fs2sint
+	lcall	_UART0_NUMBER
+;	main.c:119: UART0_NLINE();
+	lcall	_UART0_NLINE
+;	main.c:124: }
 	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area CONST   (CODE)
 ___str_0:
 	.ascii "Start:"
+	.db 0x00
+	.area CSEG    (CODE)
+	.area CONST   (CODE)
+___str_1:
+	.ascii "-"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area XINIT   (CODE)
